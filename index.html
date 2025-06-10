@@ -129,11 +129,6 @@
             transition: max-height 0.4s ease-out, padding 0.4s ease-out; /* Smooth transition for height and padding */
         }
 
-        /* Removido o max-height e overflow-y daqui para serem controlados apenas pelo JS */
-        .accordion-content.open {
-            /* Estes estilos serão aplicados via JS para controlar a transição */
-        }
-
         /* Styles for the Reading Progress Bar */
         #reading-progress-bar {
             position: fixed;
@@ -309,10 +304,23 @@
             </h2>
             <p class="max-w-3xl mx-auto text-lg text-sky-100">Nosso objetivo é te ajudar a conquistar seus objetivos acadêmicos, otimizando seu tempo, reduzindo o estresse e transformando o aprendizado em uma jornada mais leve e eficaz.</p>
             <!-- CTA: Baixe o Guia Gratuito -->
-            <button class="mt-8 bg-amber-500 text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-amber-600 transition duration-300 transform hover:scale-105">
+            <a href="#newsletter-section" class="mt-8 bg-amber-500 text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-amber-600 transition duration-300 transform hover:scale-105 inline-block scroll-link">
                 Baixe o Guia Gratuito
-            </button>
+            </a>
         </section>
+
+        <!-- Mensagem de Sucesso do Formulário com link para o guia (Inicialmente escondida) -->
+        <div id="form-success-message" class="hidden bg-emerald-100 border border-emerald-400 text-emerald-700 px-6 py-4 rounded-lg mb-8 text-center" role="alert">
+            <div class="flex items-center justify-center mb-2">
+                <i data-feather="check-circle" class="w-6 h-6 mr-3 text-emerald-500"></i>
+                <p class="font-bold text-lg">Inscrição realizada com sucesso!</p>
+            </div>
+            <p>Obrigado pela sua inscrição! Pode descarregar o seu guia completo para o sucesso universitário aqui:</p>
+            <a id="download-guide-link" href="#" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition duration-300 transform hover:scale-105">
+                <i data-feather="download" class="w-5 h-5 inline-block mr-2"></i>
+                Descarregar o Guia Agora
+            </a>
+        </div>
 
         <div class="flex flex-col lg:flex-row gap-12">
 
@@ -506,7 +514,7 @@
                         
                         <h4>2.1. Gestão de Tempo e Organização</h4>
                         <ul class="list-disc list-inside">
-                            <li><strong>Calendário:</strong> Utilize um calendário (digital ou físico) para anotar prazos de trabalhos, provas, aulas e compromissos.</li>
+                            <li><strong>Calendário:</strong> Utilize um calendário (digital como Google Calendar ou físico) para anotar prazos de trabalhos, provas, aulas e compromissos.</li>
                             <li><strong>Listas de Tarefas:</strong> Crie listas diárias ou semanais de tarefas. Priorize-as.</li>
                             <li><strong>Evite Procrastinação:</strong> Divida grandes tarefas em etapas menores e comece o quanto antes.</li>
                         </ul>
@@ -515,7 +523,8 @@
                         <ul class="list-disc list-inside">
                             <li><strong>Sono:</strong> Priorize um sono de qualidade. A privação de sono afeta diretamente a capacidade de aprendizado e memória.</li>
                             <li><strong>Exercício Físico:</strong> A atividade física regular comprovadamente melhora o foco e reduz o estresse.</li>
-                            <li><strong>Alimentação:</strong> Mantenha uma dieta equilibrada.</li>
+                            <li><strong>Alimentação:
+                            </strong> Mantenha uma dieta equilibrada.</li>
                             <li><strong>Gerenciamento de Estresse:</strong> Pratique mindfulness, meditação ou hobbies para relaxar. Não hesite em procurar apoio profissional se sentir que está sobrecarregado.</li>
                         </ul>
 
@@ -533,7 +542,7 @@
             <!-- Seção da Barra Lateral -->
             <div class="w-full lg:w-1/3">
                 <!-- Conteúdo em Destaque / Inscrição na Newsletter (Exemplo) -->
-                <div class="bg-blue-50 p-6 rounded-xl shadow-md mb-8 border-l-4 border-blue-400">
+                <div class="bg-blue-50 p-6 rounded-xl shadow-md mb-8 border-l-4 border-blue-400" id="newsletter-section">
                     <h3 class="text-xl font-bold text-blue-800 mb-4">Mantenha-se Atualizado!</h3>
                     <p class="text-blue-700 mb-4">Inscreva-se na nossa newsletter para receber as últimas dicas e guias diretamente no seu e-mail.</p>
                     <form action="https://formspree.io/f/mvgrkyvj" method="POST"> <!-- URL atualizada para a newsletter -->
@@ -611,7 +620,7 @@
                 Entre em Contato
             </h2>
             <div class="max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-md">
-                <form action="https://formspree.io/f/xeokaden" method="POST" class="space-y-4">
+                <form action="https://formspree.io/f/xeokaden" method="POST">
                     <div>
                         <label for="name" class="block text-slate-700 font-medium mb-1">Seu Nome</label>
                         <input type="text" id="name" name="name" class="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-300" placeholder="Nome Completo">
@@ -944,6 +953,31 @@
             const linkedinShareButton = document.querySelector('.social-share-buttons a.linkedin');
             if (linkedinShareButton) {
                 linkedinShareButton.href = `https://www.linkedin.com/shareArticle?mini=true&url=${pageUrl}&title=${pageTitle}`;
+            }
+        });
+
+        // --- Detecção de Submissão do Formulário Formspree e Exibição do Guia ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const submissionId = urlParams.get('submission_id');
+            const formSuccessMessage = document.getElementById('form-success-message');
+            const downloadGuideLink = document.getElementById('download-guide-link');
+
+            // TODO: SUBSTITUA ESTA URL PELA URL REAL DO SEU GUIA (PDF, DOC, etc.)
+            // Exemplo: se você colocar 'guia-completo.pdf' na raiz do seu repositório GitHub
+            // e seu site Vercel estiver em 'https://seusite.vercel.app',
+            // então a URL seria 'https://seusite.vercel.app/guia-completo.pdf'
+            const guideDownloadURL = "https://guia-taupe.vercel.app/guia-completo-descomplica.pdf"; // URL real do seu guia
+
+            if (submissionId && formSuccessMessage && downloadGuideLink) {
+                // Remove o parâmetro da URL para que a mensagem não apareça em recarregamentos futuros
+                history.replaceState(null, '', window.location.pathname);
+                
+                downloadGuideLink.href = guideDownloadURL; // Define o link de download
+                formSuccessMessage.classList.remove('hidden'); // Mostra a mensagem
+                
+                // Rola suavemente para a mensagem de sucesso
+                formSuccessMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         });
     </script>
