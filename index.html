@@ -322,6 +322,15 @@
             </a>
         </div>
 
+        <!-- Mensagem de Erro do Formulário (Inicialmente escondida) -->
+        <div id="form-error-message" class="hidden bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg mb-8 text-center" role="alert">
+            <div class="flex items-center justify-center mb-2">
+                <i data-feather="x-octagon" class="w-6 h-6 mr-3 text-red-500"></i>
+                <p class="font-bold text-lg">Ocorreu um erro na inscrição.</p>
+            </div>
+            <p>Por favor, tente novamente mais tarde. Verifique se o URL do formulário Formspree está correto, se o e-mail do Formspree está confirmado, ou se há campos obrigatórios faltando.</p>
+        </div>
+
         <div class="flex flex-col lg:flex-row gap-12">
 
             <!-- Seção de Artigos/Posts -->
@@ -545,9 +554,17 @@
                 <div class="bg-blue-50 p-6 rounded-xl shadow-md mb-8 border-l-4 border-blue-400" id="newsletter-section">
                     <h3 class="text-xl font-bold text-blue-800 mb-4">Mantenha-se Atualizado!</h3>
                     <p class="text-blue-700 mb-4">Inscreva-se na nossa newsletter para receber as últimas dicas e guias diretamente no seu e-mail.</p>
-                    <form action="https://formspree.io/f/mvgrkyvj" method="POST"> <!-- URL atualizada para a newsletter -->
-                        <input type="email" name="email" placeholder="Seu e-mail" class="w-full p-3 rounded-lg border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-300 mb-3 text-slate-700">
-                        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition duration-300">Inscrever-se</button>
+                    <form id="newsletter-form" name="newsletter-form" action="https://formspree.io/f/mvgrkyvj" method="POST"> <!-- URL atualizada para a newsletter -->
+                        <input type="email" name="email" placeholder="Seu e-mail" class="w-full p-3 rounded-lg border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-300 mb-3 text-slate-700" required>
+                        <button type="submit" id="newsletter-submit-button" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition duration-300">
+                            Inscrever-se
+                        </button>
+                        <div id="newsletter-loading-indicator" class="hidden mt-3 text-center text-blue-600">
+                            <div class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+                                <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">A carregar...</span>
+                            </div>
+                            A inscrever...
+                        </div>
                     </form>
                 </div>
 
@@ -958,26 +975,83 @@
 
         // --- Detecção de Submissão do Formulário Formspree e Exibição do Guia ---
         document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const submissionId = urlParams.get('submission_id');
+            const newsletterForm = document.getElementById('newsletter-form');
+            const newsletterSubmitButton = document.getElementById('newsletter-submit-button');
+            const newsletterLoadingIndicator = document.getElementById('newsletter-loading-indicator');
             const formSuccessMessage = document.getElementById('form-success-message');
+            const formErrorMessage = document.getElementById('form-error-message');
             const downloadGuideLink = document.getElementById('download-guide-link');
+            const emailInput = newsletterForm ? newsletterForm.querySelector('input[name="email"]') : null;
 
             // TODO: SUBSTITUA ESTA URL PELA URL REAL DO SEU GUIA (PDF, DOC, etc.)
             // Exemplo: se você colocar 'guia-completo.pdf' na raiz do seu repositório GitHub
             // e seu site Vercel estiver em 'https://seusite.vercel.app',
             // então a URL seria 'https://seusite.vercel.app/guia-completo.pdf'
-            const guideDownloadURL = "https://guia-taupe.vercel.app/guia-completo-descomplica.pdf"; // URL real do seu guia
+            const guideDownloadURL = "https://guia-taupe.vercel.app/guia-completo-descomplica.pdf"; // Substitua pela sua URL real do PDF
 
-            if (submissionId && formSuccessMessage && downloadGuideLink) {
-                // Remove o parâmetro da URL para que a mensagem não apareça em recarregamentos futuros
-                history.replaceState(null, '', window.location.pathname);
-                
-                downloadGuideLink.href = guideDownloadURL; // Define o link de download
-                formSuccessMessage.classList.remove('hidden'); // Mostra a mensagem
-                
-                // Rola suavemente para a mensagem de sucesso
-                formSuccessMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', async (event) => {
+                    event.preventDefault(); // Previne o envio padrão do formulário
+
+                    // Esconde mensagens anteriores
+                    formSuccessMessage.classList.add('hidden');
+                    formErrorMessage.classList.add('hidden');
+                    
+                    // Mostra o indicador de carregamento e desabilita o botão
+                    newsletterLoadingIndicator.classList.remove('hidden');
+                    if (newsletterSubmitButton) newsletterSubmitButton.disabled = true;
+                    if (emailInput) emailInput.disabled = true;
+
+                    try {
+                        console.log('Tentando submeter para Formspree URL:', newsletterForm.action); // Log da URL de submissão
+                        const response = await fetch(newsletterForm.action, {
+                            method: 'POST',
+                            body: new FormData(newsletterForm)
+                        });
+                        
+                        console.log('Resposta bruta do Formspree:', response); // Log da resposta completa para depuração
+
+                        if (response.ok) {
+                            formSuccessMessage.classList.remove('hidden'); // Mostra a mensagem de sucesso
+                            downloadGuideLink.href = guideDownloadURL; // Define o link de download
+                            if (emailInput) emailInput.value = ''; // Limpa o campo de e-mail
+                            formSuccessMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        } else {
+                            // Erro de submissão: O Formspree pode não retornar JSON para 400 em planos gratuitos
+                            console.error('Erro na submissão do Formspree:', response.status, response.statusText);
+                            formErrorMessage.classList.remove('hidden'); // Mostra a mensagem de erro
+                            formErrorMessage.innerHTML = `
+                                <div class="flex items-center justify-center mb-2">
+                                    <i data-feather="x-octagon" class="w-6 h-6 mr-3 text-red-500"></i>
+                                    <p class="font-bold text-lg">Ocorreu um erro na inscrição.</p>
+                                </div>
+                                <p>Por favor, tente novamente mais tarde.</p>
+                                <p class="text-sm mt-2"><strong>Dica:</strong> Verifique se o <strong>e-mail do Formspree</strong> associado a este formulário foi <strong>confirmado</strong>, ou se o <strong>ID do formulário</strong> (<code class="font-mono bg-red-200 p-1 rounded">mvgrkyvj</code> na URL) está correto.</p>
+                                <p class="text-sm">Certifique-se também de que não faltam campos obrigatórios no Formspree.</p>
+                            `;
+                            feather.replace(); // Para renderizar os ícones atualizados na mensagem de erro
+                            formErrorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    } catch (error) {
+                        console.error('Erro na submissão do formulário:', error);
+                        formErrorMessage.classList.remove('hidden'); // Mostra a mensagem de erro
+                        formErrorMessage.innerHTML = `
+                            <div class="flex items-center justify-center mb-2">
+                                <i data-feather="x-octagon" class="w-6 h-6 mr-3 text-red-500"></i>
+                                <p class="font-bold text-lg">Ocorreu um erro na inscrição.</p>
+                            </div>
+                            <p>Não foi possível enviar a sua inscrição devido a um erro de rede ou de servidor.</p>
+                            <p class="text-sm mt-2">Por favor, verifique a sua conexão com a internet e tente novamente.</p>
+                        `;
+                        feather.replace(); // Para renderizar os ícones atualizados na mensagem de erro
+                        formErrorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } finally {
+                        // Esconde o indicador de carregamento e reabilita o botão
+                        newsletterLoadingIndicator.classList.add('hidden');
+                        if (newsletterSubmitButton) newsletterSubmitButton.disabled = false;
+                        if (emailInput) emailInput.disabled = false;
+                    }
+                });
             }
         });
     </script>
