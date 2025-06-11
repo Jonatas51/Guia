@@ -88,7 +88,6 @@
             transform: scale(1.05); /* Leve aumento no hover */
         }
 
-
         /* Accordion styles for FAQ */
         .accordion-item {
             border: 1px solid #e2e8f0; /* slate-200 */
@@ -125,9 +124,13 @@
             background-color: #ffffff; /* white */
             padding: 0 1.5rem;
             max-height: 0;
-            overflow-y: hidden; /* Prevent scrollbar during collapse */
+            overflow: hidden; /* Prevent scrollbar during collapse */
             transition: max-height 0.4s ease-out, padding 0.4s ease-out; /* Smooth transition for height and padding */
         }
+        .accordion-content p {
+            padding-bottom: 1.5rem; /* Add padding to the bottom of the paragraph inside content */
+        }
+
 
         /* Styles for the Reading Progress Bar */
         #reading-progress-bar {
@@ -146,14 +149,18 @@
             border: 1px solid #fcd34d; /* amber-300 */
             background-color: #fffbeb; /* amber-50 */
         }
-        .quiz-section .question-feedback {
+        .quiz-question {
+            /* Ensures questions occupy consistent space */
+            min-height: 150px; 
+        }
+        .quiz-question .question-feedback {
             font-size: 0.875rem; /* text-sm */
             margin-top: 0.25rem; /* mt-1 */
         }
-        .quiz-section .question-feedback.correct {
+        .quiz-question .question-feedback.correct {
             color: #10b981; /* emerald-500 */
         }
-        .quiz-section .question-feedback.incorrect {
+        .quiz-question .question-feedback.incorrect {
             color: #dc2626; /* red-600 */
         }
 
@@ -196,20 +203,24 @@
         }
 
         /* Overlay for hover description */
-        .pomodoro-step > div:first-child { /* Targets the absolute positioned div for text */
-            opacity: 0;
-            transform: scale(0.9); /* Start slightly smaller */
-            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        .pomodoro-step .overlay-content { /* Targets the absolute positioned div for text */
+            position: absolute; /* Changed from first-child to a class for clarity */
+            inset: 0;
             background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background for text */
-            display: flex; /* Make it a flex container */
-            flex-direction: column; /* Arrange text vertically */
-            align-items: center; /* Center text horizontally */
-            justify-content: center; /* Center text vertically */
-            text-align: center; /* Ensure text is centered */
-            padding: 10px; /* Add padding to the overlay text */
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            border-radius: 9999px; /* Added for full rounded overlay */
         }
 
-        .pomodoro-step:hover > div:first-child {
+        .pomodoro-step:hover .overlay-content {
             opacity: 0.9;
             transform: scale(1); /* Expand to full size */
         }
@@ -220,17 +231,6 @@
 
         .pomodoro-step:hover i, .pomodoro-step:hover p {
             color: white !important; /* Force white color on hover */
-        }
-
-        /* Specific colors for icons on hover */
-        .pomodoro-step:first-child:hover i { /* Focus icon */
-            color: white !important;
-        }
-        .pomodoro-step:nth-child(3):hover i { /* Short break icon */
-            color: white !important;
-        }
-        .pomodoro-step:last-child:hover i { /* Long break icon */
-            color: white !important;
         }
 
         /* Floating Social Share Buttons */
@@ -266,15 +266,88 @@
         .social-share-buttons a.twitter:hover { background-color: #1790D4; }
         .social-share-buttons a.linkedin { background-color: #0A66C2; } /* LinkedIn Blue */
         .social-share-buttons a.linkedin:hover { background-color: #0857A6; }
+
+        /* Pomodoro Timer Specific Styles */
+        .pomodoro-timer-container {
+            border: 1px solid #bfdbfe; /* blue-200 */
+            background-color: #eff6ff; /* blue-50 */
+        }
+        .pomodoro-time {
+            font-family: 'Inter', sans-serif;
+            font-size: 3rem; /* text-5xl */
+            font-weight: 800; /* font-extrabold */
+            color: #1e40af; /* blue-800 */
+            min-width: 160px; /* Adjust as needed */
+        }
+        .pomodoro-status {
+            font-weight: 600;
+            color: #0369a1; /* sky-700 */
+        }
+        .pomodoro-controls button {
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .pomodoro-settings input {
+            width: 70px; /* Small fixed width for inputs */
+        }
+
+        /* Flashcard Styles */
+        .flashcard-section {
+            border: 1px solid #dbeafe; /* blue-100 */
+            background-color: #f0f9ff; /* blue-50 */
+        }
+        .flashcard-display {
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s, transform 0.3s;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        .flashcard-content {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            text-align: center;
+        }
+        .flashcard-term {
+            background-color: #e0f2fe; /* light blue */
+            color: #1e40af; /* dark blue */
+            transform: rotateY(0deg);
+        }
+        .flashcard-definition {
+            background-color: #bfdbfe; /* slightly darker blue */
+            color: #0369a1; /* even darker blue */
+            transform: rotateY(180deg);
+        }
+        .flashcard-display.flipped .flashcard-term {
+            transform: rotateY(180deg);
+        }
+        .flashcard-display.flipped .flashcard-definition {
+            transform: rotateY(360deg);
+        }
+        /* Style for disabled radio inputs */
+        .quiz-question input[type="radio"]:disabled + label {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
 
-    <!-- Barra de Progresso de Leitura -->
+    <!-- Reading Progress Bar -->
     <div id="reading-progress-bar"></div>
 
-    <!-- Cabeçalho -->
-    <header class="bg-white shadow-md sticky top-0 z-10">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-20">
         <div class="container mx-auto px-6 py-4 rounded-b-xl">
             <div class="flex flex-col md:flex-row items-center justify-between">
                 <div class="text-center md:text-left mb-4 md:mb-0">
@@ -293,11 +366,11 @@
         </div>
     </header>
 
-    <!-- Conteúdo Principal -->
+    <!-- Main Content -->
     <main class="container mx-auto px-6 py-12">
         
-        <!-- Seção Hero -->
-        <section id="hero-section" class="text-center mb-8 bg-gradient-to-r from-sky-500 to-blue-700 text-white p-12 rounded-2xl shadow-lg">
+        <!-- Hero Section -->
+        <section id="hero-section" class="text-center mb-12 bg-gradient-to-r from-sky-500 to-blue-700 text-white p-12 rounded-2xl shadow-lg">
             <h2 class="text-4xl font-bold mb-3 flex items-center justify-center">
                 <i data-feather="award" class="w-10 h-10 mr-3 text-sky-200 opacity-70"></i>
                 Seja bem-vindo ao DescomplicaAcadêmico!
@@ -309,40 +382,32 @@
             </a>
         </section>
 
-        <!-- Mensagem de Sucesso do Formulário com link para o guia (Inicialmente escondida) -->
+        <!-- Newsletter Form Success Message (Initially hidden) -->
         <div id="form-success-message" class="hidden bg-emerald-100 border border-emerald-400 text-emerald-700 px-6 py-4 rounded-lg mb-8 text-center" role="alert">
             <div class="flex items-center justify-center mb-2">
                 <i data-feather="check-circle" class="w-6 h-6 mr-3 text-emerald-500"></i>
                 <p class="font-bold text-lg">Inscrição realizada com sucesso!</p>
             </div>
             <p>Obrigado pela sua inscrição! Pode descarregar o seu guia completo para o sucesso universitário aqui:</p>
-            <a id="download-guide-link" href="#" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition duration-300 transform hover:scale-105">
+            <!-- UPDATED: Link to PDF using the exact filename from the user's GitHub/Vercel -->
+            <a id="download-guide-link" href="./guia-completo-descomplica.pdf" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition duration-300 transform hover:scale-105">
                 <i data-feather="download" class="w-5 h-5 inline-block mr-2"></i>
                 Descarregar o Guia Agora
             </a>
         </div>
 
-        <!-- Mensagem de Erro do Formulário (Inicialmente escondida) -->
-        <div id="form-error-message" class="hidden bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg mb-8 text-center" role="alert">
-            <div class="flex items-center justify-center mb-2">
-                <i data-feather="x-octagon" class="w-6 h-6 mr-3 text-red-500"></i>
-                <p class="font-bold text-lg">Ocorreu um erro na inscrição.</p>
-            </div>
-            <p>Por favor, tente novamente mais tarde. Verifique se o URL do formulário Formspree está correto, se o e-mail do Formspree está confirmado, ou se há campos obrigatórios faltando.</p>
-        </div>
-
         <div class="flex flex-col lg:flex-row gap-12">
 
-            <!-- Seção de Artigos/Posts -->
+            <!-- Articles/Posts Section -->
             <div class="w-full lg:w-2/3" id="guia">
                 
-                <!-- Artigo do Blog 1 -->
-                <article class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                <!-- Blog Article 1 -->
+                <article class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 mb-12">
                     <div class="mb-4">
                         <span class="text-sm text-slate-500">Publicado em 09 de Junho de 2025</span>
                     </div>
                     <h2 class="text-3xl font-bold text-slate-800 mb-6">O Guia Definitivo para o Sucesso Universitário</h2>
-                    <!-- Imagem principal com lazy loading para otimização em sites reais -->
+                    <!-- Main image with lazy loading for optimization in real sites -->
                     <img src="https://placehold.co/800x400/38bdf8/ffffff?text=Sucesso+Universit%C3%A1rio" alt="Imagem ilustrativa sobre sucesso universitário" class="rounded-lg mb-6 w-full h-auto" loading="lazy">
                     
                     <div class="prose max-w-none text-slate-700 leading-relaxed">
@@ -353,70 +418,118 @@
                         
                         <h4>1.1. Técnica Pomodoro: Foco Cronometrado</h4>
                         <p>A <strong>Técnica Pomodoro</strong> envolve dividir seu tempo de estudo em blocos de 25 minutos de foco intenso, seguidos por 5 minutos de descanso. A cada quatro "pomodoros", faça uma pausa mais longa de 15 a 30 minutos.</p>
-                        <p class="italic text-slate-600 border-l-4 border-sky-400 pl-4 py-2 my-4">
+                        <p class="italic text-slate-600 border-l-4 border-sky-400 pl-4 py-2 my-4 rounded-md">
                             <strong>Exemplo Prático:</strong> Quando eu estava a preparar-me para exames de fisiologia, sentia que a matéria era densa e a minha concentração falhava. Comecei a usar o Pomodoro: 25 minutos a estudar um sistema específico (ex: cardiovascular), 5 minutos a levantar-me, beber água e espreitar o telemóvel. Depois de quatro blocos, uma pausa maior para um lanche. Senti uma diferença enorme na minha capacidade de manter o foco e na absorção do conteúdo.
                         </p>
                         <p class="text-sm text-slate-500 mt-2">
                             <strong>Estudo de Apoio:</strong> Saiba mais sobre a eficácia do Pomodoro em produtividade e aprendizado <a href="https://example.com/estudo-pomodoro" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">aqui</a>.
                         </p>
 
-                        <!-- Infográfico Interativo para a Técnica Pomodoro -->
+                        <!-- Interactive Infographic for Pomodoro Technique -->
                         <div class="pomodoro-infographic-container bg-blue-100 p-6 rounded-lg my-8 shadow-inner flex flex-col items-center">
                             <h5 class="text-xl font-bold text-blue-800 mb-4">O Ciclo da Técnica Pomodoro</h5>
                             <div class="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-8 w-full">
 
-                                <!-- Foco Pomodoro -->
+                                <!-- Focus Pomodoro -->
                                 <div class="pomodoro-step relative w-36 h-36 bg-white rounded-full flex flex-col items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-105 group">
                                     <i data-feather="target" class="w-10 h-10 text-sky-500 transition-colors duration-300 group-hover:text-white"></i>
                                     <p class="text-lg font-bold text-slate-700 mt-2 transition-colors duration-300 group-hover:text-white">Foco</p>
                                     <p class="text-sm text-slate-500 transition-colors duration-300 group-hover:text-sky-100">25 min</p>
-                                    <div class="absolute inset-0 bg-sky-600 rounded-full opacity-0 group-hover:opacity-90 flex items-center justify-center transition-opacity duration-300 p-2">
+                                    <div class="overlay-content">
                                         <span class="text-white text-center text-sm">Concentração intensa na tarefa, evite distrações.</span>
                                     </div>
                                 </div>
 
-                                <!-- Seta 1 -->
+                                <!-- Arrow 1 -->
                                 <div class="flex flex-col items-center justify-center text-blue-600 mx-4 shrink-0 min-w-[50px]">
                                     <i data-feather="arrow-right" class="w-12 h-12 text-blue-600 transform rotate-90 md:rotate-0"></i>
                                 </div>
 
-                                <!-- Pausa Curta -->
+                                <!-- Short Break -->
                                 <div class="pomodoro-step relative w-36 h-36 bg-white rounded-full flex flex-col items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-105 group">
                                     <i data-feather="coffee" class="w-10 h-10 text-green-500 transition-colors duration-300 group-hover:text-white"></i>
                                     <p class="text-lg font-bold text-slate-700 mt-2 transition-colors duration-300 group-hover:text-white">Pausa Curta</p>
                                     <p class="text-sm text-slate-500 transition-colors duration-300 group-hover:text-green-100">5 min</p>
-                                    <div class="absolute inset-0 bg-green-600 rounded-full opacity-0 group-hover:opacity-90 flex items-center justify-center transition-opacity duration-300 p-2">
+                                    <div class="overlay-content">
                                         <span class="text-white text-center text-sm">Descanse os olhos, alongue-se, beba água.</span>
                                     </div>
                                 </div>
 
-                                <!-- Seta 2 (após 4 ciclos) -->
+                                <!-- Arrow 2 (after 4 cycles) -->
                                 <div class="flex flex-col items-center justify-center text-blue-600 mx-4 shrink-0">
                                     <i data-feather="arrow-right" class="w-12 h-12 text-blue-600 transform rotate-90 md:rotate-0"></i>
                                     <span class="text-xs text-slate-600 font-normal whitespace-nowrap text-center mt-2 md:mt-0">após 4 ciclos</span>
                                 </div>
 
 
-                                <!-- Pausa Longa -->
+                                <!-- Long Break -->
                                 <div class="pomodoro-step relative w-36 h-36 bg-white rounded-full flex flex-col items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-105 group">
                                     <i data-feather="moon" class="w-10 h-10 text-purple-500 transition-colors duration-300 group-hover:text-white"></i>
                                     <p class="text-lg font-bold text-slate-700 mt-2 transition-colors duration-300 group-hover:text-white">Pausa Longa</p>
                                     <p class="text-sm text-slate-500 transition-colors duration-300 group-hover:text-purple-100">15-30 min</p>
-                                    <div class="absolute inset-0 bg-purple-600 rounded-full opacity-0 group-hover:opacity-90 flex items-center justify-center transition-opacity duration-300 p-2">
+                                    <div class="overlay-content">
                                         <span class="text-white text-center text-sm">Relaxe, coma, faça algo que te dê prazer.</span>
                                     </div>
                                 </div>
                             </div>
                             <p class="text-sm text-slate-600 mt-6 text-center max-w-md">Realize 4 ciclos de Foco e Pausa Curta, seguidos por uma Pausa Longa.</p>
                         </div>
-                        <!-- Imagem do ciclo Pomodoro mostrando foco de 25 min, pausa de 5 min, 4 ciclos e pausa longa de 15-30 min com descrições -->
 
-                        <!-- Quiz para a seção Pomodoro -->
-                        <div class="quiz-section bg-amber-50 p-6 rounded-lg my-8 shadow-inner border-amber-100">
+                        <!-- Pomodoro Timer -->
+                        <div class="pomodoro-timer-container bg-blue-50 p-6 rounded-lg my-8 shadow-inner flex flex-col items-center border-blue-200">
+                            <h4 class="text-xl font-bold mb-4 text-blue-700">Timer Pomodoro Interativo</h4>
+                            <div class="flex items-center space-x-4 mb-6">
+                                <p class="pomodoro-status text-lg font-semibold">Foco</p>
+                                <div class="pomodoro-time" id="pomodoro-display">25:00</div>
+                            </div>
+                            <div class="pomodoro-controls flex space-x-4 mb-6">
+                                <button id="pomodoro-start" class="bg-emerald-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-600 transform hover:scale-105 transition-all duration-300">
+                                    <i data-feather="play" class="w-5 h-5 inline-block mr-2"></i> Iniciar
+                                </button>
+                                <button id="pomodoro-pause" class="bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transform hover:scale-105 transition-all duration-300" disabled>
+                                    <i data-feather="pause" class="w-5 h-5 inline-block mr-2"></i> Pausar
+                                </button>
+                                <button id="pomodoro-reset" class="bg-red-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-300">
+                                    <i data-feather="rotate-ccw" class="w-5 h-5 inline-block mr-2"></i> Resetar
+                                </button>
+                            </div>
+                            <div class="pomodoro-settings flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 text-slate-700 text-sm">
+                                <label class="flex items-center space-x-2">
+                                    <span class="font-medium">Foco (min):</span>
+                                    <input type="number" id="pomodoro-focus-time" value="25" min="1" class="px-2 py-1 border border-slate-300 rounded-md text-center">
+                                </label>
+                                <label class="flex items-center space-x-2">
+                                    <span class="font-medium">Pausa Curta (min):</span>
+                                    <input type="number" id="pomodoro-short-break-time" value="5" min="1" class="px-2 py-1 border border-slate-300 rounded-md text-center">
+                                </label>
+                                <label class="flex items-center space-x-2">
+                                    <span class="font-medium">Pausa Longa (min):</span>
+                                    <input type="number" id="pomodoro-long-break-time" value="15" min="1" class="px-2 py-1 border border-slate-300 rounded-md text-center">
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <!-- Quiz for Pomodoro section -->
+                        <div id="quiz-pomodoro-section" class="quiz-section bg-amber-50 p-6 rounded-lg my-8 shadow-inner border-amber-100">
                             <h4 class="text-xl font-bold mb-4 text-blue-700">Teste seus conhecimentos sobre a Técnica Pomodoro!</h4>
-                            <div id="quiz-pomodoro-container"></div>
-                            <button id="submit-pomodoro" class="mt-4 bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 transform hover:scale-105">Ver Respostas</button>
-                            <div id="result-pomodoro" class="mt-4 text-center font-semibold"></div>
+                            <p id="quiz-pomodoro-counter" class="text-sm text-slate-500 mb-4 text-center"></p>
+                            <div id="quiz-pomodoro-questions-container"></div>
+                            <div class="flex justify-between mt-4">
+                                <button id="quiz-pomodoro-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300" disabled>
+                                    <i data-feather="arrow-left" class="w-5 h-5 inline-block mr-2"></i> Anterior
+                                </button>
+                                <button id="quiz-pomodoro-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300">
+                                    <i data-feather="arrow-right" class="w-5 h-5 inline-block mr-2"></i> Próxima
+                                </button>
+                                <button id="quiz-pomodoro-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden">
+                                    <i data-feather="check-circle" class="w-5 h-5 inline-block mr-2"></i> Ver Resultados
+                                </button>
+                            </div>
+                            <div id="quiz-pomodoro-result" class="mt-4 text-center font-semibold"></div>
+                            <button id="quiz-pomodoro-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block">
+                                <i data-feather="refresh-ccw" class="w-5 h-5 inline-block mr-2"></i> Tentar Novamente
+                            </button>
                         </div>
 
                         <h4>1.2. Estudo Ativo e Recuperação Ativa: Ponha o Cérebro a Trabalhar</h4>
@@ -425,22 +538,35 @@
                         <ul class="list-disc list-inside">
                             <li><strong>Testes Práticos:</strong> Faça simulados, resolva exercícios e responda a perguntas sem consultar o material.</li>
                             <li><strong>Flashcards:</strong> Use flashcards (digitais ou físicos) para testar o seu conhecimento sobre termos, conceitos e fórmulas.</li>
-                            <li><strong>Autoexplicação:
-                            </strong> Explique a matéria em voz alta para si mesmo, como se estivesse a ensinar alguém.</li>
+                            <li><strong>Autoexplicação:</strong> Explique a matéria em voz alta para si mesmo, como se estivesse a ensinar alguém.</li>
                             <li><strong>Elaboração:</strong> Relacione o que está a aprender com o que já sabe ou com experiências pessoais.</li>
                         </ul>
-                        <p class="italic text-slate-600 border-l-4 border-sky-400 pl-4 py-2 my-4">
+                        <p class="italic text-slate-600 border-l-4 border-sky-400 pl-4 py-2 my-4 rounded-md">
                             <strong>Exemplo Prático:</strong> Para a cadeira de Direito Constitucional, eu lia os acórdãos e, em vez de só sublinhar, tentava explicar a fundamentação jurídica em voz alta para a minha parede. Depois, tentava escrever um resumo da decisão sem olhar para o texto original. Era difícil no início, mas forcei-me a pensar ativamente sobre o assunto, e isso fez toda a diferença na hora da prova.
                         </p>
                         <p class="text-sm text-slate-500 mt-2">
                             <strong>Estudo de Apoio:</strong> Pesquisas mostram que a recuperação ativa é mais eficaz que a releitura para memorização. Veja mais em: <a href="https://example.com/estudo-recuperacao-ativa" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">Este Artigo Científico</a>.
                         </p>
-                        <!-- Quiz para a seção Estudo Ativo -->
-                        <div class="quiz-section bg-amber-50 p-6 rounded-lg my-8 shadow-inner border-amber-100">
+                        <!-- Quiz for Active Study section -->
+                        <div id="quiz-estudoAtivo-section" class="quiz-section bg-amber-50 p-6 rounded-lg my-8 shadow-inner border-amber-100">
                             <h4 class="text-xl font-bold mb-4 text-blue-700">Teste seus conhecimentos sobre Estudo Ativo!</h4>
-                            <div id="quiz-estudoAtivo-container"></div>
-                            <button id="submit-estudoAtivo" class="mt-4 bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 transform hover:scale-105">Ver Respostas</button>
-                            <div id="result-estudoAtivo" class="mt-4 text-center font-semibold"></div>
+                            <p id="quiz-estudoAtivo-counter" class="text-sm text-slate-500 mb-4 text-center"></p>
+                            <div id="quiz-estudoAtivo-questions-container"></div>
+                            <div class="flex justify-between mt-4">
+                                <button id="quiz-estudoAtivo-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300" disabled>
+                                    <i data-feather="arrow-left" class="w-5 h-5 inline-block mr-2"></i> Anterior
+                                </button>
+                                <button id="quiz-estudoAtivo-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300">
+                                    <i data-feather="arrow-right" class="w-5 h-5 inline-block mr-2"></i> Próxima
+                                </button>
+                                <button id="quiz-estudoAtivo-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden">
+                                    <i data-feather="check-circle" class="w-5 h-5 inline-block mr-2"></i> Ver Resultados
+                                </button>
+                            </div>
+                            <div id="quiz-estudoAtivo-result" class="mt-4 text-center font-semibold"></div>
+                            <button id="quiz-estudoAtivo-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block">
+                                <i data-feather="refresh-ccw" class="w-5 h-5 inline-block mr-2"></i> Tentar Novamente
+                            </button>
                         </div>
 
                         <h4>1.3. Repetição Espaçada: Otimize a Memorização a Longo Prazo</h4>
@@ -449,15 +575,82 @@
                             <li><strong>Ferramentas:</strong> Aplicações como <strong>Anki</strong> e <strong>Quizlet</strong> são excelentes para implementar a repetição espaçada com flashcards.</li>
                             <li><strong>Estudo/Artigo de Apoio:</strong> A pesquisa sobre a <strong>curva de esquecimento de Ebbinghaus</strong> é a base para a eficácia da repetição espaçada. Pode ler mais sobre o assunto <a href="https://en.wikipedia.org/wiki/Forgetting_curve" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">aqui</a> (em inglês).</li>
                         </ul>
-                        <p class="italic text-slate-600 border-l-4 border-sky-400 pl-4 py-2 my-4">
+                        <p class="italic text-slate-600 border-l-4 border-sky-400 pl-4 py-2 my-4 rounded-md">
                             <strong>Exemplo Prático:</strong> Eu usava o Anki para as aulas de anatomia. Criava flashcards com imagens de músculos e seus nomes, e o aplicativo me mostrava os cartões em intervalos otimizados, fazendo com que eu revisasse o que eu esquecia com mais frequência, e o que eu já sabia ficava para depois. Foi essencial para memorizar tantos termos!
                         </p>
-                        <!-- Quiz para a seção Repetição Espaçada -->
-                        <div class="quiz-section bg-amber-50 p-6 rounded-lg my-8 shadow-inner border-amber-100">
+
+                        <!-- Flashcard Creator and Viewer -->
+                        <div class="flashcard-section bg-blue-50 p-6 rounded-lg my-8 shadow-inner border-blue-100">
+                            <h4 class="text-xl font-bold mb-4 text-blue-700">Criador e Revisor de Flashcards</h4>
+                            <div class="space-y-4 mb-6">
+                                <div class="flex items-end gap-2">
+                                    <div class="flex-grow">
+                                        <label for="flashcard-term" class="block text-slate-700 text-sm font-bold mb-2">Termo:</label>
+                                        <input type="text" id="flashcard-term" placeholder="Digite o termo" class="w-full px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                    </div>
+                                    <button id="generate-definition" class="whitespace-nowrap bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 transform hover:scale-105 flex items-center justify-center">
+                                        Gerar Definição ✨
+                                        <i data-feather="loader" class="animate-spin ml-2 hidden" id="definition-loader"></i>
+                                    </button>
+                                </div>
+                                <div>
+                                    <label for="flashcard-definition" class="block text-slate-700 text-sm font-bold mb-2">Definição:</label>
+                                    <textarea id="flashcard-definition" placeholder="Digite a definição" rows="3" class="w-full px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500"></textarea>
+                                </div>
+                                <button id="add-flashcard" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105">
+                                    <i data-feather="plus-circle" class="w-5 h-5 inline-block mr-2"></i> Adicionar Flashcard
+                                </button>
+                            </div>
+
+                            <div class="border border-blue-200 bg-white rounded-lg p-4 mb-6 relative shadow-md">
+                                <p class="text-slate-600 text-sm mb-3 text-center">Clique no flashcard para virar.</p>
+                                <!-- Flashcard Selector Dropdown -->
+                                <div class="mb-4">
+                                    <label for="flashcard-selector" class="block text-slate-700 text-sm font-bold mb-2">Selecione um Flashcard:</label>
+                                    <select id="flashcard-selector" class="w-full px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                                        <option value="-1">Nenhum flashcard para selecionar...</option>
+                                    </select>
+                                </div>
+                                <div id="flashcard-display" class="flashcard-display relative w-full h-40 bg-gray-100 rounded-lg border-2 border-blue-300 overflow-hidden shadow-inner">
+                                    <div class="flashcard-content flashcard-term flex items-center justify-center text-xl font-bold text-slate-800">
+                                        <span id="current-flashcard-term">Nenhum flashcard adicionado.</span>
+                                    </div>
+                                    <div class="flashcard-content flashcard-definition hidden flex-col items-center justify-content-center text-slate-700 text-base">
+                                        <span id="current-flashcard-definition"></span>
+                                        <p class="text-xs text-slate-500 mt-2">(Definição)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
+                                <!-- O botão next-flashcard foi removido, pois a seleção é feita pelo dropdown. -->
+                                <button id="clear-flashcards" class="w-full bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 transform hover:scale-105">
+                                    <i data-feather="trash-2" class="w-5 h-5 inline-block mr-2"></i> Limpar Flashcards
+                                </button>
+                            </div>
+                            <p id="flashcard-count" class="text-sm text-slate-600 mt-4 text-center">Total de flashcards: 0</p>
+                        </div>
+
+                        <!-- Quiz for Spaced Repetition section -->
+                        <div id="quiz-repeticaoEspacada-section" class="quiz-section bg-amber-50 p-6 rounded-lg my-8 shadow-inner border-amber-100">
                             <h4 class="text-xl font-bold mb-4 text-blue-700">Teste seus conhecimentos sobre Repetição Espaçada!</h4>
-                            <div id="quiz-repeticaoEspacada-container"></div>
-                            <button id="submit-repeticaoEspacada" class="mt-4 bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 transform hover:scale-105">Ver Respostas</button>
-                            <div id="result-repeticaoEspacada" class="mt-4 text-center font-semibold"></div>
+                            <p id="quiz-repeticaoEspacada-counter" class="text-sm text-slate-500 mb-4 text-center"></p>
+                            <div id="quiz-repeticaoEspacada-questions-container"></div>
+                            <div class="flex justify-between mt-4">
+                                <button id="quiz-repeticaoEspacada-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300" disabled>
+                                    <i data-feather="arrow-left" class="w-5 h-5 inline-block mr-2"></i> Anterior
+                                </button>
+                                <button id="quiz-repeticaoEspacada-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300">
+                                    <i data-feather="arrow-right" class="w-5 h-5 inline-block mr-2"></i> Próxima
+                                </button>
+                                <button id="quiz-repeticaoEspacada-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden">
+                                    <i data-feather="check-circle" class="w-5 h-5 inline-block mr-2"></i> Ver Resultados
+                                </button>
+                            </div>
+                            <div id="quiz-repeticaoEspacada-result" class="mt-4 text-center font-semibold"></div>
+                            <button id="quiz-repeticaoEspacada-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block">
+                                <i data-feather="refresh-ccw" class="w-5 h-5 inline-block mr-2"></i> Tentar Novamente
+                            </button>
                         </div>
 
                         <h4>1.4. Mapas Mentais: Visualização para Compreensão</h4>
@@ -465,594 +658,1175 @@
                         <ul class="list-disc list-inside">
                             <li><strong>Benefícios:</strong> Ajuda a visualizar o conhecimento, melhora a compreensão, facilita a revisão e estimula a memória visual.</li>
                         </ul>
-                        <p class="italic text-slate-600 border-l-4 border-sky-400 pl-4 py-2 my-4">
+                        <p class="italic text-slate-600 border-l-4 border-sky-400 pl-4 py-2 my-4 rounded-md">
                             <strong>Exemplo Prático:</strong> Para entender conceitos complexos de programação orientada a objetos, eu desenhava um mapa mental. No centro, "POO". Ramos para "Encapsulamento", "Herança", "Polimorfismo". De "Encapsulamento", puxava para "Classes", "Atributos", "Métodos". Usava cores diferentes para cada pilar, o que me ajudava a ver as conexões e a organizar a informação na minha mente.
                         </p>
                         <p class="text-sm text-slate-500 mt-2">
                             <strong>Estudo de Apoio:</strong> A eficácia dos mapas mentais na aprendizagem visual é amplamente reconhecida. Veja um estudo sobre o tema: <a href="https://example.com/estudo-mapas-mentais" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">Pesquisa</a>.
                         </p>
-                        <!-- Quiz para a seção Mapas Mentais -->
-                        <div class="quiz-section bg-amber-50 p-6 rounded-lg my-8 shadow-inner border-amber-100">
+                        <!-- Quiz for Mind Maps section -->
+                        <div id="quiz-mapasMentais-section" class="quiz-section bg-amber-50 p-6 rounded-lg my-8 shadow-inner border-amber-100">
                             <h4 class="text-xl font-bold mb-4 text-blue-700">Teste seus conhecimentos sobre Mapas Mentais!</h4>
-                            <div id="quiz-mapasMentais-container"></div>
-                            <button id="submit-mapasMentais" class="mt-4 bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 transform hover:scale-105">Ver Respostas</button>
-                            <div id="result-mapasMentais" class="mt-4 text-center font-semibold"></div>
+                            <p id="quiz-mapasMentais-counter" class="text-sm text-slate-500 mb-4 text-center"></p>
+                            <div id="quiz-mapasMentais-questions-container"></div>
+                            <div class="flex justify-between mt-4">
+                                <button id="quiz-mapasMentais-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300" disabled>
+                                    <i data-feather="arrow-left" class="w-5 h-5 inline-block mr-2"></i> Anterior
+                                </button>
+                                <button id="quiz-mapasMentais-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300">
+                                    <i data-feather="arrow-right" class="w-5 h-5 inline-block mr-2"></i> Próxima
+                                </button>
+                                <button id="quiz-mapasMentais-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden">
+                                    <i data-feather="check-circle" class="w-5 h-5 inline-block mr-2"></i> Ver Resultados
+                                </button>
+                            </div>
+                            <div id="quiz-mapasMentais-result" class="mt-4 text-center font-semibold"></div>
+                            <button id="quiz-mapasMentais-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block">
+                                <i data-feather="refresh-ccw" class="w-5 h-5 inline-block mr-2"></i> Tentar Novamente
+                            </button>
                         </div>
 
                         <h4>1.5. Técnica Feynman: Simplifique para Aprender</h4>
-                        <p><strong>Como funciona:</strong> Escolha um conceito e tente explicá-lo em voz alta como se fosse para uma criança de 8 anos, usando linguagem simples. Identifique suas lacunas na compreensão e volte ao material para preenchê-las.</p>
+                        <p><strong>Como funciona:</strong> Escolha um conceito e tente explicá-lo em voz alta como se fosse para uma criança de 8 anos, usando linguagem simples. Identifique suas lacunas na compreensão e volte ao material para preencê-las.</p>
                         <ul class="list-disc list-inside">
                             <li><strong>Benefícios:</strong> Revela falhas na compreensão, promove o aprendizado ativo e consolida o conhecimento.</li>
                         </ul>
-                        <p class="italic text-slate-600 border-l-4 border-sky-400 pl-4 py-2 my-4">
+                        <p class="italic text-slate-600 border-l-4 border-sky-400 pl-4 py-2 my-4 rounded-md">
                             <strong>Exemplo Prático:</strong> Em química, quando eu tinha dificuldade em entender a Lei de Hess, eu imaginava que estava explicando para o meu sobrinho. Começava com "Imagine que você quer ir de casa para a escola. Você pode ir direto, ou pode passar na padaria e depois na casa do amigo. O caminho total é o mesmo, a energia é igual!". Se eu travava, era sinal de que precisava rever a teoria.
                         </p>
                         <p class="text-sm text-slate-500 mt-2">
                             <strong>Estudo de Apoio:</strong> A Técnica Feynman é uma forma poderosa de metaconsciência. Saiba mais: <a href="https://example.com/estudo-feynman" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">Artigo sobre Metacognição e Feynman</a>.
                         </p>
-                        <!-- Quiz para a seção Técnica Feynman -->
-                        <div class="quiz-section bg-amber-50 p-6 rounded-lg my-8 shadow-inner border-amber-100">
+                        <!-- Quiz for Feynman Technique section -->
+                        <div id="quiz-tecnicaFeynman-section" class="quiz-section bg-amber-50 p-6 rounded-lg my-8 shadow-inner border-amber-100">
                             <h4 class="text-xl font-bold mb-4 text-blue-700">Teste seus conhecimentos sobre a Técnica Feynman!</h4>
-                            <div id="quiz-tecnicaFeynman-container"></div>
-                            <button id="submit-tecnicaFeynman" class="mt-4 bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 transform hover:scale-105">Ver Respostas</button>
-                            <div id="result-tecnicaFeynman" class="mt-4 text-center font-semibold"></div>
+                            <p id="quiz-tecnicaFeynman-counter" class="text-sm text-slate-500 mb-4 text-center"></p>
+                            <div id="quiz-tecnicaFeynman-questions-container"></div>
+                            <div class="flex justify-between mt-4">
+                                <button id="quiz-tecnicaFeynman-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300" disabled>
+                                    <i data-feather="arrow-left" class="w-5 h-5 inline-block mr-2"></i> Anterior
+                                </button>
+                                <button id="quiz-tecnicaFeynman-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300">
+                                    <i data-feather="arrow-right" class="w-5 h-5 inline-block mr-2"></i> Próxima
+                                </button>
+                                <button id="quiz-tecnicaFeynman-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden">
+                                    <i data-feather="check-circle" class="w-5 h-5 inline-block mr-2"></i> Ver Resultados
+                                </button>
+                            </div>
+                            <div id="quiz-tecnicaFeynman-result" class="mt-4 text-center font-semibold"></div>
+                            <button id="quiz-tecnicaFeynman-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block">
+                                <i data-feather="refresh-ccw" class="w-5 h-5 inline-block mr-2"></i> Tentar Novamente
+                            </button>
                         </div>
-
-                        <h4>1.6. Estudo Intercalado (Interleaving): Misture para Fortalecer</h4>
-                        <p><strong>Como funciona:</strong> Em vez de estudar um único tópico por um longo período, alterne entre diferentes assuntos ou tipos de problemas. Por exemplo, em vez de passar três horas seguidas em matemática, estude 45 minutos de matemática, depois 45 minutos de história, e 45 minutos de física, e depois volte à matemática.</p>
-                        <ul class="list-disc list-inside">
-                            <li><strong>Benefícios:
-                            </strong> Melhora a capacidade de distinguir entre conceitos semelhantes, fortalece a memória de longo prazo e torna o estudo menos monótono. Ajuda o cérebro a fazer conexões mais robustas.</li>
-                        </ul>
-                        <p class="italic text-slate-600 border-l-4 border-sky-400 pl-4 py-2 my-4">
-                            <strong>Exemplo Prático:</strong> Para os meus estudos de Engenharia, eu costumava agrupar problemas por tipo. Mas ao usar o estudo intercalado, comecei a resolver problemas mistos de cálculo, álgebra linear e equações diferenciais em uma mesma sessão. No início, parecia mais difícil, mas notei que minha capacidade de identificar qual método aplicar em cada problema, mesmo fora do contexto específico da aula, melhorou drasticamente.
-                        </p>
-                        <p class="text-sm text-slate-500 mt-2">
-                            <strong>Estudo de Apoio:</strong> A eficácia do estudo intercalado é um tema de pesquisa crescente em psicologia educacional. Leia mais sobre isso <a href="https://example.com/estudo-intercalado" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">aqui</a>.
-                        </p>
-                        <!-- Quiz para a seção Estudo Intercalado -->
-                        <div class="quiz-section bg-amber-50 p-6 rounded-lg my-8 shadow-inner border-amber-100">
-                            <h4 class="text-xl font-bold mb-4 text-blue-700">Teste seus conhecimentos sobre Estudo Intercalado!</h4>
-                            <div id="quiz-estudoIntercalado-container"></div>
-                            <button id="submit-estudoIntercalado" class="mt-4 bg-sky-600 hover:bg-sky-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 transform hover:scale-105">Ver Respostas</button>
-                            <div id="result-estudoIntercalado" class="mt-4 text-center font-semibold"></div>
-                        </div>
-
-                        <h3 class="mt-12">2. Dicas Essenciais para a Vida Universitária</h3>
-                        <p>Além dos métodos de estudo, a vida universitária exige organização, equilíbrio e cuidado com a saúde mental e física. Aqui estão algumas dicas cruciais:</p>
                         
-                        <h4>2.1. Gestão de Tempo e Organização</h4>
-                        <ul class="list-disc list-inside">
-                            <li><strong>Calendário:</strong> Utilize um calendário (digital como Google Calendar ou físico) para anotar prazos de trabalhos, provas, aulas e compromissos.</li>
-                            <li><strong>Listas de Tarefas:</strong> Crie listas diárias ou semanais de tarefas. Priorize-as.</li>
-                            <li><strong>Evite Procrastinação:</strong> Divida grandes tarefas em etapas menores e comece o quanto antes.</li>
-                        </ul>
+                        ---
+                        <h3 id="superando-procrastinacao">2. Superando a Procrastinação na Universidade</h3>
+                        <p>A procrastinação é um dos maiores desafios da vida universitária. Muitos estudantes lutam para manter o foco e evitar adiar tarefas importantes. No entanto, existem estratégias eficazes para combater a procrastinação e aumentar a sua produtividade.</p>
+                        <p>Identifique as causas da sua procrastinação. É medo de falhar? Perfeccionismo? Falta de interesse na tarefa? Compreender a raiz do problema é o primeiro passo para superá-lo.</p>
+                        <p>Divida grandes tarefas em passos menores e mais gerenciáveis. Comece com o mais fácil para ganhar embalagem e sentir-se motivado. Use a técnica Pomodoro, como discutido anteriormente, para manter o foco em blocos curtos e recompensar-se nas pausas.</p>
+                        <p>Crie um ambiente de estudo livre de distrações. Desligue as notificações do telemóvel, feche abas desnecessárias no navegador e organize o seu espaço de trabalho. A disciplina começa com a criação de um ambiente propício ao estudo.</p>
 
-                        <h4>2.2. Bem-Estar e Saúde Mental</h4>
-                        <ul class="list-disc list-inside">
-                            <li><strong>Sono:</strong> Priorize um sono de qualidade. A privação de sono afeta diretamente a capacidade de aprendizado e memória.</li>
-                            <li><strong>Exercício Físico:</strong> A atividade física regular comprovadamente melhora o foco e reduz o estresse.</li>
-                            <li><strong>Alimentação:
-                            </strong> Mantenha uma dieta equilibrada.</li>
-                            <li><strong>Gerenciamento de Estresse:</strong> Pratique mindfulness, meditação ou hobbies para relaxar. Não hesite em procurar apoio profissional se sentir que está sobrecarregado.</li>
-                        </ul>
+                        ---
+                        <h3 id="artigos-cientificos">3. Guia Completo para Escrever Artigos Científicos</h3>
+                        <p>A escrita científica é uma habilidade fundamental na universidade. Desde artigos para disciplinas a trabalhos de conclusão de curso, saber estruturar e comunicar ideias de forma clara e rigorosa é essencial. Este guia oferece uma visão geral dos passos para redigir artigos científicos de excelência.</p>
+                        <p>Comece pela pesquisa bibliográfica aprofundada para embasar o seu trabalho. Defina uma questão de pesquisa clara e formule hipóteses. A estrutura de um artigo científico geralmente inclui: introdução, revisão de literatura, metodologia, resultados, discussão e conclusão. Mantenha a objetividade e a clareza na sua escrita.</p>
+                        <p>Utilize um estilo formal e impessoal, evitando gírias ou linguagem coloquial. Citações e referências devem seguir as normas da ABNT ou de outras diretrizes específicas da sua área. A revisão é crucial: peça a colegas ou professores para lerem o seu trabalho e forneçam feedback antes da entrega final.</p>
 
-                        <h4>2.3. Participe Ativamente</h4>
-                        <ul class="list-disc list-inside">
-                            <li><strong>Aulas:</strong> Compareça às aulas, faça anotações e participe das discussões.</li>
-                            <li><strong>Grupos de Estudo:</strong> Estudar em grupo pode ser muito produtivo para trocar ideias e explicações.</li>
-                            <li><strong>Atividades Extracurriculares:</strong> Envolve-se em clubes, atléticas ou projetos de pesquisa. Isso enriquece sua experiência e desenvolve habilidades.</li>
-                        </ul>
-                        <p>Lembre-se que a universidade é uma maratona, não um sprint. Cuide de si mesmo e celebre cada pequena vitória!</p>
+                        ---
+                        <h3 id="equilibrio-vida-academica">4. Equilíbrio Vida Acadêmica e Pessoal: É Possível!</h3>
+                        <p>A vida universitária pode ser avassaladora, com uma grande carga de estudos, trabalhos e exames. Manter o equilíbrio entre as responsabilidades acadêmicas e a vida pessoal é crucial para o bem-estar e o sucesso a longo prazo. É possível ter sucesso na universidade sem sacrificar a sua saúde mental e física.</p>
+                        <p>Priorize o sono. Uma boa noite de descanso é essencial para a concentração e o aprendizado. Estabeleça horários para exercícios físicos e alimentação saudável, pois o corpo e a mente estão interligados. Reserve tempo para hobbies e atividades de lazer que o ajudem a relaxar e recarregar as energias.</p>
+                        <p>Não tenha medo de dizer "não". É importante aprender a gerir o seu tempo e as suas prioridades, mesmo que isso signifique recusar convites ou compromissos. Peça ajuda quando precisar, seja a amigos, familiares, professores ou serviços de apoio universitário. Lembre-se, o seu bem-estar é tão importante quanto o seu desempenho académico.</p>
                     </div>
                 </article>
             </div>
 
-            <!-- Seção da Barra Lateral -->
-            <div class="w-full lg:w-1/3">
-                <!-- Conteúdo em Destaque / Inscrição na Newsletter (Exemplo) -->
-                <div class="bg-blue-50 p-6 rounded-xl shadow-md mb-8 border-l-4 border-blue-400" id="newsletter-section">
-                    <h3 class="text-xl font-bold text-blue-800 mb-4">Mantenha-se Atualizado!</h3>
-                    <p class="text-blue-700 mb-4">Inscreva-se na nossa newsletter para receber as últimas dicas e guias diretamente no seu e-mail.</p>
-                    <form id="newsletter-form" name="newsletter-form" action="https://formspree.io/f/mvgrkyvj" method="POST"> <!-- URL atualizada para a newsletter -->
-                        <input type="email" name="email" placeholder="Seu e-mail" class="w-full p-3 rounded-lg border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-300 mb-3 text-slate-700" required>
-                        <button type="submit" id="newsletter-submit-button" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition duration-300">
-                            Inscrever-se
-                        </button>
-                        <div id="newsletter-loading-indicator" class="hidden mt-3 text-center text-blue-600">
-                            <div class="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
-                                <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">A carregar...</span>
-                            </div>
-                            A inscrever...
-                        </div>
-                    </form>
-                </div>
+            <!-- Sidebar (right column for additional content) -->
+            <div class="w-full lg:w-1/3 space-y-12">
 
-                <!-- Categorias / Tópicos Relacionados (Exemplo) -->
-                <div class="bg-white p-6 rounded-xl shadow-md">
-                    <h3 class="text-xl font-bold text-slate-800 mb-4">Tópicos Populares</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-sky-600 hover:underline">Gestão de Tempo</a></li>
-                        <li><a href="#" class="text-sky-600 hover:underline">Saúde Mental</a></li>
-                        <li><a href="#" class="text-sky-600 hover:underline">Preparação para Exames</a></li>
-                        <li><a href="#" class="text-sky-600 hover:underline">Recursos Acadêmicos</a></li>
+                <!-- Featured Articles / Popular Posts (Moved up) -->
+                <section class="bg-white p-8 rounded-2xl shadow-md border border-slate-200">
+                    <h3 class="text-2xl font-bold text-slate-700 mb-6 flex items-center">
+                        <i data-feather="bookmark" class="w-7 h-7 mr-3 text-amber-500"></i>
+                        Artigos Populares
+                    </h3>
+                    <ul class="space-y-4">
+                        <li>
+                            <a href="#superando-procrastinacao" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link">
+                                Superando a Procrastinação na Universidade
+                            </a>
+                            <p class="text-sm text-slate-500 mt-1">Dicas práticas para manter o foco e evitar a temida procrastinação.</p>
+                        </li>
+                        <li>
+                            <a href="#artigos-cientificos" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link">
+                                Guia Completo para Escrever Artigos Científicos
+                            </a>
+                            <p class="text-sm text-slate-500 mt-1">Estruture seus trabalhos com excelência e conquiste boas notas.</p>
+                        </li>
+                        <li>
+                            <a href="#equilibrio-vida-academica" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link">
+                                Equilíbrio Vida Acadêmica e Pessoal: É Possível!
+                            </a>
+                            <p class="text-sm text-slate-500 mt-1">Descubra como conciliar estudos, trabalho e lazer sem surtar.</p>
+                        </li>
                     </ul>
-                </div>
-            </div>
-        </div> <!-- Fim da flex-row -->
+                </section>
 
-        <!-- Seção de Perguntas Frequentes -->
-        <section id="faq-section" class="mt-16 mb-12">
-            <h2 class="text-3xl font-bold text-center text-slate-800 mb-8 flex items-center justify-center">
-                <i data-feather="help-circle" class="w-8 h-8 mr-3 text-sky-500"></i>
-                Perguntas Frequentes (FAQ)
+                <!-- Newsletter Section (for guide download) -->
+                <section id="newsletter-section" class="bg-blue-50 p-8 rounded-2xl shadow-md border border-blue-200">
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4 flex items-center">
+                        <i data-feather="mail" class="w-7 h-7 mr-3 text-blue-500"></i>
+                        Receba nosso Guia Gratuito!
+                    </h3>
+                    <p class="text-slate-700 mb-6">Inscreva-se para receber o guia completo "DescomplicaAcadêmico" e dicas exclusivas para turbinar seus estudos!</p>
+                    <form id="newsletter-form" class="space-y-4">
+                        <div>
+                            <label for="email" class="sr-only">Seu Email</label>
+                            <input type="email" id="email" name="email" placeholder="Seu melhor email" required
+                                class="w-full px-4 py-3 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                autocomplete="email">
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105 shadow-md">
+                            <i data-feather="send" class="w-5 h-5 inline-block mr-2"></i>
+                            Quero o Guia!
+                        </button>
+                    </form>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <section id="faq-section" class="mt-12 bg-white p-8 rounded-2xl shadow-md">
+            <h2 class="text-3xl font-bold text-slate-800 mb-8 text-center flex items-center justify-center">
+                <i data-feather="help-circle" class="w-9 h-9 mr-4 text-sky-500"></i>
+                Perguntas Frequentes
             </h2>
-            <div class="max-w-3xl mx-auto">
-                <!-- Item FAQ 1 -->
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
                 <div class="accordion-item">
                     <div class="accordion-header">
-                        Como posso começar a aplicar a Técnica Pomodoro?
+                        Qual é o principal objetivo do DescomplicaAcadêmico?
                         <i data-feather="chevron-down" class="w-6 h-6"></i>
                     </div>
                     <div class="accordion-content">
-                        <p class="text-slate-700">Para começar, escolha uma tarefa, defina um temporizador para 25 minutos. Trabalhe intensamente na tarefa até o temporizador tocar. Faça uma pausa de 5 minutos. Repita. A cada quatro "pomodoros", faça uma pausa mais longa (15-30 minutos). Existem muitos aplicativos e temporizadores online que podem te ajudar.</p>
+                        <p>Nosso objetivo é fornecer guias e ferramentas para ajudar estudantes universitários a otimizar seus estudos, gerenciar o tempo, reduzir o estresse e alcançar o sucesso acadêmico de forma mais eficiente e prazerosa.</p>
                     </div>
                 </div>
-                <!-- Item FAQ 2 -->
+
+                <!-- FAQ Item 2 -->
                 <div class="accordion-item">
                     <div class="accordion-header">
-                        Qual a melhor forma de fazer anotações eficazes?
+                        A Técnica Pomodoro é realmente eficaz?
                         <i data-feather="chevron-down" class="w-6 h-6"></i>
                     </div>
                     <div class="accordion-content">
-                        <p class="text-slate-700">Evite transcrever tudo. Foco em palavras-chave, conceitos principais e utilize diagramas, setas e cores para conectar ideias. Métodos como o Cornell Notes ou Mapas Mentais podem ser muito eficazes.</p>
+                        <p>Sim! A Técnica Pomodoro é amplamente reconhecida e estudada por sua eficácia em melhorar o foco e a produtividade. Ao dividir o trabalho em blocos focados com pausas curtas, ela ajuda a manter a concentração e a evitar o esgotamento.</p>
                     </div>
                 </div>
-                <!-- Item FAQ 3 -->
+
+                <!-- FAQ Item 3 -->
                 <div class="accordion-item">
                     <div class="accordion-header">
-                        Como lidar com o estresse durante os períodos de prova?
+                        Preciso pagar para usar os recursos?
                         <i data-feather="chevron-down" class="w-6 h-6"></i>
                     </div>
                     <div class="accordion-content">
-                        <p class="text-slate-700">Crie um cronograma de estudos realista, inclua pausas, mantenha uma alimentação saudável e pratique exercícios. Técnicas de relaxamento como respiração profunda ou meditação também ajudam. Converse com amigos, familiares ou procure o serviço de apoio psicológico da sua universidade se o estresse for muito intenso.</p>
+                        <p>O "Guia Definitivo para o Sucesso Universitário" e muitos dos nossos artigos e dicas são totalmente gratuitos. Futuramente, poderemos oferecer recursos premium, mas o conteúdo base será sempre acessível para todos.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        Como posso entrar em contato para sugestões ou dúvidas?
+                        <i data-feather="message-circle" class="w-6 h-6"></i>
+                    </div>
+                    <div class="accordion-content">
+                        <p>Você pode entrar em contato conosco através da seção de "Contato" no menu superior, preenchendo o formulário ou enviando um email para <a href="mailto:contato@descomplicaacademico.com" class="text-sky-500 hover:text-sky-600">contato@descomplicaacademico.com</a>. Estamos sempre abertos a feedback!</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Seção Sobre Nós -->
-        <section id="sobre" class="mt-16 mb-12 bg-blue-700 text-white p-12 rounded-2xl shadow-lg text-center">
-            <h2 class="text-3xl font-bold mb-4 flex items-center justify-center">
-                <i data-feather="info" class="w-8 h-8 mr-3 text-blue-200"></i>
+        <!-- About Section -->
+        <section id="sobre" class="mt-12 bg-white p-8 rounded-2xl shadow-md">
+            <h2 class="text-3xl font-bold text-slate-800 mb-8 text-center flex items-center justify-center">
+                <i data-feather="info" class="w-9 h-9 mr-4 text-emerald-500"></i>
                 Sobre o DescomplicaAcadêmico
             </h2>
-            <p class="max-w-2xl mx-auto text-blue-100">Nossa missão é empoderar estudantes universitários com as ferramentas e estratégias necessárias para não apenas sobreviver, mas prosperar em seus estudos. Acreditamos que o aprendizado pode ser eficiente e prazeroso. Conheça nossa equipe e nossos valores!</p>
+            <div class="prose max-w-none text-slate-700 leading-relaxed text-center">
+                <p>O <strong>DescomplicaAcadêmico</strong> nasceu da necessidade de desmistificar a vida universitária e torná-la mais produtiva e menos estressante. Acreditamos que com as ferramentas e estratégias certas, qualquer estudante pode não apenas sobreviver, mas realmente prosperar na sua jornada acadêmica.</p>
+                <p>Nossa equipa é composta por ex-alunos e educadores que vivenciaram os desafios da universidade e agora partilham o conhecimento acumulado para ajudar as novas gerações. Estamos empenhados em trazer conteúdo de qualidade, baseado em métodos comprovados e experiências reais.</p>
+            </div>
         </section>
 
-        <!-- Seção Entre em Contato -->
-        <section id="contato" class="mt-16 mb-12">
-            <h2 class="text-3xl font-bold text-center text-slate-800 mb-8 flex items-center justify-center">
-                <i data-feather="mail" class="w-8 h-8 mr-3 text-sky-500"></i>
+        <!-- Contact Section -->
+        <section id="contato" class="mt-12 bg-white p-8 rounded-2xl shadow-md">
+            <h2 class="text-3xl font-bold text-slate-800 mb-8 text-center flex items-center justify-center">
+                <i data-feather="send" class="w-9 h-9 mr-4 text-purple-500"></i>
                 Entre em Contato
             </h2>
-            <div class="max-w-xl mx-auto bg-white p-8 rounded-2xl shadow-md">
-                <form action="https://formspree.io/f/xeokaden" method="POST">
-                    <div>
-                        <label for="name" class="block text-slate-700 font-medium mb-1">Seu Nome</label>
-                        <input type="text" id="name" name="name" class="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-300" placeholder="Nome Completo">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-slate-700 font-medium mb-1">Seu E-mail</label>
-                        <input type="email" id="email" name="email" class="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-300" placeholder="seu.email@exemplo.com">
-                    </div>
-                    <div>
-                        <label for="message" class="block text-slate-700 font-medium mb-1">Sua Mensagem</label>
-                        <textarea id="message" name="message" rows="5" class="w-full p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-300" placeholder="Escreva sua mensagem aqui..."></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-sky-600 text-white font-bold py-3 rounded-lg hover:bg-sky-700 transition duration-300 transform hover:scale-105">Enviar Mensagem</button>
-                </form>
-            </div>
+            <form id="contact-form" class="max-w-xl mx-auto space-y-6">
+                <div>
+                    <label for="name" class="block text-slate-700 text-sm font-bold mb-2">Nome Completo</label>
+                    <input type="text" id="name" name="name" placeholder="Seu nome" required
+                        class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200">
+                </div>
+                <div>
+                    <label for="email-contact" class="block text-slate-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" id="email-contact" name="email" placeholder="seuemail@exemplo.com" required
+                        class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200"
+                        autocomplete="email">
+                </div>
+                <div>
+                    <label for="message" class="block text-slate-700 text-sm font-bold mb-2">Mensagem</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Sua mensagem..." required
+                        class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200"></textarea>
+                </div>
+                <button type="submit"
+                    class="w-full bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 transition duration-300 transform hover:scale-105 shadow-md">
+                    <i data-feather="send" class="w-5 h-5 inline-block mr-2"></i>
+                    Enviar Mensagem
+                </button>
+            </form>
+            <!-- Confirmation/Error Message for Contact Form (hidden by default) -->
+            <div id="contact-form-feedback" class="mt-4 hidden px-4 py-3 rounded-lg text-center"></div>
         </section>
-
     </main>
 
-    <!-- Botão Voltar ao Topo -->
-    <div id="back-to-top" class="hidden">
-        <i data-feather="arrow-up" class="w-6 h-6"></i>
-    </div>
-
-    <!-- Botões Flutuantes de Compartilhamento Social -->
+    <!-- Floating Social Share Buttons -->
     <div class="social-share-buttons">
-        <a href="#" class="twitter" title="Compartilhar no Twitter" target="_blank" rel="noopener noreferrer">
+        <a href="https://twitter.com/intent/tweet?url=https://yourwebsite.com&text=Confira%20este%20guia%20incr%C3%ADvel%20para%20o%20sucesso%20universit%C3%A1rio!" target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter" class="twitter">
             <i data-feather="twitter" class="w-6 h-6"></i>
         </a>
-        <a href="#" class="linkedin" title="Compartilhar no LinkedIn" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://yourwebsite.com&title=DescomplicaAcad%C3%AAmico&summary=O%20Seu%20Guia%20Completo%20para%20o%20Sucesso%20Universit%C3%A1rio&source=yourwebsite.com" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn" class="linkedin">
             <i data-feather="linkedin" class="w-6 h-6"></i>
         </a>
+        <!-- Adicione mais botões conforme necessário -->
     </div>
 
-    <!-- Rodapé -->
-    <footer class="bg-slate-900 text-white py-8 mt-12 rounded-t-2xl">
+    <!-- Back to Top Button -->
+    <button id="back-to-top" aria-label="Voltar ao topo">
+        <i data-feather="arrow-up" class="w-6 h-6"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-300 py-8 mt-12 rounded-t-2xl">
         <div class="container mx-auto px-6 text-center">
             <p>&copy; 2025 DescomplicaAcadêmico. Todos os direitos reservados.</p>
-            <div class="flex justify-center space-x-4 mt-4">
-                <a href="politica-privacidade.html" class="text-slate-400 hover:text-white transition duration-300">Política de Privacidade</a>
-                <a href="#" class="text-slate-400 hover:text-white transition duration-300">Termos de Uso</a>
-            </div>
+            <p class="text-sm mt-2">Feito com <i data-feather="heart" class="inline-block w-4 h-4 text-red-500"></i> para estudantes.</p>
         </div>
     </footer>
 
     <script>
-        // Inicializa os ícones Feather
-        feather.replace();
+        // Inicialização dos ícones Feather
+        document.addEventListener('DOMContentLoaded', () => {
+            feather.replace();
 
-        // --- Funcionalidade de Rolagem Suave para Links de Navegação ---
-        document.querySelectorAll('.scroll-link').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault(); // Previne o comportamento padrão do clique no link
-
-                // Obtém o elemento alvo usando o atributo href
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-
-                if (targetElement) {
-                    // Rola suavemente para o elemento alvo
-                    targetElement.scrollIntoView({
+            // Rolagem suave para links de navegação
+            document.querySelectorAll('.scroll-link').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
                         behavior: 'smooth'
                     });
+                });
+            });
+
+            // Funcionalidade do botão "Voltar ao Topo"
+            const backToTopButton = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) { // Mostrar botão após rolar 300px
+                    backToTopButton.classList.add('show');
+                } else {
+                    backToTopButton.classList.remove('show');
                 }
             });
-        });
 
-        // --- Funcionalidade do Botão Voltar ao Topo ---
-        const backToTopButton = document.getElementById('back-to-top');
-
-        // Mostra/oculta o botão com base na posição da rolagem
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) { // Mostra o botão após rolar 300px para baixo
-                backToTopButton.classList.add('show');
-                backToTopButton.classList.remove('hidden');
-            } else {
-                backToTopButton.classList.remove('show');
-                backToTopButton.classList.add('hidden');
-            }
-        });
-
-        // Rola para o topo quando o botão é clicado
-        backToTopButton.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth' // Rolagem suave para o topo
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
-        });
 
-        // --- Funcionalidade da Barra de Progresso de Leitura ---
-        const readingProgressBar = document.getElementById('reading-progress-bar');
-
-        window.addEventListener('scroll', () => {
-            // Calcula a porcentagem de rolagem
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = window.scrollY;
-            const progress = (scrolled / scrollHeight) * 100;
-
-            // Atualiza a largura da barra de progresso
-            readingProgressBar.style.width = `${progress}%`;
-        });
-
-        // --- Dados e Funções dos Quizzes ---
-        // Define as perguntas dos quizzes e suas respostas corretas, juntamente com o feedback.
-        const quizQuestions = {
-            pomodoro: {
-                question: "Qual é a duração recomendada para um bloco de foco (um 'pomodoro') na Técnica Pomodoro?",
-                options: ["10 minutos", "25 minutos", "45 minutos", "60 minutos"],
-                correctAnswerIndex: 1,
-                feedback: "A duração recomendada para um 'pomodoro' é de 25 minutos de foco intenso, seguida de uma breve pausa."
-            },
-            estudoAtivo: {
-                question: "Qual das seguintes técnicas MELHOR exemplifica o 'estudo ativo'?",
-                options: ["Reler anotações passivamente", "Sublinhar textos importantes", "Resolver exercícios sem consultar o material", "Copiar trechos do livro didático"],
-                correctAnswerIndex: 2,
-                feedback: "Resolver exercícios e testar-se ativamente força o cérebro a recuperar a informação, fortalecendo a memória."
-            },
-            repeticaoEspacada: {
-                question: "A Repetição Espaçada é mais eficaz para:",
-                options: ["Memorização de curto prazo", "Evitar distrações", "Otimizar a memorização a longo prazo", "Melhorar a compreensão imediata"],
-                correctAnswerIndex: 2,
-                feedback: "A Repetição Espaçada foca em revisar o material em intervalos crescentes, ideal para a memorização de longo prazo."
-            },
-            mapasMentais: {
-                question: "Qual o principal benefício do uso de Mapas Mentais?",
-                options: ["Aumentar a velocidade de leitura", "Melhorar a memória visual e a compreensão holística", "Reduzir o tempo de sono necessário", "Apenas para memorizar números e datas"],
-                correctAnswerIndex: 1,
-                feedback: "Mapas Mentais ajudam a visualizar conexões e organizar informações de forma holística, estimulando a memória visual."
-            },
-            tecnicaFeynman: {
-                question: "Ao usar a Técnica Feynman, qual é o objetivo principal de tentar explicar um conceito 'para uma criança de 8 anos'?",
-                options: ["Simplificar o material para outras pessoas", "Identificar lacunas na sua própria compreensão", "Praticar habilidades de comunicação", "Apenas para se divertir com a matéria"],
-                correctAnswerIndex: 1,
-                feedback: "Explicar para uma criança revela se você realmente entende o conceito, pois exige simplificação e clareza, expondo suas próprias lacunas."
-            },
-            estudoIntercalado: {
-                question: "O Estudo Intercalado (Interleaving) sugere que você deve:",
-                options: ["Estudar um único tópico por um longo período", "Alterar entre diferentes assuntos ou tipos de problemas em uma sessão", "Fazer pausas muito longas entre as sessões de estudo", "Focar apenas nos tópicos mais difíceis"],
-                correctAnswerIndex: 1,
-                feedback: "O Estudo Intercalado envolve alternar entre diferentes assuntos ou tipos de problemas para fortalecer a capacidade de distinção e memória de longo prazo."
-            }
-        };
-
-        /**
-         * Renderiza um quiz em um contêiner HTML especificado.
-         * @param {object} quizData - Objeto contendo a pergunta, opções, etc.
-         * @param {string} containerId - ID da div onde o quiz será renderizado.
-         */
-        function renderQuiz(quizData, containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) {
-                console.error(`Contêiner com ID '${containerId}' não encontrado.`);
-                return;
-            }
-
-            let quizHtml = `<p class="font-semibold text-slate-800 mb-3">${quizData.question}</p>`;
-            quizData.options.forEach((option, index) => {
-                quizHtml += `
-                    <label class="block mb-2 cursor-pointer hover:bg-slate-100 p-2 rounded-md transition duration-200">
-                        <input type="radio" name="question-${containerId}" value="${index}" class="mr-2 accent-sky-500">
-                        ${option}
-                    </label>
-                `;
+            // Funcionalidade da Barra de Progresso de Leitura
+            const readingProgressBar = document.getElementById('reading-progress-bar');
+            window.addEventListener('scroll', () => {
+                const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = document.documentElement.scrollTop;
+                const percentage = (scrolled / docHeight) * 100;
+                readingProgressBar.style.width = percentage + '%';
             });
-            container.innerHTML = quizHtml;
-        }
 
-        /**
-         * Verifica as respostas de um quiz e exibe o feedback.
-         * @param {object} quizData - Objeto contendo os dados do quiz.
-         * @param {string} containerId - ID do contêiner do quiz.
-         * @param {string} resultId - ID da div para exibir o feedback do resultado.
-         */
-        function checkQuizAnswers(quizData, containerId, resultId) {
-            const container = document.getElementById(containerId);
-            const resultDiv = document.getElementById(resultId);
-            if (!container || !resultDiv) {
-                console.error("Contêiner do quiz ou div de resultado não encontrados.");
-                return;
-            }
+            // Funcionalidade do Acordeão para FAQ
+            const accordionHeaders = document.querySelectorAll('.accordion-header');
+            accordionHeaders.forEach(header => {
+                header.addEventListener('click', () => {
+                    const accordionItem = header.closest('.accordion-item');
+                    const accordionContent = accordionItem.querySelector('.accordion-content');
+                    
+                    header.classList.toggle('active'); // Alterna a classe 'active' para rotação da seta
 
-            const selectedOption = container.querySelector(`input[name="question-${containerId}"]:checked`);
+                    if (accordionContent.style.maxHeight) {
+                        accordionContent.style.maxHeight = null;
+                        accordionContent.style.paddingTop = '0';
+                        accordionContent.style.paddingBottom = '0';
+                    } else {
+                        accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+                        accordionContent.style.paddingTop = '1.5rem'; // Reaplicar padding-top
+                        accordionContent.style.paddingBottom = '1.5rem'; // Reaplicar padding-bottom
+                    }
 
-            if (!selectedOption) {
-                resultDiv.innerHTML = '<span class="text-red-500">Por favor, selecione uma opção.</span>';
-                resultDiv.classList.add('animate-feedback-pulse');
-                setTimeout(() => resultDiv.classList.remove('animate-feedback-pulse'), 500);
-                return;
-            }
+                    // Fechar outros acordeões abertos
+                    accordionHeaders.forEach(otherHeader => {
+                        if (otherHeader !== header && otherHeader.classList.contains('active')) {
+                            otherHeader.classList.remove('active');
+                            const otherContent = otherHeader.closest('.accordion-item').querySelector('.accordion-content');
+                            otherContent.style.maxHeight = null;
+                            otherContent.style.paddingTop = '0';
+                            otherContent.style.paddingBottom = '0';
+                        }
+                    });
+                });
+            });
 
-            const selectedAnswerIndex = parseInt(selectedOption.value);
+            // Dados dos Quizzes
+            const quizzes = {
+                pomodoro: {
+                    questions: [
+                        {
+                            question: "Qual a duração de um 'pomodoro' na Técnica Pomodoro?",
+                            options: ["10 minutos", "25 minutos", "45 minutos", "1 hora"],
+                            correctAnswer: "25 minutos"
+                        },
+                        {
+                            question: "Qual o objetivo principal da Técnica Pomodoro?",
+                            options: ["Estudar por mais tempo sem parar", "Melhorar a concentração e produtividade", "Eliminar pausas completamente", "Fazer várias tarefas ao mesmo tempo"],
+                            correctAnswer: "Melhorar a concentração e produtividade"
+                        },
+                        {
+                            question: "Após quantos 'pomodoros' uma 'pausa longa' é recomendada?",
+                            options: ["Um", "Dois", "Três", "Quatro"],
+                            correctAnswer: "Quatro"
+                        },
+                        {
+                            question: "Qual a duração típica de uma 'pausa curta' no Pomodoro?",
+                            options: ["1 minuto", "5 minutos", "10 minutos", "20 minutos"],
+                            correctAnswer: "5 minutos"
+                        },
+                        {
+                            question: "O que se deve fazer durante uma pausa Pomodoro?",
+                            options: ["Continuar a estudar", "Responder e-mails de trabalho", "Alongar-se e beber água", "Fazer outra tarefa complexa"],
+                            correctAnswer: "Alongar-se e beber água"
+                        },
+                        {
+                            question: "A Técnica Pomodoro é mais adequada para quais tipos de tarefa?",
+                            options: ["Tarefas longas e ininterruptas", "Tarefas que exigem foco intenso e pausas regulares", "Tarefas criativas sem estrutura", "Tarefas em grupo que exigem constante interação"],
+                            correctAnswer: "Tarefas que exigem foco intenso e pausas regulares"
+                        }
+                    ],
+                    currentQuestionIndex: 0,
+                    // Armazena a resposta selecionada para cada pergunta
+                    // null: não respondido, 'value': valor da opção selecionada
+                    selectedAnswers: [], 
+                    // Armazena o feedback (correto/incorreto) para cada pergunta
+                    // null: sem feedback, true: correto, false: incorreto
+                    feedbackStatus: [],
+                    correctAnswersCount: 0
+                },
+                estudoAtivo: {
+                    questions: [
+                        {
+                            question: "Qual destas não é uma técnica de estudo ativo?",
+                            options: ["Fazer testes práticos", "Reler o material várias vezes", "Usar flashcards", "Autoexplicação"],
+                            correctAnswer: "Reler o material várias vezes"
+                        },
+                        {
+                            question: "O que a 'recuperação ativa' faz com o conhecimento?",
+                            options: ["Apaga-o da memória", "Fortalece as conexões neurais", "Torna-o mais complexo", "Nenhuma das anteriores"],
+                            correctAnswer: "Fortalece as conexões neurais"
+                        },
+                        {
+                            question: "Ao explicar a matéria para si mesmo em voz alta, qual técnica de estudo ativo está a usar?",
+                            options: ["Elaboração", "Testes práticos", "Autoexplicação", "Repetição espaçada"],
+                            correctAnswer: "Autoexplicação"
+                        },
+                        {
+                            question: "Para que são mais úteis os flashcards no estudo ativo?",
+                            options: ["Ler longos textos", "Memorizar termos e definições", "Fazer brainstorming", "Escrever resumos"],
+                            correctAnswer: "Memorizar termos e definições"
+                        },
+                        {
+                            question: "Qual a principal vantagem de fazer testes práticos?",
+                            options: ["Gastar tempo com exercícios desnecessários", "Identificar lacunas no conhecimento", "Apenas verificar o que já sabe", "Relaxar a mente"],
+                            correctAnswer: "Identificar lacunas no conhecimento"
+                        },
+                        {
+                            question: "O que significa 'Elaboração' no contexto do estudo ativo?",
+                            options: ["Escrever elaboradamente sobre o assunto", "Conectar o novo conhecimento ao que já sabe", "Repetir informações exaustivamente", "Apenas ler o material sem interagir"],
+                            correctAnswer: "Conectar o novo conhecimento ao que já sabe"
+                        }
+                    ],
+                    currentQuestionIndex: 0,
+                    selectedAnswers: [],
+                    feedbackStatus: [],
+                    correctAnswersCount: 0
+                },
+                repeticaoEspacada: {
+                    questions: [
+                        {
+                            question: "Qual o princípio da Repetição Espaçada?",
+                            options: ["Revisar todo o material todos os dias", "Revisar o material em intervalos crescentes", "Apenas ler o material uma vez", "Fazer resumos visuais"],
+                            correctAnswer: "Revisar o material em intervalos crescentes"
+                        },
+                        {
+                            question: "Qual ferramenta é comumente usada para Repetição Espaçada com flashcards?",
+                            options: ["Microsoft Word", "Netflix", "Anki", "Spotify"],
+                            correctAnswer: "Anki"
+                        },
+                        {
+                            question: "A Repetição Espaçada é baseada na pesquisa de qual 'curva'?",
+                            options: ["Curva da Fama", "Curva da Aprendizagem", "Curva do Esquecimento", "Curva de Crescimento"],
+                            correctAnswer: "Curva do Esquecimento"
+                        },
+                        {
+                            question: "Se você domina um conceito na Repetição Espaçada, com que frequência o revisará?",
+                            options: ["Mais frequentemente", "Menos frequentemente", "Diariamente", "Nunca mais"],
+                            correctAnswer: "Menos frequentemente"
+                        },
+                        {
+                            question: "Qual o principal benefício da Repetição Espaçada para a memória?",
+                            options: ["Memorização de curto prazo", "Memorização a longo prazo", "Diminuição da retenção", "Aumento do estresse"],
+                            correctAnswer: "Memorização a longo prazo"
+                        },
+                        {
+                            question: "Além do Anki, qual outra aplicação é mencionada para Repetição Espaçada?",
+                            options: ["WhatsApp", "Quizlet", "Instagram", "TikTok"],
+                            correctAnswer: "Quizlet"
+                        }
+                    ],
+                    currentQuestionIndex: 0,
+                    selectedAnswers: [],
+                    feedbackStatus: [],
+                    correctAnswersCount: 0
+                },
+                mapasMentais: {
+                    questions: [
+                        {
+                            question: "Onde se posiciona a ideia central em um mapa mental?",
+                            options: ["No canto superior esquerdo", "No centro", "Na margem inferior", "Em cada ramificação"],
+                            correctAnswer: "No centro"
+                        },
+                        {
+                            question: "Qual o principal benefício dos mapas mentais?",
+                            options: ["Aumentar o tempo de estudo", "Promover a memorização por repetição", "Visualizar o conhecimento e melhorar a compreensão", "Apenas organizar listas de tarefas"],
+                            correctAnswer: "Visualizar o conhecimento e melhorar a compreensão"
+                        },
+                        {
+                            question: "O que você deve usar para conectar ideias principais a sub-ramos em um mapa mental?",
+                            options: ["Números sequenciais", "Listas de verificação", "Palavras-chave, imagens e símbolos", "Apenas texto corrido"],
+                            correctAnswer: "Palavras-chave, imagens e símbolos"
+                        },
+                        {
+                            question: "Qual aspecto da memória é mais estimulado pelos mapas mentais?",
+                            options: ["Memória auditiva", "Memória olfativa", "Memória visual", "Memória muscular"],
+                            correctAnswer: "Memória visual"
+                        },
+                        {
+                            question: "Qual material é frequentemente utilizado para fazer um mapa mental?",
+                            options: ["Uma planilha de cálculo", "Um papel em branco e canetas coloridas", "Um editor de texto", "Um programa de apresentações"],
+                            correctAnswer: "Um papel em branco e canetas coloridas"
+                        },
+                        {
+                            question: "Fazer conexões entre os ramos em um mapa mental ajuda a:",
+                            options: ["Isolar conceitos", "Ver a relação entre diferentes ideias", "Tornar o estudo mais demorado", "Apenas decorar informações"],
+                            correctAnswer: "Ver a relação entre diferentes ideias"
+                        }
+                    ],
+                    currentQuestionIndex: 0,
+                    selectedAnswers: [],
+                    feedbackStatus: [],
+                    correctAnswersCount: 0
+                },
+                tecnicaFeynman: {
+                    questions: [
+                        {
+                            question: "Qual a principal ideia da Técnica Feynman?",
+                            options: ["Memorizar tudo o que for lido", "Explicar um conceito de forma complexa", "Explicar um conceito como se fosse para uma criança", "Ler em voz alta sem parar"],
+                            correctAnswer: "Explicar um conceito como se fosse para uma criança"
+                        },
+                        {
+                            question: "O que a Técnica Feynman ajuda a identificar?",
+                            options: ["Novos tópicos para estudar", "Lacunas na compreensão do assunto", "Apenas erros de ortografia", "Pontos de melhoria na escrita"],
+                            correctAnswer: "Lacunas na compreensão do assunto"
+                        },
+                        {
+                            question: "Qual o próximo passo ao identificar uma lacuna de conhecimento na Técnica Feynman?",
+                            options: ["Desistir do conceito", "Voltar ao material para preencher a lacuna", "Pedir a alguém para explicar", "Mudar para outro tópico"],
+                            correctAnswer: "Voltar ao material para preencher a lacuna"
+                        },
+                        {
+                            question: "Qual é um dos benefícios da Técnica Feynman?",
+                            options: ["Estudo passivo", "Aprendizado superficial", "Promoção do aprendizado ativo", "Apenas memorização de termos"],
+                            correctAnswer: "Promoção do aprendizado ativo"
+                        },
+                        {
+                            question: "Quem foi Richard Feynman?",
+                            options: ["Um historiador famoso", "Um físico e educador", "Um filósofo antigo", "Um artista renascentista"],
+                            correctAnswer: "Um físico e educador"
+                        },
+                        {
+                            question: "A Técnica Feynman é útil para:",
+                            options: ["Apenas conceitos simples", "Apenas disciplinas exatas", "Qualquer conceito, simples ou complexo", "Tarefas que não exigem compreensão profunda"],
+                            correctAnswer: "Qualquer conceito, simples ou complexo"
+                        }
+                    ],
+                    currentQuestionIndex: 0,
+                    selectedAnswers: [],
+                    feedbackStatus: [],
+                    correctAnswersCount: 0
+                }
+            };
 
-            if (selectedAnswerIndex === quizData.correctAnswerIndex) {
-                resultDiv.innerHTML = `
-                    <span class="question-feedback correct">Correto!</span>
-                    <p class="text-slate-700 text-sm mt-1">${quizData.feedback}</p>
+            // Função para renderizar uma única questão do quiz
+            function renderQuestion(quizId, questionIndex) {
+                const quizData = quizzes[quizId];
+                const container = document.getElementById(`quiz-${quizId}-questions-container`);
+                const counter = document.getElementById(`quiz-${quizId}-counter`);
+                const prevBtn = document.getElementById(`quiz-${quizId}-prev`);
+                const nextBtn = document.getElementById(`quiz-${quizId}-next`);
+                const submitFinalBtn = document.getElementById(`quiz-${quizId}-submit-final`);
+                const resultDiv = document.getElementById(`quiz-${quizId}-result`);
+                const retryBtn = document.getElementById(`quiz-${quizId}-retry`);
+
+                if (!quizData || !container) return;
+
+                container.innerHTML = ''; // Limpa a questão anterior
+                retryBtn.classList.add('hidden'); // Esconde o botão de tentar novamente
+
+                const q = quizData.questions[questionIndex];
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'quiz-question mb-4';
+                questionDiv.innerHTML = `
+                    <p class="font-medium text-slate-700 mb-2">${questionIndex + 1}. ${q.question}</p>
+                    <div class="options-container"></div>
+                    <div class="question-feedback" id="quiz-${quizId}-q${questionIndex}-feedback"></div> <!-- Keeping ID for direct access -->
                 `;
-                resultDiv.classList.remove('text-red-500'); // Remove potential error color
-                resultDiv.classList.add('animate-feedback-pulse');
-                setTimeout(() => resultDiv.classList.remove('animate-feedback-pulse'), 500);
-            } else {
-                resultDiv.innerHTML = `
-                    <span class="question-feedback incorrect">Incorreto.</span>
-                    <p class="text-slate-700 text-sm mt-1">A resposta correta era: <strong>${quizData.options[quizData.correctAnswerIndex]}</strong>. ${quizData.feedback}</p>
-                `;
-                resultDiv.classList.remove('text-red-500'); // Remove potential error color
-                resultDiv.classList.add('animate-feedback-pulse');
-                setTimeout(() => resultDiv.classList.remove('animate-feedback-pulse'), 500);
+
+                const optionsContainer = questionDiv.querySelector('.options-container');
+                // Adiciona as opções de resposta e os listeners
+                q.options.forEach((option, optIndex) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'flex items-center mb-2';
+                    const radioInputId = `quiz-${quizId}-q${questionIndex}-opt${optIndex}`;
+                    optionDiv.innerHTML = `
+                        <input type="radio" id="${radioInputId}" name="quiz-${quizId}-q${questionIndex}" value="${option}" class="form-radio text-sky-600 h-4 w-4">
+                        <label for="${radioInputId}" class="ml-2 text-slate-600 cursor-pointer">${option}</label>
+                    `;
+                    optionsContainer.appendChild(optionDiv);
+                });
+
+                container.appendChild(questionDiv); // Adiciona a questão ao DOM ANTES de manipular seus elementos
+
+                // Agora que a questionDiv está no DOM, podemos acessar seus elementos com segurança
+                const feedbackDiv = questionDiv.querySelector(`#quiz-${quizId}-q${questionIndex}-feedback`); 
+                const currentQuestionRadioInputs = questionDiv.querySelectorAll('input[type="radio"]');
+
+                // Aplica o estado persistente (resposta selecionada e feedback)
+                if (quizData.selectedAnswers[questionIndex] !== null) { // Se a pergunta foi respondida
+                    // Define a opção selecionada anteriormente
+                    const previouslySelectedRadio = questionDiv.querySelector(`input[value="${quizData.selectedAnswers[questionIndex]}"]`);
+                    if (previouslySelectedRadio) {
+                        previouslySelectedRadio.checked = true;
+                    }
+
+                    // Desabilita todas as opções para esta pergunta
+                    currentQuestionRadioInputs.forEach(input => {
+                        input.disabled = true;
+                    });
+
+                    // Exibe o feedback persistente
+                    feedbackDiv.innerHTML = '';
+                    feedbackDiv.classList.remove('correct', 'incorrect', 'animate-feedback-pulse');
+                    if (quizData.feedbackStatus[questionIndex] === true) {
+                        feedbackDiv.textContent = 'Correto!';
+                        feedbackDiv.classList.add('correct');
+                    } else if (quizData.feedbackStatus[questionIndex] === false) {
+                        feedbackDiv.textContent = `Incorreto. A resposta correta é: ${q.correctAnswer}`;
+                        feedbackDiv.classList.add('incorrect');
+                    }
+                } else { // Se ainda não respondida, adiciona os listeners de mudança
+                    currentQuestionRadioInputs.forEach(radioInput => {
+                        radioInput.addEventListener('change', (event) => {
+                            const selectedOption = event.target.value;
+                            
+                            const currentFeedbackDiv = questionDiv.querySelector(`#quiz-${quizId}-q${questionIndex}-feedback`); 
+                            const radioInputsInCurrentQuestion = questionDiv.querySelectorAll('input[type="radio"]');
+
+                            currentFeedbackDiv.innerHTML = '';
+                            currentFeedbackDiv.classList.remove('correct', 'incorrect', 'animate-feedback-pulse');
+
+                            if (selectedOption === q.correctAnswer) {
+                                currentFeedbackDiv.textContent = 'Correto!';
+                                currentFeedbackDiv.classList.add('correct', 'animate-feedback-pulse');
+                                quizData.feedbackStatus[questionIndex] = true;
+                            } else {
+                                currentFeedbackDiv.textContent = `Incorreto. A resposta correta é: ${q.correctAnswer}`;
+                                currentFeedbackDiv.classList.add('incorrect', 'animate-feedback-pulse');
+                                quizData.feedbackStatus[questionIndex] = false;
+                            }
+                            quizData.selectedAnswers[questionIndex] = selectedOption;
+
+                            // Desabilita todas as opções após uma seleção
+                            radioInputsInCurrentQuestion.forEach(input => {
+                                input.disabled = true;
+                            });
+                        });
+                    });
+                }
+
+                // Atualiza o contador de perguntas
+                counter.textContent = `Pergunta ${questionIndex + 1} de ${quizData.questions.length}`;
+
+                // Gerencia a visibilidade dos botões de navegação e submissão
+                prevBtn.disabled = questionIndex === 0;
+                nextBtn.classList.remove('hidden');
+                submitFinalBtn.classList.add('hidden');
+
+                if (questionIndex === quizData.questions.length - 1) {
+                    nextBtn.classList.add('hidden');
+                    submitFinalBtn.classList.remove('hidden');
+                }
             }
-        }
 
-        // Renderiza todos os quizzes ao carregar a página
-        document.addEventListener('DOMContentLoaded', () => {
-            renderQuiz(quizQuestions.pomodoro, 'quiz-pomodoro-container');
-            renderQuiz(quizQuestions.estudoAtivo, 'quiz-estudoAtivo-container');
-            renderQuiz(quizQuestions.repeticaoEspacada, 'quiz-repeticaoEspacada-container');
-            renderQuiz(quizQuestions.mapasMentais, 'quiz-mapasMentais-container');
-            renderQuiz(quizQuestions.tecnicaFeynman, 'quiz-tecnicaFeynman-container');
-            renderQuiz(quizQuestions.estudoIntercalado, 'quiz-estudoIntercalado-container');
-        });
+            // Função para inicializar o estado de respostas de um quiz
+            function initializeQuizAnswers(quizId) {
+                quizzes[quizId].selectedAnswers = Array(quizzes[quizId].questions.length).fill(null);
+                quizzes[quizId].feedbackStatus = Array(quizzes[quizId].questions.length).fill(null);
+                quizzes[quizId].currentQuestionIndex = 0;
+                quizzes[quizId].correctAnswersCount = 0;
+            }
 
-        // Adiciona ouvintes de evento para os botões de envio dos quizzes
-        document.getElementById('submit-pomodoro').addEventListener('click', () => {
-            checkQuizAnswers(quizQuestions.pomodoro, 'quiz-pomodoro-container', 'result-pomodoro');
-        });
-        document.getElementById('submit-estudoAtivo').addEventListener('click', () => {
-            checkQuizAnswers(quizQuestions.estudoAtivo, 'quiz-estudoAtivo-container', 'result-estudoAtivo');
-        });
-        document.getElementById('submit-repeticaoEspacada').addEventListener('click', () => {
-            checkQuizAnswers(quizQuestions.repeticaoEspacada, 'quiz-repeticaoEspacada-container', 'result-repeticaoEspacada');
-        });
-        document.getElementById('submit-mapasMentais').addEventListener('click', () => {
-            checkQuizAnswers(quizQuestions.mapasMentais, 'quiz-mapasMentais-container', 'result-mapasMentais');
-        });
-        document.getElementById('submit-tecnicaFeynman').addEventListener('click', () => {
-            checkQuizAnswers(quizQuestions.tecnicaFeynman, 'quiz-tecnicaFeynman-container', 'result-tecnicaFeynman');
-        });
-        document.getElementById('submit-estudoIntercalado').addEventListener('click', () => {
-            checkQuizAnswers(quizQuestions.estudoIntercalado, 'quiz-estudoIntercalado-container', 'result-estudoIntercalado');
-        });
+            // Função para verificar todas as respostas e exibir a pontuação final
+            function checkFinalAnswers(quizId) {
+                const quizData = quizzes[quizId];
+                const resultDiv = document.getElementById(`quiz-${quizId}-result`);
+                const retryBtn = document.getElementById(`quiz-${quizId}-retry`);
+
+                // Recalcula o número de respostas corretas com base no feedbackStatus
+                quizData.correctAnswersCount = quizData.feedbackStatus.filter(status => status === true).length;
+                
+                resultDiv.innerHTML = `Você acertou ${quizData.correctAnswersCount} de ${quizData.questions.length} perguntas!`;
+                resultDiv.classList.remove('text-emerald-600', 'text-red-600');
+                if (quizData.correctAnswersCount === quizData.questions.length) {
+                    resultDiv.classList.add('text-emerald-600');
+                } else {
+                    resultDiv.classList.add('text-red-600');
+                }
+                
+                retryBtn.classList.remove('hidden'); // Mostrar botão de tentar novamente
+            }
+
+            // Função para reiniciar um quiz
+            function resetQuiz(quizId) {
+                initializeQuizAnswers(quizId);
+                renderQuestion(quizId, 0);
+                document.getElementById(`quiz-${quizId}-result`).innerHTML = '';
+                document.getElementById(`quiz-${quizId}-retry`).classList.add('hidden');
+                document.getElementById(`quiz-${quizId}-next`).classList.remove('hidden');
+                document.getElementById(`quiz-${quizId}-submit-final`).classList.add('hidden');
+                // Re-habilitar todos os inputs de rádio para o quiz resetado
+                const questionContainers = document.getElementById(`quiz-${quizId}-questions-container`).querySelectorAll('.quiz-question');
+                questionContainers.forEach(qDiv => {
+                    qDiv.querySelectorAll('input[type="radio"]').forEach(input => {
+                        input.disabled = false;
+                        input.checked = false; // Desmarcar todas as opções
+                    });
+                    qDiv.querySelector('.question-feedback').innerHTML = ''; // Limpar feedback individual
+                    qDiv.querySelector('.question-feedback').classList.remove('correct', 'incorrect', 'animate-feedback-pulse');
+                });
+            }
+
+            // Configurar cada quiz
+            Object.keys(quizzes).forEach(quizId => {
+                initializeQuizAnswers(quizId);
+                renderQuestion(quizId, 0); // Renderiza a primeira pergunta de cada quiz
+
+                // Event Listener para o botão "Próxima Pergunta"
+                document.getElementById(`quiz-${quizId}-next`).addEventListener('click', () => {
+                    const quizData = quizzes[quizId];
+                    if (quizData.currentQuestionIndex < quizData.questions.length - 1) {
+                        quizData.currentQuestionIndex++;
+                        renderQuestion(quizId, quizData.currentQuestionIndex);
+                    }
+                });
+
+                // Event Listener para o botão "Anterior"
+                document.getElementById(`quiz-${quizId}-prev`).addEventListener('click', () => {
+                    const quizData = quizzes[quizId];
+                    if (quizData.currentQuestionIndex > 0) {
+                        quizData.currentQuestionIndex--;
+                        renderQuestion(quizId, quizData.currentQuestionIndex);
+                    }
+                });
+
+                // Event Listener para o botão "Ver Resultados" (submissão final)
+                document.getElementById(`quiz-${quizId}-submit-final`).addEventListener('click', () => {
+                    checkFinalAnswers(quizId);
+                    document.getElementById(`quiz-${quizId}-next`).classList.add('hidden'); // Esconder próximo
+                    document.getElementById(`quiz-${quizId}-prev`).classList.add('hidden'); // Esconder anterior
+                    document.getElementById(`quiz-${quizId}-submit-final`).classList.add('hidden'); // Esconder ver resultados
+                    
+                    // Desabilitar todas as opções após a submissão final
+                    const questionContainers = document.getElementById(`quiz-${quizId}-questions-container`).querySelectorAll('.quiz-question');
+                    questionContainers.forEach(qDiv => {
+                        qDiv.querySelectorAll('input[type="radio"]').forEach(input => {
+                            input.disabled = true;
+                        });
+                    });
+                });
+
+                // Event Listener para o botão "Tentar Novamente"
+                document.getElementById(`quiz-${quizId}-retry`).addEventListener('click', () => {
+                    resetQuiz(quizId);
+                });
+            });
 
 
-        // --- Funcionalidade do Acordeão para o FAQ ---
-        document.querySelectorAll('.accordion-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const item = header.closest('.accordion-item');
-                // Alterado: procura por <i> ou <svg> para ser compatível com feather-icons
-                const icon = header.querySelector('i, svg'); 
-                const content = item ? item.querySelector('.accordion-content') : null; 
+            // Newsletter Form Submission
+            const newsletterForm = document.getElementById('newsletter-form');
+            const formSuccessMessage = document.getElementById('form-success-message');
+            const downloadGuideLink = document.getElementById('download-guide-link');
 
-                // Se algum elemento não for encontrado, sair para evitar erros
-                if (!item || !content || !icon) {
-                    console.error("Elemento do acordeão (item, content ou icon) não encontrado. Verifique a estrutura HTML ou o carregamento de scripts externos.");
+            newsletterForm.addEventListener('submit', function(e) {
+                e.preventDefault(); // Impede o envio real do formulário
+
+                const emailInput = document.getElementById('email');
+                if (emailInput.value) {
+                    // Simula uma inscrição bem-sucedida
+                    formSuccessMessage.classList.remove('hidden');
+                    // Define o link para download do PDF diretamente do seu repositório
+                    downloadGuideLink.href = './guia-completo-descomplica.pdf'; 
+                    newsletterForm.reset(); // Limpa o formulário
+                    
+                    // Rolagem suave para a mensagem de sucesso
+                    formSuccessMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+
+            // Envio do Formulário de Contato (exemplo, substitua pela integração real com backend)
+            const contactForm = document.getElementById('contact-form');
+            const contactFormFeedback = document.getElementById('contact-form-feedback');
+
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Simula o envio do formulário
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email-contact').value;
+                const message = document.getElementById('message').value;
+
+                // Validação básica
+                if (name && email && message) {
+                    contactFormFeedback.classList.remove('hidden', 'bg-red-100', 'border-red-400', 'text-red-700');
+                    contactFormFeedback.classList.add('bg-emerald-100', 'border-emerald-400', 'text-emerald-700');
+                    contactFormFeedback.innerHTML = `<p class="font-bold">Mensagem enviada com sucesso!</p><p>Agradecemos o seu contato.</p>`;
+                    contactForm.reset();
+                } else {
+                    contactFormFeedback.classList.remove('hidden', 'bg-emerald-100', 'border-emerald-400', 'text-emerald-700');
+                    contactFormFeedback.classList.add('bg-red-100', 'border-red-400', 'text-red-700');
+                    contactFormFeedback.innerHTML = `<p class="font-bold">Erro ao enviar!</p><p>Por favor, preencha todos os campos.</p>`;
+                }
+                // Rola para a mensagem de feedback
+                contactFormFeedback.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Esconde o feedback após alguns segundos
+                setTimeout(() => {
+                    contactFormFeedback.classList.add('hidden');
+                }, 5000);
+            });
+
+            /* -------------------------------------- */
+            /* INÍCIO DA LÓGICA DO TIMER POMODORO     */
+            /* -------------------------------------- */
+            const pomodoroDisplay = document.getElementById('pomodoro-display');
+            const pomodoroStatus = document.querySelector('.pomodoro-status');
+            const pomodoroStartBtn = document.getElementById('pomodoro-start');
+            const pomodoroPauseBtn = document.getElementById('pomodoro-pause');
+            const pomodoroResetBtn = document.getElementById('pomodoro-reset');
+            const pomodoroFocusTimeInput = document.getElementById('pomodoro-focus-time');
+            const pomodoroShortBreakTimeInput = document.getElementById('pomodoro-short-break-time');
+            const pomodoroLongBreakTimeInput = document.getElementById('pomodoro-long-break-time'); /* Fixed a typo here: 'document =' to 'document.getElementById' */
+
+            let countdown;
+            let timeLeft;
+            let currentMode = 'focus'; // 'focus', 'shortBreak', 'longBreak'
+            let pomodoroCount = 0;
+            let isRunning = false;
+
+            // Áudio para conclusão do timer
+            const timerEndSound = new Audio('https://www.soundjay.com/buttons/beep-07a.mp3');
+
+            // Função para atualizar a exibição do timer
+            function updateTimerDisplay() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                pomodoroDisplay.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
+
+            // Função para definir o timer com base no modo atual
+            function setTimer() {
+                if (currentMode === 'focus') {
+                    timeLeft = parseInt(pomodoroFocusTimeInput.value) * 60;
+                    pomodoroStatus.textContent = 'Foco';
+                    pomodoroDisplay.style.color = '#1e40af'; // blue-800
+                } else if (currentMode === 'shortBreak') {
+                    timeLeft = parseInt(pomodoroShortBreakTimeInput.value) * 60;
+                    pomodoroStatus.textContent = 'Pausa Curta';
+                    pomodoroDisplay.style.color = '#10b981'; // emerald-500
+                } else if (currentMode === 'longBreak') {
+                    timeLeft = parseInt(pomodoroLongBreakTimeInput.value) * 60;
+                    pomodoroStatus.textContent = 'Pausa Longa';
+                    pomodoroDisplay.style.color = '#8b5cf6'; // violet-500
+                }
+                updateTimerDisplay();
+            }
+
+            // Função para iniciar o timer
+            function startTimer() {
+                if (isRunning) return;
+                isRunning = true;
+                pomodoroStartBtn.disabled = true;
+                pomodoroPauseBtn.disabled = false;
+
+                countdown = setInterval(() => {
+                    timeLeft--;
+                    updateTimerDisplay();
+
+                    if (timeLeft <= 0) {
+                        clearInterval(countdown);
+                        timerEndSound.play();
+                        isRunning = false;
+                        
+                        if (currentMode === 'focus') {
+                            pomodoroCount++;
+                            if (pomodoroCount % 4 === 0) {
+                                currentMode = 'longBreak';
+                            } else {
+                                currentMode = 'shortBreak';
+                            }
+                        } else { // Era uma pausa
+                            currentMode = 'focus';
+                        }
+                        setTimer();
+                        pomodoroStartBtn.disabled = false;
+                        pomodoroPauseBtn.disabled = true;
+                    }
+                }, 1000);
+            }
+
+            // Função para pausar o timer
+            function pauseTimer() {
+                clearInterval(countdown);
+                isRunning = false;
+                pomodoroStartBtn.disabled = false;
+                pomodoroPauseBtn.disabled = true;
+            }
+
+            // Função para reiniciar o timer
+            function resetTimer() {
+                clearInterval(countdown);
+                isRunning = false;
+                pomodoroCount = 0;
+                currentMode = 'focus';
+                setTimer();
+                pomodoroStartBtn.disabled = false;
+                pomodoroPauseBtn.disabled = true;
+            }
+
+            // Event Listeners para os controles do Timer Pomodoro
+            pomodoroStartBtn.addEventListener('click', startTimer);
+            pomodoroPauseBtn.addEventListener('click', pauseTimer);
+            pomodoroResetBtn.addEventListener('click', resetTimer);
+
+            // Atualiza as configurações do timer quando os valores de entrada mudam
+            pomodoroFocusTimeInput.addEventListener('change', setTimer);
+            pomodoroShortBreakTimeInput.addEventListener('change', setTimer);
+            pomodoroLongBreakTimeInput.addEventListener('change', setTimer);
+
+            // Inicializa o timer ao carregar
+            setTimer();
+            /* -------------------------------------- */
+            /* FIM DA LÓGICA DO TIMER POMODORO        */
+            /* -------------------------------------- */
+
+            /* -------------------------------------- */
+            /* INÍCIO DA LÓGICA DOS FLASHCARDS        */
+            /* -------------------------------------- */
+            const flashcardTermInput = document.getElementById('flashcard-term');
+            const flashcardDefinitionInput = document.getElementById('flashcard-definition');
+            const addFlashcardBtn = document.getElementById('add-flashcard');
+            const flashcardDisplay = document.getElementById('flashcard-display');
+            const currentFlashcardTerm = document.getElementById('current-flashcard-term');
+            const currentFlashcardDefinition = document.getElementById('current-flashcard-definition');
+            const clearFlashcardsBtn = document.getElementById('clear-flashcards');
+            const flashcardCountSpan = document.getElementById('flashcard-count');
+            const flashcardSelector = document.getElementById('flashcard-selector');
+            const generateDefinitionBtn = document.getElementById('generate-definition');
+            const definitionLoader = document.getElementById('definition-loader');
+
+            let flashcards = [];
+            let currentFlashcardIndex = -1;
+            let isFlipped = false;
+
+            // Carregar flashcards do localStorage
+            function loadFlashcards() {
+                const storedFlashcards = localStorage.getItem('descomplicaAcad_flashcards');
+                if (storedFlashcards) {
+                    flashcards = JSON.parse(storedFlashcards);
+                }
+                updateFlashcardCount();
+                renderFlashcardSelector(); // Renderiza o seletor ao carregar
+                displayFlashcard(); // Exibe um flashcard (ou o estado vazio)
+            }
+
+            // Salvar flashcards no localStorage
+            function saveFlashcards() {
+                localStorage.setItem('descomplicaAcad_flashcards', JSON.stringify(flashcards));
+                updateFlashcardCount();
+                renderFlashcardSelector(); // Atualiza o seletor ao salvar
+            }
+
+            // Atualizar exibição da contagem de flashcards
+            function updateFlashcardCount() {
+                flashcardCountSpan.textContent = `Total de flashcards: ${flashcards.length}`;
+                if (flashcards.length === 0) {
+                    flashcardSelector.disabled = true; // Desabilita o seletor se não houver flashcards
+                } else {
+                    flashcardSelector.disabled = false; // Habilita o seletor se houver flashcards
+                }
+            }
+
+            // Renderiza o seletor de flashcards
+            function renderFlashcardSelector() {
+                flashcardSelector.innerHTML = '<option value="-1">Selecione um flashcard...</option>'; // Opção padrão
+
+                flashcards.forEach((card, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = card.term;
+                    flashcardSelector.appendChild(option);
+                });
+
+                // Tenta selecionar o flashcard atualmente exibido no dropdown
+                if (currentFlashcardIndex !== -1 && flashcards.length > 0) {
+                    flashcardSelector.value = currentFlashcardIndex;
+                } else {
+                    flashcardSelector.value = "-1"; // Reseta para a opção padrão
+                }
+            }
+
+            // Exibir um flashcard (aleatório ou por índice)
+            function displayFlashcard(index = null) {
+                if (flashcards.length === 0) {
+                    currentFlashcardTerm.textContent = 'Nenhum flashcard adicionado.';
+                    currentFlashcardDefinition.innerHTML = ''; /* Changed to innerHTML to clear any previous formatting */
+                    flashcardDisplay.classList.remove('flipped');
+                    currentFlashcardTerm.closest('.flashcard-content').style.display = 'flex';
+                    currentFlashcardDefinition.closest('.flashcard-content').style.display = 'none';
+                    currentFlashcardIndex = -1; // Reset index
+                    flashcardSelector.value = "-1"; // Reset selector
                     return;
                 }
 
-                // Fecha todos os outros itens do acordeão abertos
-                document.querySelectorAll('.accordion-item').forEach(otherItem => {
-                    if (otherItem && otherItem !== item) {
-                        const otherContent = otherItem.querySelector('.accordion-content');
-                        // Alterado: procura por <i> ou <svg> para ser compatível com feather-icons
-                        const otherIcon = otherItem.querySelector('i, svg'); 
-                        if (otherContent && otherContent.classList.contains('open')) {
-                            otherContent.style.maxHeight = otherContent.scrollHeight + 'px'; 
-                            otherContent.style.paddingTop = '0';
-                            otherContent.style.paddingBottom = '0';
-                            otherContent.classList.remove('open');
-                            // Força o reflow para garantir que a transição de max-height inicie da altura correta
-                            void otherContent.offsetWidth; 
-                            otherContent.style.maxHeight = '0'; 
-                        }
-                        if (otherIcon) { // Verificado otherIcon
-                            otherIcon.classList.remove('active');
-                        }
-                        otherItem.classList.remove('active');
-                    }
-                });
-
-                // Alterna o item do acordeão clicado
-                if (content.classList.contains('open')) {
-                    // Fechar o acordeão
-                    content.style.maxHeight = content.scrollHeight + 'px'; 
-                    content.style.paddingTop = '0';
-                    content.style.paddingBottom = '0';
-                    content.classList.remove('open');
-                    void content.offsetWidth; 
-                    content.style.maxHeight = '0'; 
-                    icon.classList.remove('active');
-                    item.classList.remove('active');
+                let newIndex;
+                if (index !== null && index >= 0 && index < flashcards.length) {
+                    newIndex = index;
                 } else {
-                    // Abrir o acordeão
-                    content.classList.add('open'); 
-                    content.style.paddingTop = '1rem';
-                    content.style.paddingBottom = '1.5rem';
+                    // Lógica para selecionar um flashcard aleatório (mantida para uso interno, caso seja necessário)
+                    do {
+                        newIndex = Math.floor(Math.random() * flashcards.length);
+                    } while (flashcards.length > 1 && newIndex === currentFlashcardIndex); // Evita mostrar o mesmo cartão duas vezes seguidas
+                }
 
-                    // Após aplicar a classe 'open' e paddings,
-                    // lemos o scrollHeight e o aplicamos para a transição.
-                    // O setTimeout(0) garante que o navegador tenha um ciclo para renderizar
-                    // as mudanças de estilo antes de lermos o scrollHeight.
+                currentFlashcardIndex = newIndex;
+                const card = flashcards[currentFlashcardIndex];
+
+                currentFlashcardTerm.textContent = card.term;
+                flashcardDisplay.classList.remove('flipped'); // Garante que comece no lado do termo
+                isFlipped = false;
+                
+                // Convert Markdown bold (**text**) to HTML strong (<strong>text</strong>) for display
+                // Also handle unwanted asterisks if they appear without a corresponding closing one
+                let formattedDefinition = card.definition.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                // Optional: remove any remaining stray asterisks not part of bold markdown
+                formattedDefinition = formattedDefinition.replace(/\*/g, ''); 
+                currentFlashcardDefinition.innerHTML = formattedDefinition; 
+
+                // Garantir que o conteúdo correto esteja visível
+                currentFlashcardTerm.closest('.flashcard-content').style.display = 'flex';
+                currentFlashcardDefinition.closest('.flashcard-content').style.display = 'none';
+
+                // Atualiza o seletor para o flashcard exibido
+                flashcardSelector.value = currentFlashcardIndex;
+            }
+
+            // Função para gerar definição usando a Gemini API
+            generateDefinitionBtn.addEventListener('click', async () => {
+                const term = flashcardTermInput.value.trim();
+                if (!term) {
+                    const flashcardSection = document.querySelector('.flashcard-section');
+                    const messageBox = document.createElement('div');
+                    messageBox.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mt-4 text-center';
+                    messageBox.innerHTML = '<p>Por favor, digite um termo para gerar a definição.</p>';
+                    flashcardSection.appendChild(messageBox);
                     setTimeout(() => {
-                        content.style.maxHeight = content.scrollHeight + 'px';
-                        // Após a transição de abertura, removemos o max-height
-                        // para que o conteúdo se ajuste naturalmente se o tamanho mudar.
-                        const handleTransitionEnd = () => {
-                            if (content.classList.contains('open')) {
-                                content.style.maxHeight = 'none';
-                                content.style.overflowY = 'auto'; // Reativa o scrollbar
-                            }
-                            content.removeEventListener('transitionend', handleTransitionEnd);
-                        };
-                        content.addEventListener('transitionend', handleTransitionEnd);
-                    }, 0); 
-                    
-                    icon.classList.add('active');
-                    item.classList.add('active');
+                        messageBox.remove();
+                    }, 3000);
+                    return;
+                }
+
+                definitionLoader.classList.remove('hidden'); // Show loader
+                generateDefinitionBtn.disabled = true; // Disable button during loading
+
+                try {
+                    let chatHistory = [];
+                    // Changed prompt to explicitly ask for no asterisks and to provide text definition directly
+                    chatHistory.push({ role: "user", parts: [{ text: `Forneça uma definição concisa e abrangente para o seguinte termo em português (Portugal), adequada para um flashcard académico: "${term}". A definição deve ser direta, cobrir os aspetos mais importantes do conceito e NÃO deve conter asteriscos ou qualquer outra formatação Markdown.` }] });
+                    const payload = { contents: chatHistory };
+                    const apiKey = ""; // If you want to use models other than gemini-2.0-flash or imagen-3.0-generate-002, provide an API key here. Otherwise, leave this as-is.
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const definition = result.candidates[0].content.parts[0].text;
+                        // Removed Markdown conversion here, as the prompt now asks for plain text
+                        flashcardDefinitionInput.value = definition.trim();
+                    } else {
+                        throw new Error('Não foi possível gerar a definição. Tente novamente.');
+                    }
+                } catch (error) {
+                    console.error('Erro ao chamar a API Gemini:', error);
+                    const flashcardSection = document.querySelector('.flashcard-section');
+                    const messageBox = document.createElement('div');
+                    messageBox.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mt-4 text-center';
+                    messageBox.innerHTML = `<p>Erro: ${error.message}</p>`;
+                    flashcardSection.appendChild(messageBox);
+                    setTimeout(() => {
+                        messageBox.remove();
+                    }, 5000);
+                    flashcardDefinitionInput.value = 'Erro ao gerar definição. Por favor, tente novamente.';
+                } finally {
+                    definitionLoader.classList.add('hidden'); // Hide loader
+                    generateDefinitionBtn.disabled = false; // Enable button
+                    feather.replace(); // Re-render icons in case loader is replaced
                 }
             });
-        });
 
-        // --- Funcionalidade dos Botões de Compartilhamento Social ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const pageTitle = encodeURIComponent(document.title);
-            const pageUrl = encodeURIComponent(window.location.href);
 
-            const twitterShareButton = document.querySelector('.social-share-buttons a.twitter');
-            if (twitterShareButton) {
-                twitterShareButton.href = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`;
-            }
+            // Adicionar novo flashcard
+            addFlashcardBtn.addEventListener('click', () => {
+                const term = flashcardTermInput.value.trim();
+                const definition = flashcardDefinitionInput.value.trim();
 
-            const linkedinShareButton = document.querySelector('.social-share-buttons a.linkedin');
-            if (linkedinShareButton) {
-                linkedinShareButton.href = `https://www.linkedin.com/shareArticle?mini=true&url=${pageUrl}&title=${pageTitle}`;
-            }
-        });
+                if (term && definition) {
+                    flashcards.push({ term, definition });
+                    saveFlashcards();
+                    flashcardTermInput.value = '';
+                    flashcardDefinitionInput.value = '';
+                    displayFlashcard(flashcards.length - 1); // Mostra o novo cartão adicionado
+                    feather.replace(); // Renderiza novamente os ícones se houverem sido adicionados dinamicamente no cartão
+                } else {
+                    // Usando uma mensagem simples, não alert()
+                    const flashcardSection = document.querySelector('.flashcard-section');
+                    const messageBox = document.createElement('div');
+                    messageBox.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mt-4 text-center';
+                    messageBox.innerHTML = '<p>Por favor, preencha o termo e a definição do flashcard.</p>';
+                    flashcardSection.appendChild(messageBox);
+                    setTimeout(() => {
+                        messageBox.remove();
+                    }, 3000);
+                }
+            });
 
-        // --- Detecção de Submissão do Formulário Formspree e Exibição do Guia ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const newsletterForm = document.getElementById('newsletter-form');
-            const newsletterSubmitButton = document.getElementById('newsletter-submit-button');
-            const newsletterLoadingIndicator = document.getElementById('newsletter-loading-indicator');
-            const formSuccessMessage = document.getElementById('form-success-message');
-            const formErrorMessage = document.getElementById('form-error-message');
-            const downloadGuideLink = document.getElementById('download-guide-link');
-            const emailInput = newsletterForm ? newsletterForm.querySelector('input[name="email"]') : null;
+            // Alternar flashcard (virar)
+            flashcardDisplay.addEventListener('click', () => {
+                if (flashcards.length > 0) {
+                    flashcardDisplay.classList.toggle('flipped');
+                    isFlipped = !isFlipped;
 
-            // TODO: SUBSTITUA ESTA URL PELA URL REAL DO SEU GUIA (PDF, DOC, etc.)
-            // Exemplo: se você colocar 'guia-completo.pdf' na raiz do seu repositório GitHub
-            // e seu site Vercel estiver em 'https://seusite.vercel.app',
-            // então a URL seria 'https://seusite.vercel.app/guia-completo.pdf'
-            const guideDownloadURL = "https://guia-taupe.vercel.app/guia-completo-descomplica.pdf"; // Substitua pela sua URL real do PDF
-
-            if (newsletterForm) {
-                newsletterForm.addEventListener('submit', async (event) => {
-                    event.preventDefault(); // Previne o envio padrão do formulário
-
-                    // Esconde mensagens anteriores
-                    formSuccessMessage.classList.add('hidden');
-                    formErrorMessage.classList.add('hidden');
-                    
-                    // Mostra o indicador de carregamento e desabilita o botão
-                    newsletterLoadingIndicator.classList.remove('hidden');
-                    if (newsletterSubmitButton) newsletterSubmitButton.disabled = true;
-                    if (emailInput) emailInput.disabled = true;
-
-                    try {
-                        console.log('Tentando submeter para Formspree URL:', newsletterForm.action); // Log da URL de submissão
-                        const response = await fetch(newsletterForm.action, {
-                            method: 'POST',
-                            body: new FormData(newsletterForm)
-                        });
-                        
-                        console.log('Resposta bruta do Formspree:', response); // Log da resposta completa para depuração
-
-                        if (response.ok) {
-                            formSuccessMessage.classList.remove('hidden'); // Mostra a mensagem de sucesso
-                            downloadGuideLink.href = guideDownloadURL; // Define o link de download
-                            if (emailInput) emailInput.value = ''; // Limpa o campo de e-mail
-                            formSuccessMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        } else {
-                            // Erro de submissão: O Formspree pode não retornar JSON para 400 em planos gratuitos
-                            console.error('Erro na submissão do Formspree:', response.status, response.statusText);
-                            formErrorMessage.classList.remove('hidden'); // Mostra a mensagem de erro
-                            formErrorMessage.innerHTML = `
-                                <div class="flex items-center justify-center mb-2">
-                                    <i data-feather="x-octagon" class="w-6 h-6 mr-3 text-red-500"></i>
-                                    <p class="font-bold text-lg">Ocorreu um erro na inscrição.</p>
-                                </div>
-                                <p>Por favor, tente novamente mais tarde.</p>
-                                <p class="text-sm mt-2"><strong>Dica:</strong> Verifique se o <strong>e-mail do Formspree</strong> associado a este formulário foi <strong>confirmado</strong>, ou se o <strong>ID do formulário</strong> (<code class="font-mono bg-red-200 p-1 rounded">mvgrkyvj</code> na URL) está correto.</p>
-                                <p class="text-sm">Certifique-se também de que não faltam campos obrigatórios no Formspree.</p>
-                            `;
-                            feather.replace(); // Para renderizar os ícones atualizados na mensagem de erro
-                            formErrorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
-                    } catch (error) {
-                        console.error('Erro na submissão do formulário:', error);
-                        formErrorMessage.classList.remove('hidden'); // Mostra a mensagem de erro
-                        formErrorMessage.innerHTML = `
-                            <div class="flex items-center justify-center mb-2">
-                                <i data-feather="x-octagon" class="w-6 h-6 mr-3 text-red-500"></i>
-                                <p class="font-bold text-lg">Ocorreu um erro na inscrição.</p>
-                            </div>
-                            <p>Não foi possível enviar a sua inscrição devido a um erro de rede ou de servidor.</p>
-                            <p class="text-sm mt-2">Por favor, verifique a sua conexão com a internet e tente novamente.</p>
-                        `;
-                        feather.replace(); // Para renderizar os ícones atualizados na mensagem de erro
-                        formErrorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    } finally {
-                        // Esconde o indicador de carregamento e reabilita o botão
-                        newsletterLoadingIndicator.classList.add('hidden');
-                        if (newsletterSubmitButton) newsletterSubmitButton.disabled = false;
-                        if (emailInput) emailInput.disabled = false;
+                    // Controla manualmente a exibição com base no estado de virada para acessibilidade e visibilidade do conteúdo
+                    if (isFlipped) {
+                        currentFlashcardTerm.closest('.flashcard-content').style.display = 'none';
+                        currentFlashcardDefinition.closest('.flashcard-content').style.display = 'flex';
+                    } else {
+                        currentFlashcardTerm.closest('.flashcard-content').style.display = 'flex';
+                        currentFlashcardDefinition.closest('.flashcard-content').style.display = 'none';
                     }
+                }
+            });
+
+            // Event listener for the new flashcard selector dropdown
+            flashcardSelector.addEventListener('change', (event) => {
+                const selectedIndex = parseInt(event.target.value);
+                if (selectedIndex !== -1) {
+                    displayFlashcard(selectedIndex);
+                } else {
+                    // Handle "Selecione um flashcard..." option, maybe clear display
+                    currentFlashcardTerm.textContent = 'Nenhum flashcard selecionado.';
+                    currentFlashcardDefinition.innerHTML = ''; /* Changed to innerHTML to clear any previous formatting */
+                    flashcardDisplay.classList.remove('flipped');
+                    currentFlashcardTerm.closest('.flashcard-content').style.display = 'flex';
+                    currentFlashcardDefinition.closest('.flashcard-content').style.display = 'none';
+                }
+            });
+
+            // Limpar todos os flashcards
+            clearFlashcardsBtn.addEventListener('click', () => {
+                // Usando uma caixa de diálogo de confirmação personalizada em vez de confirm()
+                const section = document.querySelector('.flashcard-section');
+                const confirmationBox = document.createElement('div');
+                confirmationBox.className = 'fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-[1002]';
+                confirmationBox.innerHTML = `
+                    <div class="bg-white p-8 rounded-lg shadow-xl text-center max-w-sm mx-4">
+                        <p class="text-lg font-semibold mb-4 text-slate-800">Tem certeza que deseja limpar todos os flashcards?</p>
+                        <div class="flex justify-center space-x-4">
+                            <button id="confirm-clear" class="bg-red-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-red-700 transition duration-300">Sim, Limpar</button>
+                            <button id="cancel-clear" class="bg-gray-300 text-slate-800 font-bold py-2 px-5 rounded-lg hover:bg-gray-400 transition duration-300">Cancelar</button>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(confirmationBox);
+
+                document.getElementById('confirm-clear').addEventListener('click', () => {
+                    flashcards = [];
+                    saveFlashcards();
+                    displayFlashcard(); // Exibir estado vazio
+                    flashcardSelector.value = "-1"; // Reseta o dropdown
+                    confirmationBox.remove();
                 });
-            }
+
+                document.getElementById('cancel-clear').addEventListener('click', () => {
+                    confirmationBox.remove();
+                });
+            });
+
+            // Carregar flashcards iniciais
+            loadFlashcards();
+            /* -------------------------------------- */
+            /* FIM DA LÓGICA DOS FLASHCARDS           */
+            /* -------------------------------------- */
         });
     </script>
 </body>
