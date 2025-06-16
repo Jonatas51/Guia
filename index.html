@@ -290,7 +290,7 @@
             justify-content: center; /* Aligns items horizontally center */
             cursor: pointer; /* Pointer cursor */
             user-select: none; /* Disables text selection */
-            transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+            transition: transform 0.6s; /* Smooth transition */
             transform-style: preserve-3d; /* Preserves 3D style for flipping effect */
             perspective: 1000px; /* Perspective for 3D effect */
         }
@@ -300,6 +300,7 @@
             height: 100%; /* Full height */
             backface-visibility: hidden; /* Hides the back face */
             display: flex; /* Flexbox */
+            flex-direction: column; /* Aligns content vertically for definition */
             align-items: center; /* Aligns items vertically center */
             justify-content: center; /* Aligns items horizontally center */
             padding: 1rem; /* Padding */
@@ -448,6 +449,80 @@
             text-decoration: line-through; /* Strikethrough for completed tasks */
             color: #64748b; /* slate-500 */
         }
+
+        /* Styling for Ad Blocks for better visual separation and pricing */
+        .ad-block {
+            background-color: #eff6ff; /* blue-50 */ /* Changed from slate-50 */
+            border: 1px solid #dbeafe; /* blue-100 */ /* Changed from slate-200 */
+            border-radius: 0.75rem; /* rounded-xl */
+            padding: 1.5rem; /* p-6 */
+            text-align: center;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08); /* Increased shadow */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .ad-block:hover {
+            transform: translateY(-3px) scale(1.01); /* Added subtle scale */
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15); /* Increased hover shadow */
+        }
+        .ad-block .ad-title {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 700; /* font-bold */
+            /* Added gradient text for more visual appeal */
+            background-image: linear-gradient(to right, #0ea5e9, #1e40af); /* sky-500 to blue-700 */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text; /* For standard compliance */
+            color: #0ea5e9; /* Fallback color */
+            margin-bottom: 0.75rem; /* mb-3 */
+        }
+        .ad-block .product-name {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #1e40af; /* blue-800 */
+            margin-bottom: 0.5rem; /* mb-2 */
+        }
+        .ad-block .product-price {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 800; /* font-extrabold */
+            color: #10b981; /* emerald-600 */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        .ad-block .product-price .disclaimer {
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 400; /* font-normal */
+            color: #64748b; /* slate-500 */
+            display: block; /* Ensures it's on a new line */
+            margin-top: 0.25rem;
+        }
+        .ad-block .ad-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f97316; /* orange-500 */
+            color: white;
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            font-weight: 700; /* font-bold */
+            transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
+            box-shadow: 0 6px 12px rgba(249, 115, 22, 0.25); /* Stronger initial shadow */
+        }
+        .ad-block .ad-button:hover {
+            background-color: #ea580c; /* orange-600 */
+            transform: translateY(-1px);
+            box-shadow: 0 8px 16px rgba(249, 115, 22, 0.35); /* Stronger hover shadow */
+        }
+        .ad-block .affiliate-text {
+            font-size: 0.75rem; /* text-xs */
+            color: #94a3b8; /* slate-400 */
+            margin-top: 1rem; /* mt-4 */
+        }
+        .ad-block img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem; /* rounded-lg */
+            margin-bottom: 1rem; /* mb-4 */
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800">
@@ -465,14 +540,14 @@
                 </div>
                 <!-- Main Navigation (with ARIA attributes) -->
                 <nav class="flex space-x-4" aria-label="Navegação Principal">
-                    <a href="#hero-section" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link" aria-label="Ir para a seção Início">Início</a>
-                    <a href="#guia" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link" aria-label="Ir para a seção Guia">Guia</a>
-                    <a href="#gerador-questoes" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link" aria-label="Ir para a seção Gerador de Questões">Gerador de Questões</a>
-                    <a href="#planejador-estudos" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link" aria-label="Ir para a seção Planejador de Estudos">Planejador de Estudos</a>
-                    <a href="#organizacao-anotacoes" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link" aria-label="Ir para a seção Gestão de Anotações e Organização">Anotações</a>
-                    <a href="#faq-section" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link" aria-label="Ir para a seção FAQ">FAQ</a>
-                    <a href="#sobre" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link" aria-label="Ir para a seção Sobre">Sobre</a>
-                    <a href="#contato" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link" aria-label="Ir para a seção Contato">Contato</a>
+                    <a href="#hero-section" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-label="Ir para a seção Início">Início</a>
+                    <a href="#guia" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-label="Ir para a seção Guia">Guia</a>
+                    <a href="#gerador-questoes" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-label="Ir para a seção Gerador de Questões">Gerador de Questões</a>
+                    <a href="#planejador-estudos" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-label="Ir para a seção Planejador de Estudos">Planejador de Estudos</a>
+                    <a href="#organizacao-anotacoes" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-label="Ir para a seção Gestão de Anotações e Organização">Anotações</a>
+                    <a href="#faq-section" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-label="Ir para a seção FAQ">FAQ</a>
+                    <a href="#sobre" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-label="Ir para a seção Sobre">Sobre</a>
+                    <a href="#contato" class="text-slate-600 hover:text-sky-500 font-medium transition duration-300 scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-label="Ir para a seção Contato">Contato</a>
                 </nav>
             </div>
         </div>
@@ -489,7 +564,7 @@
             </h2>
             <p class="max-w-3xl mx-auto text-lg text-sky-100">Nosso objetivo é te ajudar a conquistar seus objetivos acadêmicos, otimizando seu tempo, reduzindo o estresse e transformando o aprendizado em uma jornada mais leve e eficaz.</p>
             <!-- CTA button to download the free guide -->
-            <a href="#newsletter-section" class="mt-8 bg-amber-500 text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-amber-600 transition duration-300 transform hover:scale-105 inline-block scroll-link" aria-label="Baixe o Guia Gratuito">
+            <a href="#newsletter-section" class="mt-8 bg-amber-500 text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-amber-600 transition duration-300 transform hover:scale-105 inline-block scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2" aria-label="Baixe o Guia Gratuito">
                 Baixe o Guia Gratuito
             </a>
         </section>
@@ -502,7 +577,7 @@
             </div>
             <p>Obrigado pela sua inscrição! Pode descarregar o seu guia completo para o sucesso universitário aqui:</p>
             <!-- Link to the PDF (kept user's file name) -->
-            <a id="download-guide-link" href="./guia-completo-descomplica.pdf" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition duration-300 transform hover:scale-105" aria-label="Descarregar o Guia Agora">
+            <a id="download-guide-link" href="./guia-completo-descomplica.pdf" target="_blank" rel="noopener noreferrer" class="mt-4 inline-block bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-700 transition duration-300 transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2" aria-label="Descarregar o Guia Agora">
                 <i data-feather="download" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i>
                 Descarregar o Guia Agora
             </a>
@@ -534,7 +609,7 @@
                             <strong>Exemplo Prático:</strong> Quando eu estava a preparar-me para exames de fisiologia, sentia que a matéria era densa e a minha concentração falhava. Comecei a usar o Pomodoro: 25 minutos a estudar um sistema específico (ex: cardiovascular), 5 minutos a levantar-me, beber água e espreitar o telemóvel. Depois de quatro blocos, uma pausa maior para um lanche. Senti uma diferença enorme na minha capacidade de manter o foco e na absorção do conteúdo.
                         </p>
                         <p class="text-sm text-slate-500 mt-2">
-                            <strong>Estudo de Apoio:</strong> Saiba mais sobre a eficácia do Pomodoro em produtividade e aprendizado <a href="https://napratica.org.br/pomodoro/" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">aqui</a>.
+                            <strong>Estudo de Apoio:</strong> Saiba mais sobre a eficácia do Pomodoro em produtividade e aprendizado <a href="https://napratica.org.br/pomodoro/" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">aqui</a>.
                         </p>
 
                         <!-- Interactive Infographic for Pomodoro Technique (with ARIA accessibility) -->
@@ -587,47 +662,52 @@
                         </div>
 
                         <!-- Interactive Pomodoro Timer (with ARIA accessibility) -->
-                        <div class="pomodoro-timer-container bg-blue-50 p-6 rounded-lg my-8 shadow-inner flex flex-col items-center border-blue-200" role="timer" aria-live="polite">
+                        <div class="pomodoro-timer-container bg-blue-50 p-6 rounded-lg my-8 shadow-inner border-blue-200" role="timer" aria-live="polite">
                             <h4 class="text-xl font-bold mb-4 text-blue-700">Timer Pomodoro Interativo</h4>
                             <div class="flex items-center space-x-4 mb-6">
                                 <p class="pomodoro-status text-lg font-semibold" aria-atomic="true" aria-relevant="text">Foco</p>
                                 <div class="pomodoro-time" id="pomodoro-display" aria-atomic="true" aria-live="assertive">25:00</div>
                             </div>
                             <div class="pomodoro-controls flex space-x-4 mb-6">
-                                <button id="pomodoro-start" class="bg-emerald-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-600 transform hover:scale-105 transition-all duration-300" aria-label="Iniciar Timer">
+                                <button id="pomodoro-start" class="bg-emerald-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-emerald-600 transform hover:scale-105 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2" aria-label="Iniciar Timer">
                                     <i data-feather="play" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Iniciar
                                 </button>
-                                <button id="pomodoro-pause" class="bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transform hover:scale-105 transition-all duration-300" disabled aria-label="Pausar Timer">
+                                <button id="pomodoro-pause" class="bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transform hover:scale-105 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:ring-offset-2" disabled aria-label="Pausar Timer">
                                     <i data-feather="pause" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Pausar
                                 </button>
-                                <button id="pomodoro-reset" class="bg-red-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-300" aria-label="Resetar Timer">
+                                <button id="pomodoro-reset" class="bg-red-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2" aria-label="Resetar Timer">
                                     <i data-feather="rotate-ccw" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Resetar
                                 </button>
                             </div>
                             <div class="pomodoro-settings flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 text-slate-700 text-sm">
                                 <label class="flex items-center space-x-2">
                                     <span class="font-medium">Foco (min):</span>
-                                    <input type="number" id="pomodoro-focus-time" value="25" min="1" class="px-2 py-1 border border-slate-300 rounded-md text-center" aria-label="Tempo de Foco em minutos">
+                                    <input type="number" id="pomodoro-focus-time" value="25" min="1" class="px-2 py-1 border border-slate-300 rounded-md text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2" aria-label="Tempo de Foco em minutos">
                                 </label>
                                 <label class="flex items-center space-x-2">
                                     <span class="font-medium">Pausa Curta (min):</span>
-                                    <input type="number" id="pomodoro-short-break-time" value="5" min="1" class="px-2 py-1 border border-slate-300 rounded-md text-center" aria-label="Tempo de Pausa Curta em minutos">
+                                    <input type="number" id="pomodoro-short-break-time" value="5" min="1" class="px-2 py-1 border border-slate-300 rounded-md text-center focus:outline-none focus-visible:ring-2 focus:ring-blue-500 focus-visible:ring-offset-2" aria-label="Tempo de Pausa Curta em minutos">
                                 </label>
                                 <label class="flex items-center space-x-2">
                                     <span class="font-medium">Pausa Longa (min):</span>
-                                    <input type="number" id="pomodoro-long-break-time" value="15" min="1" class="px-2 py-1 border border-slate-300 rounded-md text-center" aria-label="Tempo de Pausa Longa em minutos">
+                                    <input type="number" id="pomodoro-long-break-time" value="15" min="1" class="px-2 py-1 border border-slate-300 rounded-md text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2" aria-label="Tempo de Pausa Longa em minutos">
                                 </label>
                             </div>
                         </div>
 
-                        <!-- Bloco de Anúncio 1: Amazon Affiliate Product (Moved from sidebar) -->
-                        <div class="my-8 bg-blue-50 p-4 rounded-lg border border-blue-200 text-center shadow-md">
-                            <p class="text-sm mb-2 text-blue-700 font-semibold">Recomendado para o seu foco!</p>
-                            <a href="https://www.amazon.com.br/soundcore-Cancelamento-Reprodu%C3%A7%C3%A3o-Personaliza%C3%A7%C3%A3o-Transpar%C3%AAncia/dp/B0C3HCD34R?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=10W70J1EIQSZW&dib=eyJ2IjoiMSJ9.3aIDTJpDLJwk5RDZpmB-EDiHf5LbEb91o3woLEPt0UEqYv978bNPOzvlB087c-SRqMVzM_31YKOK-b2fvYAPhz5OY8t9VL2KrEuVtmRjq3lEPIaF-fpR02kdPiAefwSbjZ3kR3Y3egpdpMC1WCzKP0p0P9d0CVU1gJfCuPYZwNMAySrrZEJ2lu0304pJvoM4FowI3jvIwbFRtWnY8Um4B-RJxLRI9ak0U9NXMeQV_n7Ww3s1pzL9Y_EbkIZyCZZp7lBSS5y2_AW1SHdDE9qnmCOvWXoF8m8eUIaYc4_iKhU.cX31oonOJidfz9gffreHthQm2GQqa_dhhBzWcHeFoW0&dib_tag=se&keywords=fone%2Bxiaomi%2Bredmi%2Bbuds&qid=1750089760&sprefix=fone%2Bxiaomi%2Bredmi%2Bbuds%2Caps%2C180&sr=8-1-spons&ufe=app_do%3Aamzn1.fos.4bddec23-2dcf-4403-8597-e1a02442043d&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=ll1&tag=descompli073a-20&linkId=62afe9fb103d2160004a4849a8d367a8&language=pt_BR&ref_=as_li_ss_tl" target="_blank" rel="nofollow noopener" aria-label="Comprar Fone de Ouvido Xiaomi Redmi Buds 4 Active na Amazon">
-                                <img src="https://m.media-amazon.com/images/I/6196rZ67rvL._AC_SX679_.jpg" alt="Fone de Ouvido Xiaomi Redmi Buds 4 Active" class="w-full h-auto block mx-auto rounded-lg mb-3" onerror="this.onerror=null;this.src='https://placehold.co/679x679/38bdf8/ffffff?text=Imagem+N%C3%A3o+Dispon%C3%ADvel';">
-                                <p class="text-sm text-slate-800 font-semibold mb-1">Xiaomi Redmi Buds 4 Active - Fone de Ouvido sem Fio</p>
-                                <p class="text-xs text-blue-600">Conforto e qualidade de som para seus estudos.</p>
+                        <!-- Bloco de Anúncio 1: Amazon Affiliate Product (Moved from sidebar and enhanced) -->
+                        <div class="my-8 ad-block">
+                            <h5 class="ad-title">Concentração Total! O Segredo para Estudos Sem Distrações</h5>
+                            <a href="https://www.amazon.com.br/soundcore-Cancelamento-Reprodu%C3%A7%C3%A3o-Personaliza%C3%A7%C3%A3o-Transpar%C3%AAncia/dp/B0C3HCD34R?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=10W70J1EIQSZW&dib=eyJ2IjoiMSJ9.3aIDTJpDLJwk5RDZpmB-EDiHf5LbEb91o3woLEPt0UEqYv978bNPOzvlB087c-SRqMVzM_31YKOK-b2fvYAPhz5OY8t9VL2KrEuTtmRjq3lEPIaF-fpR02kdPiAefwSbjZ3kR3Y3egpdpMC1WCzKP0p0P9d0CVV1gJfCuPYZwNMAySrrZEJ2lu0304pJvoM4FowI3jvIwbFRtWnY8Um4B-RJxLRI9ak0U9NXMeQV_n7Ww3s1pzL9Y_EbkIZyCZZp7lBSS5y2_AW1SHdDE9qnmCOvWXoF8m8eUIaYc4_iKhU.cX31oonOJidfz9gffreHthQm2GQqa_dhhBzWcHeFoW0&dib_tag=se&keywords=fone%2Bxiaomi%2Bredmi%2Bbuds&qid=1750089760&sprefix=fone%2Bxiaomi%2Bredmi%2Bbuds%2Caps%2C180&sr=8-1-spons&ufe=app_do%3Aamzn1.fos.4bddec23-2dcf-4403-8597-e1a02442043d&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=ll1&tag=descompli073a-20&linkId=62afe9fb103d2160004a4849a8d367a8&language=pt_BR&ref_=as_li_ss_tl" target="_blank" rel="nofollow noopener" class="block w-full max-w-sm mx-auto" aria-label="Comprar Fone de Ouvido Xiaomi Redmi Buds 4 Active na Amazon">
+                                <img src="https://m.media-amazon.com/images/I/6196rZ67rvL._AC_SX679_.jpg" alt="Fone de Ouvido Xiaomi Redmi Buds 4 Active" class="mx-auto rounded-lg mb-4 object-contain shadow-sm" onerror="this.onerror=null;this.src='https://placehold.co/679x679/38bdf8/ffffff?text=Imagem+N%C3%A3o+Dispon%C3%ADvel';" width="200" height="200">
+                                <p class="product-name">Fone de Ouvido Xiaomi Redmi Buds 4 Active: Foco e Qualidade Sonora</p>
+                                <p class="product-price">R$ 470,00 <span class="disclaimer">(Preço estimado)</span></p>
+                                <button class="ad-button focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2">
+                                    <i data-feather="shopping-cart" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i>
+                                    Comprar Agora e Focar!
+                                </button>
                             </a>
+                            <p class="affiliate-text">Link de Afiliado Amazon.</p>
                         </div>
                         <!-- End of Moved Ad Block -->
 
@@ -637,18 +717,18 @@
                             <p id="quiz-pomodoro-counter" class="text-sm text-slate-500 mb-4 text-center" aria-live="polite" aria-atomic="true"></p>
                             <div id="quiz-pomodoro-questions-container" role="region" aria-live="polite"></div>
                             <div class="flex justify-between mt-4">
-                                <button id="quiz-pomodoro-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300" disabled aria-label="Pergunta Anterior">
+                                <button id="quiz-pomodoro-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2" disabled aria-label="Pergunta Anterior">
                                     <i data-feather="arrow-left" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Anterior
                                 </button>
-                                <button id="quiz-pomodoro-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300" aria-label="Próxima Pergunta">
+                                <button id="quiz-pomodoro-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-label="Próxima Pergunta">
                                     <i data-feather="arrow-right" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Próxima
                                 </button>
-                                <button id="quiz-pomodoro-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden" aria-label="Ver Resultados do Quiz">
+                                <button id="quiz-pomodoro-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2" aria-label="Ver Resultados do Quiz">
                                     <i data-feather="check-circle" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Ver Resultados
                                 </button>
                             </div>
                             <div id="quiz-pomodoro-result" class="mt-4 text-center font-semibold" aria-live="polite"></div>
-                            <button id="quiz-pomodoro-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block" aria-label="Tentar Novamente o Quiz">
+                            <button id="quiz-pomodoro-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2" aria-label="Tentar Novamente o Quiz">
                                 <i data-feather="refresh-ccw" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Tentar Novamente
                             </button>
                         </div>
@@ -674,18 +754,18 @@
                             <p id="quiz-estudoAtivo-counter" class="text-sm text-slate-500 mb-4 text-center" aria-live="polite" aria-atomic="true"></p>
                             <div id="quiz-estudoAtivo-questions-container" role="region" aria-live="polite"></div>
                             <div class="flex justify-between mt-4">
-                                <button id="quiz-estudoAtivo-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300" disabled aria-label="Pergunta Anterior">
+                                <button id="quiz-estudoAtivo-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2" disabled aria-label="Pergunta Anterior">
                                     <i data-feather="arrow-left" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Anterior
                                 </button>
-                                <button id="quiz-estudoAtivo-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300" aria-label="Próxima Pergunta">
+                                <button id="quiz-estudoAtivo-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-label="Próxima Pergunta">
                                     <i data-feather="arrow-right" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Próxima
                                 </button>
-                                <button id="quiz-estudoAtivo-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden" aria-label="Ver Resultados do Quiz">
+                                <button id="quiz-estudoAtivo-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2" aria-label="Ver Resultados do Quiz">
                                     <i data-feather="check-circle" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Ver Resultados
                                 </button>
                             </div>
                             <div id="quiz-estudoAtivo-result" class="mt-4 text-center font-semibold" aria-live="polite"></div>
-                            <button id="quiz-estudoAtivo-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block" aria-label="Tentar Novamente o Quiz">
+                            <button id="quiz-estudoAtivo-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2" aria-label="Tentar Novamente o Quiz">
                                 <i data-feather="refresh-ccw" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Tentar Novamente
                             </button>
                         </div>
@@ -694,7 +774,7 @@
                         <p>A <strong>Repetição Espaçada</strong> é um método que envolve revisar o material em intervalos crescentes de tempo. Em vez de rever tudo todos os dias, você revisa mais frequentemente o que tem dificuldade e menos o que já domina.</p>
                         <ul class="list-disc list-inside">
                             <li><strong>Ferramentas:</strong> Aplicações como <strong>Anki</strong> e <strong>Quizlet</strong> são excelentes para implementar a repetição espaçada com flashcards.</li>
-                            <li><strong>Estudo/Artigo de Apoio:</strong> A pesquisa sobre a <strong>curva de esquecimento de Ebbinghaus</strong> é a base para a eficácia da repetição espaçada. Pode ler mais sobre o assunto <a href="https://en.wikipedia.org/wiki/Forgetting_curve" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">aqui</a> (em inglês).</li>
+                            <li><strong>Estudo/Artigo de Apoio:</strong> A pesquisa sobre a <strong>curva de esquecimento de Ebbinghaus</strong> é a base para a eficácia da repetição espaçada. Pode ler mais sobre o assunto <a href="https://en.wikipedia.org/wiki/Forgetting_curve" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">aqui</a> (em inglês).</li>
                         </ul>
                         <p class="italic text-slate-600 border-l-4 border-sky-400 pl-4 py-2 my-4 rounded-md">
                             <strong>Exemplo Prático:</strong> Eu usava o Anki para as aulas de anatomia. Criava flashcards com imagens de músculos e seus nomes, e o aplicativo me mostrava os cartões em intervalos otimizados, fazendo com que eu revisasse o que eu esquecia com mais frequência, e o que eu já sabia ficava para depois. Foi essencial para memorizar tantos termos!
@@ -707,18 +787,18 @@
                                 <div class="flex items-end gap-2">
                                     <div class="flex-grow">
                                         <label for="flashcard-term" class="block text-slate-700 text-sm font-bold mb-2">Termo:</label>
-                                        <input type="text" id="flashcard-term" placeholder="Digite o termo" class="w-full px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500" aria-required="true" aria-label="Termo do flashcard">
+                                        <input type="text" id="flashcard-term" placeholder="Digite o termo" class="w-full px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2" aria-required="true" aria-label="Termo do flashcard">
                                     </div>
-                                    <button id="generate-definition" class="whitespace-nowrap bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 transform hover:scale-105 flex items-center justify-center" aria-label="Gerar Definição com IA">
+                                    <button id="generate-definition" class="whitespace-nowrap bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 transform hover:scale-105 flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2" aria-label="Gerar Definição com IA">
                                         Gerar Definição ✨
                                         <i data-feather="loader" class="animate-spin ml-2 hidden" id="definition-loader" aria-hidden="true"></i>
                                     </button>
                                 </div>
                                 <div>
                                     <label for="flashcard-definition" class="block text-slate-700 text-sm font-bold mb-2">Definição:</label>
-                                    <textarea id="flashcard-definition" placeholder="Digite a definição" rows="3" class="w-full px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500" aria-required="true" aria-label="Definição do flashcard"></textarea>
+                                    <textarea id="flashcard-definition" placeholder="Digite a definição" rows="3" class="w-full px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2" aria-required="true" aria-label="Definição do flashcard"></textarea>
                                 </div>
-                                <button id="add-flashcard" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105" aria-label="Adicionar Flashcard">
+                                <button id="add-flashcard" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2" aria-label="Adicionar Flashcard">
                                     <i data-feather="plus-circle" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Adicionar Flashcard
                                 </button>
                             </div>
@@ -728,7 +808,7 @@
                                 <!-- Dropdown to select Flashcard (with ARIA accessibility) -->
                                 <div class="mb-4">
                                     <label for="flashcard-selector" class="block text-slate-700 text-sm font-bold mb-2">Selecione um Flashcard:</label>
-                                    <select id="flashcard-selector" class="w-full px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500" aria-label="Selecione um flashcard para revisar">
+                                    <select id="flashcard-selector" class="w-full px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2" aria-label="Selecione um flashcard para revisar">
                                         <option value="-1">Nenhum flashcard para selecionar...</option>
                                     </select>
                                 </div>
@@ -745,15 +825,36 @@
                             </div>
                             
                             <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
-                                <button id="delete-current-flashcard" class="w-full bg-red-400 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-500 transition duration-300 transform hover:scale-105" aria-label="Excluir Flashcard Atual">
+                                <button id="delete-current-flashcard" class="w-full bg-red-400 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-500 transition duration-300 transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2" aria-label="Excluir Flashcard Atual">
                                     <i data-feather="trash" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Excluir Flashcard Atual
                                 </button>
-                                <button id="clear-flashcards" class="w-full bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 transform hover:scale-105" aria-label="Limpar todos os Flashcards">
+                                <button id="clear-flashcards" class="w-full bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2" aria-label="Limpar todos os Flashcards">
                                     <i data-feather="trash-2" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Limpar Todos
                                 </button>
                             </div>
                             <p id="flashcard-count" class="text-sm text-slate-600 mt-4 text-center" aria-live="polite">Total de flashcards: 0</p>
                         </div>
+
+                       <!-- Bloco de Anúncio para Garrafa Térmica -->
+<div class="my-8 ad-block">
+    <h5 class="ad-title">Energia Constante! Mantenha a Concentração (e a Bebida!) no Ponto Certo</h5>
+    <a href="https://www.amazon.com.br/Garrafa-T%C3%A9rmica-Caf%C3%A9-Sensor-Temperatura/dp/B09FFLXHG7?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3EF4ZAVLPA713&dib=eyJ2IjoiMSJ9.dfV-x6ni2wDVUmBmR6Z5stSJZl-HsvfGOYzUGO9H1oYfDkG3cenADQH7PkRnvDrd2yzcPzP-wQYQzNEo_elsIwkHbU7AIJgNzOpqJKeDGjK5ilbuIpqYaOATVVTdu_91oZ3rqC2PbK-NucifEWljdQ_r2l8Z54REvcfXAxsbNwGCtQCEHI-G8mTnbWiFU4siN-r1vnx_WDXRsME7eXQICPNLLo6LzFV1d1AxHytYFNNaIaAl4Wwxe1Aisw1kYpOl1A3HFHLzTkpd7zzq0S8fZuYsJM8MaDzgDIBAk9UNOT8.hK3ODbAi-e7tYp2sZuAGatcc3SEKlFeCmHb-Q4sNL98&dib_tag=se&keywords=garrafas%2Bcom%2Bmarca%C3%A7%C3%A3o%2Bde%2Btem&qid=1749926300&sprefix=garrafas%2Bcom%2Bmarca%C3%A7%C3%A3o%2Bde%2Btem%2Caps%2C159&sr=8-35&th=1&linkCode=ll1&tag=descompli073a-20&linkId=4058f6b66dc659ef80428e5137b87b60&language=pt_BR&ref_=as_li_ss_tl" 
+       target="_blank" rel="nofollow noopener" class="block w-full max-w-sm mx-auto" aria-label="Ver Garrafa Térmica na Amazon">
+        <img src="https://m.media-amazon.com/images/I/61jXEY3II0L._AC_SX679_.jpg"
+             alt="Garrafa Térmica com Sensor de Temperatura"
+             class="mx-auto rounded-lg mb-4 object-contain shadow-sm"
+             width="200" height="200">
+        <p class="product-name">Garrafa Térmica Inteligente: Hidratação Perfeita para Longas Horas de Estudo</p>
+        <p class="product-price">R$ 89,90 <span class="disclaimer">(Preço estimado)</span></p>
+        <button class="ad-button">
+            <i data-feather="coffee" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i>
+            Garanta a Sua!
+        </button>
+    </a>
+    <p class="affiliate-text">Link de Afiliado Amazon.</p>
+</div>
+
+                        <!-- Fim do Bloco de Anúncio para Tablet -->
 
                         <!-- Quiz for the Spaced Repetition section -->
                         <div id="quiz-repeticaoEspacada-section" class="quiz-section bg-amber-50 p-6 rounded-lg my-8 shadow-inner border-amber-100" role="group" aria-labelledby="quiz-repeticaoEspacada-title">
@@ -761,18 +862,18 @@
                             <p id="quiz-repeticaoEspacada-counter" class="text-sm text-slate-500 mb-4 text-center" aria-live="polite" aria-atomic="true"></p>
                             <div id="quiz-repeticaoEspacada-questions-container" role="region" aria-live="polite"></div>
                             <div class="flex justify-between mt-4">
-                                <button id="quiz-repeticaoEspacada-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300" disabled aria-label="Pergunta Anterior">
+                                <button id="quiz-repeticaoEspacada-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2" disabled aria-label="Pergunta Anterior">
                                     <i data-feather="arrow-left" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Anterior
                                 </button>
-                                <button id="quiz-repeticaoEspacada-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300" aria-label="Próxima Pergunta">
+                                <button id="quiz-repeticaoEspacada-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-label="Próxima Pergunta">
                                     <i data-feather="arrow-right" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Próxima
                                 </button>
-                                <button id="quiz-repeticaoEspacada-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden" aria-label="Ver Resultados do Quiz">
+                                <button id="quiz-repeticaoEspacada-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2" aria-label="Ver Resultados do Quiz">
                                     <i data-feather="check-circle" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Ver Resultados
                                 </button>
                             </div>
                             <div id="quiz-repeticaoEspacada-result" class="mt-4 text-center font-semibold" aria-live="polite"></div>
-                            <button id="quiz-repeticaoEspacada-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block" aria-label="Tentar Novamente o Quiz">
+                            <button id="quiz-repeticaoEspacada-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2" aria-label="Tentar Novamente o Quiz">
                                 <i data-feather="refresh-ccw" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Tentar Novamente
                             </button>
                         </div>
@@ -786,7 +887,7 @@
                             <strong>Exemplo Prático:</strong> Para entender conceitos complexos de programação orientada a objetos, eu desenhava um mapa mental. No centro, "POO". Ramos para "Encapsulamento", "Herança", "Polimorfismo". De "Encapsulamento", puxava para "Classes", "Atributos", "Métodos". Usava cores diferentes para cada pilar, o que me ajudava a ver as conexões e a organizar a informação na minha mente.
                         </p>
                         <p class="text-sm text-slate-500 mt-2">
-                            <strong>Estudo de Apoio:</strong> A eficácia dos mapas mentais na aprendizagem visual é amplamente reconhecida. Veja um estudo sobre o tema: <a href="https://revistas.uece.br/index.php/redufor/article/view/13292" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">Pesquisa</a>.
+                            <strong>Estudo de Apoio:</strong> A eficácia dos mapas mentais na aprendizagem visual é amplamente reconhecida. Veja um estudo sobre o tema: <a href="https://revistas.uece.br/index.php/redufor/article/view/13292" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">Pesquisa</a>.
                         </p>
                         <!-- Quiz for the Mind Maps section -->
                         <div id="quiz-mapasMentais-section" class="quiz-section bg-amber-50 p-6 rounded-lg my-8 shadow-inner border-amber-100" role="group" aria-labelledby="quiz-mapasMentais-title">
@@ -794,18 +895,18 @@
                             <p id="quiz-mapasMentais-counter" class="text-sm text-slate-500 mb-4 text-center" aria-live="polite" aria-atomic="true"></p>
                             <div id="quiz-mapasMentais-questions-container" role="region" aria-live="polite"></div>
                             <div class="flex justify-between mt-4">
-                                <button id="quiz-mapasMentais-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300" disabled aria-label="Pergunta Anterior">
+                                <button id="quiz-mapasMentais-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2" disabled aria-label="Pergunta Anterior">
                                     <i data-feather="arrow-left" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Anterior
                                 </button>
-                                <button id="quiz-mapasMentais-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300" aria-label="Próxima Pergunta">
+                                <button id="quiz-mapasMentais-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-label="Próxima Pergunta">
                                     <i data-feather="arrow-right" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Próxima
                                 </button>
-                                <button id="quiz-mapasMentais-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden" aria-label="Ver Resultados do Quiz">
+                                <button id="quiz-mapasMentais-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2" aria-label="Ver Resultados do Quiz">
                                     <i data-feather="check-circle" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Ver Resultados
                                 </button>
                             </div>
                             <div id="quiz-mapasMentais-result" class="mt-4 text-center font-semibold" aria-live="polite"></div>
-                            <button id="quiz-mapasMentais-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block" aria-label="Tentar Novamente o Quiz">
+                            <button id="quiz-mapasMentais-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2" aria-label="Tentar Novamente o Quiz">
                                 <i data-feather="refresh-ccw" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Tentar Novamente
                             </button>
                         </div>
@@ -819,7 +920,7 @@
                             <strong>Exemplo Prático:</strong> Em química, quando eu tinha dificuldade em entender a Lei de Hess, eu imaginava que estava explicando para o meu sobrinho. Começava com "Imagine que você quer ir de casa para a escola. Você pode ir direto, ou pode passar na padaria e depois na casa do amigo. O caminho total é o mesmo, a energia é igual!". Se eu travava, era sinal de que precisava rever a teoria.
                         </p>
                         <p class="text-sm text-slate-500 mt-2">
-                            <strong>Estudo de Apoio:</strong> A Técnica Feynman é uma forma poderosa de metaconsciência. Saiba mais: <a href="https://napratica.org.br/aprenda-rapido-com-tecnica-feynman/" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">Artigo sobre Metacognição e Feynman</a>.
+                            <strong>Estudo de Apoio:</strong> A Técnica Feynman é uma forma poderosa de metaconsciência. Saiba mais: <a href="https://napratica.org.br/aprenda-rapido-com-tecnica-feynman/" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">Artigo sobre Metacognição e Feynman</a>.
                         </p>
                         <!-- Quiz for the Feynman Technique section -->
                         <div id="quiz-tecnicaFeynman-section" class="quiz-section bg-amber-50 p-6 rounded-lg my-8 shadow-inner border-amber-100" role="group" aria-labelledby="quiz-tecnicaFeynman-title">
@@ -827,18 +928,18 @@
                             <p id="quiz-tecnicaFeynman-counter" class="text-sm text-slate-500 mb-4 text-center" aria-live="polite" aria-atomic="true"></p>
                             <div id="quiz-tecnicaFeynman-questions-container" role="region" aria-live="polite"></div>
                             <div class="flex justify-between mt-4">
-                                <button id="quiz-tecnicaFeynman-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300" disabled aria-label="Pergunta Anterior">
+                                <button id="quiz-tecnicaFeynman-prev" class="bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg hover:bg-gray-400 transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2" disabled aria-label="Pergunta Anterior">
                                     <i data-feather="arrow-left" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Anterior
                                 </button>
-                                <button id="quiz-tecnicaFeynman-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300" aria-label="Próxima Pergunta">
+                                <button id="quiz-tecnicaFeynman-next" class="bg-sky-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-sky-700 transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-label="Próxima Pergunta">
                                     <i data-feather="arrow-right" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Próxima
                                 </button>
-                                <button id="quiz-tecnicaFeynman-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden" aria-label="Ver Resultados do Quiz">
+                                <button id="quiz-tecnicaFeynman-submit-final" class="bg-emerald-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-emerald-700 transition duration-300 hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2" aria-label="Ver Resultados do Quiz">
                                     <i data-feather="check-circle" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Ver Resultados
                                 </button>
                             </div>
                             <div id="quiz-tecnicaFeynman-result" class="mt-4 text-center font-semibold" aria-live="polite"></div>
-                            <button id="quiz-tecnicaFeynman-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block" aria-label="Tentar Novamente o Quiz">
+                            <button id="quiz-tecnicaFeynman-retry" class="mt-4 bg-purple-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-purple-700 transition duration-300 hidden mx-auto block focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2" aria-label="Tentar Novamente o Quiz">
                                 <i data-feather="refresh-ccw" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Tentar Novamente
                             </button>
                         </div>
@@ -857,9 +958,9 @@
                             <div class="space-y-4 mb-6">
                                 <div>
                                     <label for="study-text-input" class="block text-slate-700 text-sm font-bold mb-2">Cole o texto aqui:</label>
-                                    <textarea id="study-text-input" placeholder="Cole o seu texto de estudo aqui para gerar questões..." rows="8" class="w-full px-4 py-2 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500" aria-required="true" aria-label="Campo para colar texto de estudo"></textarea>
+                                    <textarea id="study-text-input" placeholder="Cole o seu texto de estudo aqui para gerar questões..." rows="8" class="w-full px-4 py-2 border border-indigo-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2" aria-required="true" aria-label="Campo para colar texto de estudo"></textarea>
                                 </div>
-                                <button id="generate-questions-btn" class="w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition duration-300 transform hover:scale-105 shadow-md flex items-center justify-center" aria-label="Gerar Questões a partir do texto">
+                                <button id="generate-questions-btn" class="w-full bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition duration-300 transform hover:scale-105 shadow-md flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2" aria-label="Gerar Questões a partir do texto">
                                     Gerar Questões ✨
                                     <i data-feather="loader" class="animate-spin ml-2 hidden" id="questions-loader" aria-hidden="true"></i>
                                 </button>
@@ -867,7 +968,7 @@
                             <div id="generated-questions-output" class="bg-white p-4 rounded-lg border border-indigo-200 min-h-[100px] text-slate-700 leading-relaxed overflow-auto" aria-live="polite" aria-atomic="true" tabindex="0">
                                 <p class="text-slate-500 italic">As questões geradas aparecerão aqui.</p>
                             </div>
-                            <button id="clear-generated-questions" class="mt-4 bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 transform hover:scale-105 hidden" aria-label="Limpar Questões Geradas">
+                            <button id="clear-generated-questions" class="mt-4 bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 transform hover:scale-105 hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2" aria-label="Limpar Questões Geradas">
                                 <i data-feather="trash-2" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Limpar Questões
                             </button>
                         </div>
@@ -875,16 +976,30 @@
 
                         <hr class="my-10 border-t-2 border-slate-200">
 
-                        <!-- Novo Bloco de Anúncio: Notebook para Estudos (Adicionado acima do Planejador de Estudos) -->
-                        <div class="my-8 text-center">
-                          <a href="https://amzn.to/43LnJeC" target="_blank" rel="noopener noreferrer nofollow" class="inline-block bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 transition duration-300 transform hover:scale-105 shadow-md" aria-label="Comprar Notebook para Estudos na Amazon">
-                            <i data-feather="laptop" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i>
-                            Otimize seus estudos com um Notebook!
-                          </a>
-                        </div>
-                        <!-- Fim do Novo Bloco de Anúncio -->
-                         
-                        <h3 id="planejador-estudos">3. Planejador de Estudos Personalizado com IA</h3>
+                       
+                        
+<!-- Bloco de Anúncio Atualizado: Carregador Portátil -->
+<div class="my-8 ad-block">
+    <h5 class="ad-title">Nunca Mais Fique Sem Bateria! Mantenha Seus Dispositivos Prontos para a Jornada Académica</h5>
+    <a href="https://www.amazon.com.br/Carregador-Port%C3%A1til-M%C3%BAltiplas-Inteligente-Dispositivos/dp/B0F3Q19G17?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&dib=eyJ2IjoiMSJ9.Ufu3vzAJpjnol06O0Cnl-y8y674CIJpMIVZQZTjcsRVG4636vTBiskVHp8-jJxoDWW3mY7aY7HxavjDo9zMK0Cnl-y8y674CIJpMIVZQZTjcsRVG4636vTBiskVHp8-jJxoDWW3mY7aY7HxavdDo9zMK0rNUjH44fbMcGgx6SmCOMKLv-ftJzb4hvBnUcAq-nZnNJVyVQKn0LuP0m1FAmtdTrwvUT77o0vRDYX0ZjiMaPdK2oIHVjaqfqunDyU7896oux9L2_Wus5s5ZGSDZAJEsvQzW4LzzKTEnvTpVUHqpjI4lpr1vBb4KfFRP-7oqgfhA9ln4SpuZG2RFPaC_lXrnm-Ras_odxe9gZxKQ9oXGaZ4.WncGWBd44ExbRYr6orrPBuDpKbf9WPnm069tUBOkoMY&dib_tag=se&keywords=Power%2BBank&qid=1750093795&sr=8-1-spons&ufe=app_do%3Aamzn1.fos.6121c6c4-c969-43ae-92f7-cc248fc6181d&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=ll1&tag=descompli073a-20&linkId=ddf93884c677067998cfb75f555097b8&language=pt_BR&ref_=as_li_ss_tl"
+       target="_blank" rel="nofollow noopener" class="block w-full max-w-sm mx-auto" aria-label="Ver Carregador Portátil na Amazon">
+        <img src="https://m.media-amazon.com/images/I/61B6bOYbaZL._AC_SL1000_.jpg"
+             alt="Carregador Portátil Inteligente"
+             class="mx-auto rounded-lg mb-4 object-contain shadow-sm"
+             width="200" height="200">
+        <p class="product-name">Power Bank de Alta Capacidade: Liberdade para Estudar Onde Quiser</p>
+        <p class="product-price">R$ 119,90 <span class="disclaimer">(Preço estimado)</span></p>
+        <button class="ad-button">
+            <i data-feather="battery-charging" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i>
+            Adquirir o Seu!
+        </button>
+    </a>
+    <p class="affiliate-text">Link de Afiliado Amazon.</p>
+</div>
+<!-- Fim do Novo Bloco de Anúncio -->
+
+
+<h3 id="planejador-estudos">3. Planejador de Estudos Personalizado com IA</h3>
                         <p>Gerencie sua carga de estudo de forma inteligente! Informe suas disciplinas, prazos e a duração do plano, e nossa IA (via Gemini) irá sugerir um cronograma de estudos otimizado, aplicando princípios de produtividade como a Técnica Pomodoro e a Repetição Espaçada.</p>
 
                         <div class="bg-green-50 p-6 rounded-lg my-8 shadow-inner border border-green-200" role="region" aria-labelledby="planner-title">
@@ -895,24 +1010,24 @@
                             <div class="space-y-4 mb-6">
                                 <div>
                                     <label for="study-plan-subjects" class="block text-slate-700 text-sm font-bold mb-2">Suas Disciplinas/Tópicos (um por linha):</label>
-                                    <textarea id="study-plan-subjects" placeholder="Ex: Matemática (Cálculo I)&#10;Português (Gramática)&#10;História (Idade Média)" rows="4" class="w-full px-4 py-2 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500" aria-required="true" aria-label="Disciplinas ou tópicos de estudo"></textarea>
+                                    <textarea id="study-plan-subjects" placeholder="Ex: Matemática (Cálculo I)&#10;Português (Gramática)&#10;História (Idade Média)" rows="4" class="w-full px-4 py-2 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2" aria-required="true" aria-label="Disciplinas ou tópicos de estudo"></textarea>
                                 </div>
                                 <div>
                                     <label for="study-plan-deadlines" class="block text-slate-700 text-sm font-bold mb-2">Prazos e Exames (um por linha, com data se possível):</label>
-                                    <textarea id="study-plan-deadlines" placeholder="Ex: Exame de Cálculo: 20/07/2025&#10;Trabalho de Gramática: 10/07/2025" rows="3" class="w-full px-4 py-2 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500" aria-required="true" aria-label="Prazos e datas de exames"></textarea>
+                                    <textarea id="study-plan-deadlines" placeholder="Ex: Exame de Cálculo: 20/07/2025&#10;Trabalho de Gramática: 10/07/2025" rows="3" class="w-full px-4 py-2 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2" aria-required="true" aria-label="Prazos e datas de exames"></textarea>
                                 </div>
                                 <div>
                                     <label for="study-plan-start-date" class="block text-slate-700 text-sm font-bold mb-2">Data de Início do Plano:</label>
-                                    <input type="date" id="study-plan-start-date" class="w-full px-4 py-2 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500" aria-required="true" aria-label="Data de início do plano de estudos">
+                                    <input type="date" id="study-plan-start-date" class="w-full px-4 py-2 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2" aria-required="true" aria-label="Data de início do plano de estudos">
                                 </div>
                                 <div>
                                     <label for="study-plan-duration" class="block text-slate-700 text-sm font-bold mb-2">Duração do Plano (em dias):</label>
-                                    <input type="number" id="study-plan-duration" value="7" min="1" max="30" class="w-full px-4 py-2 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500" aria-required="true" aria-label="Duração do plano de estudos em dias">
+                                    <input type="number" id="study-plan-duration" value="7" min="1" max="30" class="w-full px-4 py-2 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2" aria-required="true" aria-label="Duração do plano de estudos em dias">
                                 </div>
                                 <!-- New input for study intensity -->
                                 <div>
                                     <label for="study-plan-intensity" class="block text-slate-700 text-sm font-bold mb-2">Intensidade de Estudo Diária:</label>
-                                    <select id="study-plan-intensity" class="w-full px-4 py-2 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500" aria-label="Intensidade de estudo diária">
+                                    <select id="study-plan-intensity" class="w-full px-4 py-2 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2" aria-label="Intensidade de estudo diária">
                                         <option value="moderada">Moderada</option>
                                         <option value="leve">Leve</option>
                                         <option value="intensa">Intensa</option>
@@ -921,9 +1036,9 @@
                                 <!-- New input for preferred study times -->
                                 <div>
                                     <label for="study-plan-preferred-times" class="block text-slate-700 text-sm font-bold mb-2">Períodos Preferenciais para Estudo (ex: manhã, tarde, noite, fins de semana):</label>
-                                    <input type="text" id="study-plan-preferred-times" placeholder="Ex: manhã, tarde, fins de semana" class="w-full px-4 py-2 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500" aria-label="Períodos preferenciais para estudo">
+                                    <input type="text" id="study-plan-preferred-times" placeholder="Ex: manhã, tarde, fins de semana" class="w-full px-4 py-2 border border-green-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2" aria-label="Períodos preferenciais para estudo">
                                 </div>
-                                <button id="generate-study-plan-btn" class="w-full bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 transition duration-300 transform hover:scale-105 shadow-md flex items-center justify-center" aria-label="Gerar Plano de Estudos">
+                                <button id="generate-study-plan-btn" class="w-full bg-green-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-green-700 transition duration-300 transform hover:scale-105 shadow-md flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2" aria-label="Gerar Plano de Estudos">
                                     Gerar Plano ✨
                                     <i data-feather="loader" class="animate-spin ml-2 hidden" id="study-plan-loader" aria-hidden="true"></i>
                                 </button>
@@ -931,7 +1046,7 @@
                             <div id="generated-study-plan-output" class="bg-white p-4 rounded-lg border border-green-200 min-h-[100px] text-slate-700 leading-relaxed overflow-auto" aria-live="polite" aria-atomic="true" tabindex="0">
                                 <p class="text-slate-500 italic">O seu plano de estudos gerado aparecerá aqui.</p>
                             </div>
-                            <button id="clear-study-plan" class="mt-4 bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 transform hover:scale-105 hidden" aria-label="Limpar Plano de Estudos">
+                            <button id="clear-study-plan" class="mt-4 bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 transform hover:scale-105 hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2" aria-label="Limpar Plano de Estudos">
                                 <i data-feather="trash-2" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i> Limpar Plano
                                 </button>
                             </div>
@@ -953,7 +1068,7 @@
                         <p>A forma como organiza as suas anotações e materiais de estudo tem um impacto direto na sua capacidade de reter informações e aceder a elas rapidamente. Um sistema de organização eficiente pode poupar-lhe tempo e reduzir o estresse na altura dos exames.</p>
                         <h4 id="tecnicas-anotacao">5.1. Técnicas de Anotação Eficazes</h4>
                         <ul class="list-disc list-inside">
-                            <li><strong>Método Cornell:</strong> Divida a página em três secções: notas principais, pistas/palavras-chave e um resumo na parte inferior. Isso facilita a revisão e a recuperação ativa.</li>
+                            <li><strong>Método Cornell:</strong> Divida a página em três secções: notas principais, pistas/palavras-chave e um resumo na parte inferior. Isto facilita a revisão e a recuperação ativa.</li>
                             <li><strong>Mapeamento:</strong> Ideal para visualizar relações entre ideias, similar a mapas mentais, mas focado na hierarquia de anotações.</li>
                             <li><strong>Anotações Lineares:</strong> O método tradicional de bullet points ou frases curtas, útil para conteúdos sequenciais.</li>
                             <li><strong>Esquemas:</strong> Use hierarquias e indentação para organizar informações, destacando pontos principais e sub-pontos.</li>
@@ -1027,10 +1142,10 @@
                             <!-- Removed "Biblioteca de Modelos" section as requested -->
                             <li><strong>Lista de Ferramentas Recomendadas:</strong>
                                 <ul class="list-circle list-inside ml-5">
-                                    <li><strong>Notion:</strong> Para organização de notas, projetos e bases de dados pessoais (<a href="https://www.notion.so/" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">Site Oficial</a>).</li>
-                                    <li><strong>Grammarly:</strong> Assistente de escrita para correção gramatical e estilística (<a href="https://www.grammarly.com/" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">Site Oficial</a>).</li>
-                                    <li><strong>Mendeley/Zotero:</strong> Gerenciadores de referências para artigos científicos (<a href="https://www.mendeley.com/" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">Mendeley</a>, <a href="https://www.zotero.org/" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">Zotero</a>).</li>
-                                    <li><strong>Forest:</strong> Aplicativo de produtividade que ajuda a manter o foco plantando uma árvore virtual enquanto você estuda (<a href="https://www.forestapp.cc/" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600">Site Oficial</a>).</li>
+                                    <li><strong>Notion:</strong> Para organização de notas, projetos e bases de dados pessoais (<a href="https://www.notion.so/" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">Site Oficial</a>).</li>
+                                    <li><strong>Grammarly:</strong> Assistente de escrita para correção gramatical e estilística (<a href="https://www.grammarly.com/" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">Site Oficial</a>).</li>
+                                    <li><strong>Mendeley/Zotero:</strong> Gerenciadores de referências para artigos científicos (<a href="https://www.mendeley.com/" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">Mendeley</a>, <a href="https://www.zotero.org/" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">Zotero</a>).</li>
+                                    <li><strong>Forest:</strong> Aplicativo de produtividade que ajuda a manter o foco plantando uma árvore virtual enquanto você estuda (<a href="https://www.forestapp.cc/" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">Site Oficial</a>).</li>
                                 </ul>
                             </li>
                         </ul>
@@ -1055,37 +1170,37 @@
                     </h3>
                     <ul class="space-y-4">
                         <li>
-                            <a href="#gerador-questoes" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link">
+                            <a href="#gerador-questoes" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">
                                 Gerador de Questões de Estudo ✨
                             </a>
                             <p class="text-sm text-slate-500 mt-1">Crie questões personalizadas a partir do seu texto.</p>
                         </li>
                         <li>
-                            <a href="#planejador-estudos" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link">
+                            <a href="#planejador-estudos" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">
                                 Planejador de Estudos Personalizado ✨
                             </a>
                             <p class="text-sm text-slate-500 mt-1">Gere um plano de estudos otimizado com base em suas necessidades.</p>
                         </li>
                         <li>
-                            <a href="#superando-procrastinacao" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link">
+                            <a href="#superando-procrastinacao" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">
                                 Superando a Procrastinação na Universidade
                             </a>
                             <p class="text-sm text-slate-500 mt-1">Dicas práticas para manter o foco e evitar a temida procrastinação.</p>
                         </li>
                         <li>
-                            <a href="#organizacao-anotacoes" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link">
+                            <a href="#organizacao-anotacoes" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">
                                 Gestão de Anotações e Organização
                             </a>
                             <p class="text-sm text-slate-500 mt-1">Descubra técnicas para organizar suas anotações e materiais de estudo.</p>
                         </li>
                         <li>
-                            <a href="#expansao-personalizacao" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link">
+                            <a href="#expansao-personalizacao" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">
                                 Expansão e Personalização do Conteúdo
                             </a>
                             <p class="text-sm text-slate-500 mt-1">Descubra novos métodos de gestão de tempo, bem-estar e habilidades académicas.</p>
                         </li>
                         <li>
-                            <a href="#equilibrio-vida-academica" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link">
+                            <a href="#equilibrio-vida-academica" class="block text-lg text-sky-600 hover:text-sky-800 font-semibold transition duration-300 scroll-link focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">
                                 Equilíbrio Vida Acadêmica e Pessoal: É Possível!
                             </a>
                             <p class="text-sm text-slate-500 mt-1">Descubra como conciliar estudos, trabalho e lazer sem surtar.</p>
@@ -1104,25 +1219,30 @@
                         <div>
                             <label for="email" class="sr-only">O seu Email</label>
                             <input type="email" id="email" name="email" placeholder="O seu melhor email" required
-                                class="w-full px-4 py-3 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+                                class="w-full px-4 py-3 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                 autocomplete="email" aria-required="true">
                         </div>
                         <button type="submit"
-                            class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105 shadow-md">
+                            class="w-full bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105 shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
                             <i data-feather="send" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i>
                             Quero o Guia!
                         </button>
                     </form>
                 </section>
 
-                <!-- Bloco de Anúncio: Luminária de Mesa Ajustável (MOVIDO PARA A BARRA LATERAL) -->
-                <div class="my-8 bg-blue-50 p-4 rounded-lg border border-blue-200 text-center shadow-md">
-                    <p class="text-sm mb-2 text-blue-700 font-semibold">Iluminação ideal para o seu espaço de estudo!</p>
-                    <a href="https://www.amazon.com.br/Lumin%C3%A1ria-Mesa-Ajust%C3%A1vel-Porta-Caneta/dp/B0F88M5KPP?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=Y9XK1I0GW238&dib=eyJ2IjoiMSJ9.FaVIPusNv6XmREXSBR7doNe7wq0KXGxksuhrReVYKyFUR_JagNuyZkFe7luFLDqFXek2K4RGDWBoCmu9czt9sZYA69UWrBIMX9N9TEpESIk.gUeNKyJ6-Z7DQAsJ8xc9DcKRB0r3qUET4wTRka_y9gQ&dib_tag=se&keywords=Lumin%C3%A1rias+LED+com+ajuste+de+temperatura+de+cor+e+intensidade.&qid=1749912132&sprefix=lumin%C3%A1rias+led+com+ajuste+de+temperatura+de+cor+e+intensidade+%2Caps%2C196&sr=8-97-spons&ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9&xpid=uFwsq_G7bFnGM&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGZfbmV4dA&psc=1&linkCode=ll1&tag=descompli073a-20&linkId=c46fba64ad66cbfd476d4baffc3cf5c1&language=pt_BR&ref_=as_li_ss_tl" target="_blank" rel="nofollow noopener" aria-label="Comprar Luminária de Mesa Ajustável com Porta-Caneta na Amazon">
-                        <img src="https://m.media-amazon.com/images/I/61gR5i4d7AL._AC_SL1500_.jpg" alt="Luminária de Mesa LED Ajustável com Porta-Caneta" class="w-full h-auto block mx-auto rounded-lg mb-3" onerror="this.onerror=null;this.src='https://placehold.co/1500x1500/38bdf8/ffffff?text=Lumin%C3%A1ria+N%C3%A3o+Dispon%C3%ADvel';">
-                        <p class="text-sm text-slate-800 font-semibold mb-1">Luminária de Mesa LED Ajustável com Porta-Caneta</p>
-                        <p class="text-xs text-blue-600">Com três modos de cor e intensidade, perfeita para estudar.</p>
+                <!-- Bloco de Anúncio: Luminária de Mesa Ajustável (MOVIDO PARA A BARRA LATERAL e aprimorado) -->
+                <div class="my-8 ad-block">
+                    <h5 class="ad-title">Estude com Conforto e Eficiência! A Iluminação Ideal Faz Toda a Diferença</h5>
+                    <a href="https://www.amazon.com.br/Lumin%C3%A1ria-Mesa-Ajust%C3%A1vel-Porta-Caneta/dp/B0F88M5KPP?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=Y9XK1I0GW238&dib=eyJ2IjoiMSJ9.FaVIPusNv6XmREXSBR7doNe7wq0KXGxksuhrReVYKyFUR_JagNuyZkFe7luFLDqFXek2K4RGDWBoCmu9czt9sZYA69UWrBIMX9N9TEpESIk.gUeNKyJ6-Z7DQAsJ8xc9DcKRB0r3qUET4wTRka_y9gQ&dib_tag=se&keywords=Lumin%C3%A1rias+LED+com+ajuste+de+temperatura+de+cor+e+intensidade.&qid=1749912132&sprefix=lumin%C3%A1rias+led+com+ajuste+de+temperatura+de+cor+e+intensidade+%2Caps%2C196&sr=8-97-spons&ufe=app_do%3Aamzn1.fos.6d798eae-cadf-45de-946a-f477d47705b9&xpid=uFwsq_G7bFnGM&sp_csd=d2lkZ2V0TmFtZT1zcF9hdF9uZXh0&psc=1&linkCode=ll1&tag=descompli073a-20&linkId=c46fba64ad66cbfd476d4baffc3cf5c1&language=pt_BR&ref_=as_li_ss_tl" target="_blank" rel="nofollow noopener" class="block w-full max-w-sm mx-auto" aria-label="Comprar Luminária de Mesa Ajustável com Porta-Caneta na Amazon">
+                        <img src="https://m.media-amazon.com/images/I/51GQs1nSl+L._AC_SX679_.jpg" alt="Luminária de Mesa LED Ajustável com Porta-Caneta" class="mx-auto rounded-lg mb-4 object-contain shadow-sm" onerror="this.onerror=null;this.src='https://placehold.co/1500x1500/38bdf8/ffffff?text=Lumin%C3%A1ria+N%C3%A3o+Dispon%C3%ADvel';" width="200" height="200">
+                        <p class="product-name">Luminária de Mesa LED Ajustável: Clareza para as Suas Leituras e Tarefas</p>
+                        <p class="product-price">R$ 69,90 <span class="disclaimer">(Preço estimado)</span></p>
+                        <button class="ad-button focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2">
+                            <i data-feather="shopping-cart" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i>
+                            Compre Já a Sua!
+                        </button>
                     </a>
+                    <p class="affiliate-text">Link de Afiliado Amazon.</p>
                 </div>
                 <!-- Fim do Bloco de Anúncio MOVIDO -->
 
@@ -1176,7 +1296,7 @@
                         <i data-feather="message-circle" class="w-6 h-6" aria-hidden="true"></i>
                     </div>
                     <div id="faq-content-4" class="accordion-content" role="region" aria-labelledby="faq-header-4">
-                        <p>Você pode entrar em contato connosco através da seção de "Contato" no menu superior, preenchendo o formulário ou enviando um email para <a href="mailto:contato@descomplicaacademico.com" class="text-sky-500 hover:text-sky-600">contato@descomplicaacademico.com</a>. Estamos sempre abertos a feedback!</p>
+                        <p>Você pode entrar em contato connosco através da seção de "Contato" no menu superior, preenchendo o formulário ou enviando um email para <a href="mailto:contato@descomplicaacademico.com" class="text-sky-500 hover:text-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">contato@descomplicaacademico.com</a>. Estamos sempre abertos a feedback!</p>
                     </div>
                 </div>
             </div>
@@ -1204,22 +1324,22 @@
                 <div>
                     <label for="name" class="block text-slate-700 text-sm font-bold mb-2">Nome Completo</label>
                     <input type="text" id="name" name="name" placeholder="O seu nome" required
-                        class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200"
+                        class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2"
                         aria-required="true">
                 </div>
                 <div>
                     <label for="email-contact" class="block text-slate-700 text-sm font-bold mb-2">Email</label>
                     <input type="email" id="email-contact" name="email" placeholder="o seu email@exemplo.com" required
-                        class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200"
+                        class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2"
                         autocomplete="email" aria-required="true">
                 </div>
                 <div>
                     <label for="message" class="block text-slate-700 text-sm font-bold mb-2">Mensagem</label>
                     <textarea id="message" name="message" rows="5" placeholder="A sua mensagem..." required
-                        class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200" aria-required="true"></textarea>
+                        class="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2" aria-required="true"></textarea>
                 </div>
                 <button type="submit"
-                    class="w-full bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 transition duration-300 transform hover:scale-105 shadow-md">
+                    class="w-full bg-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-purple-700 transition duration-300 transform hover:scale-105 shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2">
                     <i data-feather="send" class="w-5 h-5 inline-block mr-2" aria-hidden="true"></i>
                     Enviar Mensagem
                 </button>
@@ -1231,17 +1351,17 @@
 
     <!-- Floating Social Share Buttons (with ARIA accessibility) -->
     <div class="social-share-buttons" role="group" aria-label="Partilhar nas Redes Sociais">
-        <a href="https://twitter.com/intent/tweet?url=https://yourwebsite.com&text=Confira%20este%20guia%20incr%C3%ADvel%20para%20o%20sucesso%20universit%C3%A1rio!" target="_blank" rel="noopener noreferrer" aria-label="Partilhar no Twitter" class="twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://yourwebsite.com&text=Confira%20este%20guia%20incr%C3%ADvel%20para%20o%20sucesso%20universit%C3%A1rio!" target="_blank" rel="noopener noreferrer" aria-label="Partilhar no Twitter" class="twitter focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
             <i data-feather="twitter" class="w-6 h-6" aria-hidden="true"></i>
         </a>
-        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://yourwebsite.com&title=DescomplicaAcad%C3%AAmico&summary=O%20Seu%20Guia%20Completo%20para%20o%20Sucesso%20Universit%C3%A1rio&source=yourwebsite.com" target="_blank" rel="noopener noreferrer" aria-label="Partilhar no LinkedIn" class="linkedin">
+        <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://yourwebsite.com&title=DescomplicaAcad%C3%AAmico&summary=O%20Seu%20Guia%20Completo%20para%20o%20Sucesso%20Universit%C3%A1rio&source=yourwebsite.com" target="_blank" rel="noopener noreferrer" aria-label="Partilhar no LinkedIn" class="linkedin focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
             <i data-feather="linkedin" class="w-6 h-6" aria-hidden="true"></i>
         </a>
         <!-- Add more buttons as needed -->
     </div>
 
     <!-- "Back to Top" Button (with ARIA accessibility) -->
-    <button id="back-to-top" aria-label="Voltar ao topo da página">
+    <button id="back-to-top" aria-label="Voltar ao topo da página" class="focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2">
         <i data-feather="arrow-up" class="w-6 h-6" aria-hidden="true"></i>
     </button>
 
@@ -1314,6 +1434,10 @@
          * @param {HTMLElement} targetElement - The element after which the message will be inserted.
          */
         function displayMessage(message, type, targetElement) {
+            // Remove any existing custom messages to ensure only one is visible at a time
+            const existingMessages = document.querySelectorAll('.custom-message');
+            existingMessages.forEach(msg => msg.remove());
+
             const messageBox = document.createElement('div');
             messageBox.textContent = message;
             messageBox.className = `custom-message ${type}`;
@@ -1375,8 +1499,8 @@
                     <h5 id="confirm-title" class="text-lg font-semibold mb-4 text-slate-800">${title}</h5>
                     <p id="confirm-desc" class="mb-6 text-slate-600">${message}</p>
                     <div class="flex justify-center space-x-4">
-                        <button id="confirm-action" class="bg-red-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-red-700 transition duration-300">Sim</button>
-                        <button id="cancel-action" class="bg-gray-300 text-slate-800 font-bold py-2 px-5 rounded-lg hover:bg-gray-400 transition duration-300">Cancelar</button>
+                        <button id="confirm-action" class="bg-red-600 text-white font-bold py-2 px-5 rounded-lg hover:bg-red-700 transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2">Sim</button>
+                        <button id="cancel-action" class="bg-gray-300 text-slate-800 font-bold py-2 px-5 rounded-lg hover:bg-gray-400 transition duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-gray-500 focus-visible:ring-offset-2">Cancelar</button>
                     </div>
                 </div>
             `;
@@ -1529,7 +1653,6 @@
                 downloadGuideLink.href = './guia-completo-descomplica.pdf';
                 newsletterForm.reset();
                 formSuccessMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                // No need for a specific timeout here as displayMessage handles its own timeout for the temp message
             });
         }
 
@@ -1681,7 +1804,7 @@
                     const radioInputId = `quiz-${this.quizId}-q${this.quizData.currentQuestionIndex}-opt${optIndex}`;
                     optionsHtml += `
                         <div class="flex items-center mb-2">
-                            <input type="radio" id="${radioInputId}" name="quiz-${this.quizId}-q${this.quizData.currentQuestionIndex}" value="${option}" class="form-radio text-sky-600 h-4 w-4" aria-labelledby="${radioInputId}-label">
+                            <input type="radio" id="${radioInputId}" name="quiz-${this.quizId}-q${this.quizData.currentQuestionIndex}" value="${option}" class="form-radio text-sky-600 h-4 w-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-labelledby="${radioInputId}-label">
                             <label for="${radioInputId}" class="ml-2 text-slate-600 cursor-pointer" id="${radioInputId}-label">${option}</label>
                         </div>
                     `;
@@ -1767,23 +1890,27 @@
              */
             resetQuiz() {
                 this.initializeQuizAnswers();
-                this.renderQuestion();
+                this.renderQuestion(); // Re-render the first question to show reset state
                 this.resultDiv.innerHTML = '';
                 this.retryBtn.classList.add('hidden');
                 this.nextBtn.classList.remove('hidden');
                 this.prevBtn.disabled = true;
                 this.submitFinalBtn.classList.add('hidden');
                 
-                // Re-enable all radio options for all questions in the quiz
-                // This targets all questions in the container, regardless of the current view
-                const allQuestionContainers = document.getElementById(`quiz-${this.quizId}-questions-container`).closest('.quiz-section').querySelectorAll('.quiz-question');
-                allQuestionContainers.forEach(qDiv => {
-                    qDiv.querySelectorAll('input[type="radio"]').forEach(input => {
-                        input.disabled = false;
-                        input.checked = false;
-                    });
-                    qDiv.querySelector('.question-feedback').innerHTML = ''; // Clear individual feedback
-                    qDiv.querySelector('.question-feedback').classList.remove('correct', 'incorrect', 'animate-feedback-pulse');
+                // Ensure all radio options are re-enabled and unchecked for a full visual reset
+                this.quizData.questions.forEach((q, qIndex) => {
+                    const questionDiv = this.container.querySelector(`#question-${this.quizId}-${qIndex}`).closest('.quiz-question');
+                    if (questionDiv) { // Ensure the question div exists (important if not all questions are rendered at once)
+                        questionDiv.querySelectorAll('input[type="radio"]').forEach(input => {
+                            input.disabled = false;
+                            input.checked = false;
+                        });
+                        const feedbackDiv = questionDiv.querySelector('.question-feedback');
+                        if (feedbackDiv) {
+                            feedbackDiv.innerHTML = '';
+                            feedbackDiv.classList.remove('correct', 'incorrect', 'animate-feedback-pulse');
+                        }
+                    }
                 });
             }
 
@@ -1926,6 +2053,8 @@
                     this.currentFlashcardTerm.textContent = 'Nenhum flashcard adicionado.';
                     this.currentFlashcardDefinition.innerHTML = '';
                     this.flashcardDisplay.classList.remove('flipped');
+                    this.isFlipped = false; // Ensure flip state is consistent
+                    // Ensure term side is visible and definition side is hidden when no cards
                     this.currentFlashcardTerm.closest('.flashcard-content').style.display = 'flex';
                     this.currentFlashcardDefinition.closest('.flashcard-content').style.display = 'none';
                     this.currentFlashcardTerm.setAttribute('aria-hidden', 'false');
@@ -2184,9 +2313,9 @@
                 const storedQuestions = localStorage.getItem('generatedStudyQuestions');
                 if (storedQuestions) {
                     try {
-                        this.generatedQuestions = JSON.parse(storedQuestions);
+                        const parsed = JSON.parse(storedQuestions);
                         // Ensure 'isAnswerVisible' property exists for all loaded questions
-                        this.generatedQuestions = this.generatedQuestions.map(qa => ({
+                        this.generatedQuestions = parsed.map(qa => ({
                             ...qa,
                             isAnswerVisible: qa.isAnswerVisible === undefined ? false : qa.isAnswerVisible
                         }));
@@ -2222,7 +2351,7 @@
                         questionsHtml += `
                             <div class="generated-question-item" id="question-item-${index}">
                                 <p class="question-text">${index + 1}. ${qa.question}</p>
-                                <button class="toggle-answer-btn bg-sky-500 text-white px-4 py-2 rounded-md hover:bg-sky-600 transition-colors duration-200 text-sm" aria-expanded="${qa.isAnswerVisible ? 'true' : 'false'}" aria-controls="answer-content-${index}">
+                                <button class="toggle-answer-btn bg-sky-500 text-white px-4 py-2 rounded-md hover:bg-sky-600 transition-colors duration-200 text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-500 focus-visible:ring-offset-2" aria-expanded="${qa.isAnswerVisible ? 'true' : 'false'}" aria-controls="answer-content-${index}">
                                     ${qa.isAnswerVisible ? 'Ocultar Resposta' : 'Mostrar Resposta'}
                                 </button>
                                 <div id="answer-content-${index}" class="generated-answer-content ${qa.isAnswerVisible ? 'show' : ''}" aria-hidden="${qa.isAnswerVisible ? 'false' : 'true'}">
@@ -2359,12 +2488,14 @@
                         }));
                         this.saveGeneratedQuestions();
                         this.renderGeneratedQuestions();
+                        displayMessage('Questões geradas com sucesso!', 'success', this.generateQuestionsBtn);
                     } else {
                         throw new Error('Não foi possível gerar as questões. Resposta da API inesperada.');
                     }
                 } catch (error) {
                     console.error('Erro ao chamar a API Gemini para gerar questões:', error);
                     this.generatedQuestionsOutput.innerHTML = `<p class="text-red-600">Erro ao gerar questões: ${error.message}. Por favor, tente novamente.</p>`;
+                    displayMessage(`Erro ao gerar questões: ${error.message}.`, 'error', this.generateQuestionsBtn);
                 } finally {
                     toggleLoadingState(this.generateQuestionsBtn, this.questionsLoader, false);
                     this.studyTextInput.disabled = false; // Re-enable input
@@ -2438,7 +2569,7 @@
                         this.studyPlan = parsedPlan.map(dayPlan => ({
                             ...dayPlan,
                             suggested_activities: dayPlan.suggested_activities.map(activity =>
-                                typeof activity === 'object' ? activity : { text: activity, isCompleted: false }
+                                typeof activity === 'object' && activity !== null && 'text' in activity ? activity : { text: activity, isCompleted: false }
                             )
                         }));
                     } catch (e) {
@@ -2480,7 +2611,7 @@
                             const isCompleted = typeof activity === 'object' ? activity.isCompleted : false;
                             planHtml += `
                                 <li class="${isCompleted ? 'completed-task' : ''}">
-                                    <input type="checkbox" id="task-${dayIndex}-${activityIndex}" data-day-index="${dayIndex}" data-activity-index="${activityIndex}" class="task-checkbox form-checkbox h-4 w-4 text-green-600 rounded" ${isCompleted ? 'checked' : ''} aria-label="Marcar atividade '${activityText}' como concluída">
+                                    <input type="checkbox" id="task-${dayIndex}-${activityIndex}" data-day-index="${dayIndex}" data-activity-index="${activityIndex}" class="task-checkbox form-checkbox h-4 w-4 text-green-600 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2" ${isCompleted ? 'checked' : ''} aria-label="Marcar atividade '${activityText}' como concluída">
                                     <label for="task-${dayIndex}-${activityIndex}">${activityText}</label>
                                 </li>
                             `;
@@ -2669,7 +2800,7 @@
             }
 
             /**
-             * Sets up event listeners for the study planner.
+                             * Sets up event listeners for the study planner.
              */
             setupEventListeners() {
                 if (this.generatePlanBtn) {
@@ -2709,6 +2840,8 @@
                 this.pomodoroCount = 0;
                 this.isRunning = false;
 
+                // Use a simple sound from Mixkit.co for timer end
+                // Note: Autoplay policies might prevent sound from playing without user interaction first.
                 this.timerEndSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-bleep-913.mp3');
             }
 
